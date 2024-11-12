@@ -15,7 +15,7 @@ The stats are exposed as an API as well as exported report (in XML format)
 ## API Usage
 
 ```python
-from ca-cpp-stats import CppStats
+from cpp_stats import CppStats
 
 stats = CppStats("path/to/repo")
 
