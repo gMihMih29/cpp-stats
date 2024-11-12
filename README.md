@@ -1,31 +1,36 @@
-# C/C++ Project Model
+# Code Repository C/C++ Stats
 
-Forms project model based on C/C++ files within repository as well as provide base statistics.
-Provides API for traversing the model as well as export in common format (TBP).
-
-The model for C/C++ looks like below:
-```
-folder
- |- .h/.cpp file (LoC)
-   |- include
-   |- namespace
-   |- struct
-   |- function
-   |- classA
-     |- method (LoC, cyclomatic complexity)
-       |- parameter
-       |- variable
-     |- field
-     |- ...
-   |- classB
-     |- ... 
-   |- ...
- |- .h/.cpp file
- |- ... 
-```
+Taking source code repository as an input calculate base statistics for C/C++ source files.  
 
 Base statistics include:
-- number of .h/.cpp files
+- number of C/C++ files
 - number of classes
 - avg/max number of methods per class
-- avg/max method size (LoC)
+- avg/max method size (in LoC)
+- avg/max cyclomatic complexity of method
+- _(to be extended)_ 
+
+The stats are exposed as an API as well as exported report (in XML format)
+
+## API Usage
+
+```python
+import ca-cpp-stats as st
+
+stats = CppStats("path/to/repo")
+
+# Print available metrics
+print(stats.list())
+
+# Print number of classes
+print(stats.metric("NUMBER_OF_CLASSES"))
+
+# Print XML report
+print(stats.as_xml())
+```
+
+## CLI Usage
+
+```shell
+\> python3 ca-python-stats --report path_to_xml.xml path_to_repo
+```
