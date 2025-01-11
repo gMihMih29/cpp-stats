@@ -55,13 +55,27 @@ A metric measures the maximum cyclomatic complexity of methods.
 * Source
 [Egor Bugaenko](https://www.youtube.com/watch?v=Cvv0Olx4Bpw&list=PLaIsQH4uc08xyXRhhYPHh-Yam2kEwNaLl&index=2)
 
-## Cognitive complexity (TODO)
+## Cognitive complexity
+* Description
+    A metric measures readability complexity of code.
 
-## Mean cognitive complexity (TODO)
-Подсчёт средней когнитивной сложности методов. [Описание](https://habr.com/ru/articles/565652/).
+    Metric increases by one for each cyclic constructions (`for`, `while`, `do while`, ...) and conditional constructions (`if`, `#if`, `#ifdef`, ternary operators).
 
-## Maximum cognitive complexity (TODO)
-Подсчёт максимальной когнитивной сложности методов. [Описание](https://habr.com/ru/articles/565652/).
+    Metric increases by one for each nested contructions.
+* Source
+[Egor Bugaenko](https://www.youtube.com/watch?v=oRUux3w4rsc&list=PLaIsQH4uc08xyXRhhYPHh-Yam2kEwNaLl&index=3)
+
+## Mean cognitive complexity
+* Description
+    A metric measures the mean cognitive complexity of methods.
+* Source
+[Egor Bugaenko](https://www.youtube.com/watch?v=oRUux3w4rsc&list=PLaIsQH4uc08xyXRhhYPHh-Yam2kEwNaLl&index=3)
+
+## Maximum cognitive complexity
+* Description
+    A metric measures the maximum cognitive complexity of methods.
+* Source
+[Egor Bugaenko](https://www.youtube.com/watch?v=oRUux3w4rsc&list=PLaIsQH4uc08xyXRhhYPHh-Yam2kEwNaLl&index=3)
 
 ## Halstead complexity measures
 * Description
@@ -91,15 +105,17 @@ Halstead complexity measures are metrics based on the computation of operands an
 ## Maintainability Index
 * Formula
     $$
-    \text{MI}=171-5.2\cdot\ln(\text{Halstead Volume})-0.23\cdot(\text{Cyclomatic Complexity})-16.2\cdot \ln(\text{LoC})
+    \text{MI}=\max(0, 171-5.2\cdot\ln(\text{Halstead Volume})-0.23\cdot(\text{Cyclomatic Complexity})-16.2\cdot \ln(\text{LoC}))
     $$
+    MI $\in [0;100]$. Higher value means higher maintainablility.
 * Source
 [Egor Bugaenko](https://www.youtube.com/watch?v=xnSnPfVkmkM&list=PLaIsQH4uc08xyXRhhYPHh-Yam2kEwNaLl&index=5)
 
 ## Lack of Cohesion of Methods (LCOM)
 * Description
+    LCOM measures cohesion between methods and attributes in class.
 * Formula
-$$
+    $$
     P = \{(v_i,v_j)|v_i \cap v_j = \emptyset \}
     $$
     $$
@@ -123,7 +139,7 @@ $$
     $$
     where $m$ is the number of methods in class, $t = 1 - \text{LCOM2}$
     
-    $\text{LCOM1} \in [0;2]$. $\text{LCOM1} \in [0;1]$ means OK.
+    $\text{LCOM3} \in [0;2]$. $\text{LCOM3} \in [0;1]$ means OK.
     
     $$
     \text{LCOM4} = \text{\#connectivity components in graph } G,
@@ -139,6 +155,7 @@ $$
 
 ## Tight and Loose Class Cohesion (TCC and LCC)
 * Description
+The metrics TCC and LCC provide another way to measure the cohesion of a class. The higher TCC and LCC, the more cohesive and thus better the class.
 * Formula
 Let:
     $$
@@ -163,14 +180,39 @@ Let:
 * Source
 [Egor Bugaenko](https://www.youtube.com/watch?v=JOKxjpAglFU&list=PLaIsQH4uc08xyXRhhYPHh-Yam2kEwNaLl&index=9)
 
-## CAMC
-Подсчёт степени пересечения списков типов параметров. [Описание](https://www.scirp.org/pdf/JSEA20100400008_80076534.pdf).
+## Cohesion among Methods of a Class (CAMC)
+* Description
+    The CAMC metric measures the extent of intersection of individual method parameter type lists with the parameter type list of all methods in the class 
+* Formula
+    $$
+    \text{CAMC} = \frac{\sigma}{kl} \text{  where  } \sigma = \sum_{1}^{k}\sum_{1}^{l}PO[i][j]
+    $$
+    $PO$ is a parameter-occurrence matrix that has a row for each method and a column for each data type that appears at least once as the type of a parameter in at least one method in the class. The value in row $i$ and column $j$ in the matrix is 1 when the $i$th method has a parameter of the $j$th data type and is 0 otherwise
+* Source
+[Egor Bugaenko](https://www.youtube.com/watch?v=oCxJ_YSSAGo&list=PLaIsQH4uc08xyXRhhYPHh-Yam2kEwNaLl&index=12)
+["Exploring Design Level Class Cohesion Metrics", Kuljit Kaur, Hardeep Singh](https://www.scirp.org/pdf/JSEA20100400008_80076534.pdf)
 
-## NHD
-Подсчёт согласованности списков типов параметров. [Описание](https://www.scirp.org/pdf/JSEA20100400008_80076534.pdf).
+## Normalized Hamming Distance (NHD)
+* Description
+    NHD measures agreement between rows in the PO matrix from CAMC. 
+* Formula
+    $$
+    \text{NHD} = \frac{2}{lk(k-1)}\sum_{1}^{k-1}\sum_{j+1}^{k}a(i,j)
+    $$
+    where $a(i,j)$ is value of the cell at $(i,j)$th location in the parameter agreement matrix.
+* Source
+[Egor Bugaenko](https://www.youtube.com/watch?v=oCxJ_YSSAGo&list=PLaIsQH4uc08xyXRhhYPHh-Yam2kEwNaLl&index=12)
+["Exploring Design Level Class Cohesion Metrics", Kuljit Kaur, Hardeep Singh](https://www.scirp.org/pdf/JSEA20100400008_80076534.pdf)
 
-## SNHD
-Подсчёт отмасштабированной метрики NHD. [Описание](https://www.scirp.org/pdf/JSEA20100400008_80076534.pdf).
+<!-- ## Scaled NHD (SNHD)
+* Description
+* Formula
+* Source
+["Exploring Design Level Class Cohesion Metrics", Kuljit Kaur, Hardeep Singh](https://www.scirp.org/pdf/JSEA20100400008_80076534.pdf) -->
 
-## NHDM
-Подсчёт модифицированной метрики NHD. [Описание](https://www.scirp.org/pdf/JSEA20100400008_80076534.pdf).
+<!-- ## Normalized Hamming Distance Modified (NHDM)
+* Description
+* Formula
+
+* Source
+["Exploring Design Level Class Cohesion Metrics", Kuljit Kaur, Hardeep Singh](https://www.scirp.org/pdf/JSEA20100400008_80076534.pdf) -->
