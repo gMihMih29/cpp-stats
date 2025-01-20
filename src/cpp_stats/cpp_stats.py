@@ -16,27 +16,25 @@ class CppStats(object):
             'COGNITIVE_COMPLEXITY', 
             'MEAN_COGNITIVE_COMPLEXITY', 
             'MAX_COGNITIVE_COMPLEXITY', 
-            'HALSTEAD_COMPLEXITY',
+            'HALSTEAD_PROGRAM_VOCABULARY',
+            'HALSTEAD_PROGRAM_LENGTH',
+            'HALSTEAD_CALCULATED_ESTIMATED_PROGRAM_LENGTH',
+            'HALSTEAD_VOLUME',
+            'HALSTEAD_DIFFICULTY',
+            'HALSTEAD_EFFORT',
+            'HALSTEAD_TIME_REQUIRED',
+            'HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
             'MAINTAINABILITY_INDEX',
             'LCOM',
-            'LACK_OF_COHESION_OF_METHODS',
             'LCOM2',
-            'LACK_OF_COHESION_OF_METHODS2',
             'LCOM3',
-            'LACK_OF_COHESION_OF_METHODS3',
             'LCOM4',
-            'LACK_OF_COHESION_OF_METHODS4',
             'TCC',
-            'TIGHT_CLASS_COHESION',
             'LCC',
-            'LOOSE_CLASS_COHESION',
             'CAMC',
-            'COHESION_AMONG_METHODS_OF_A_CLASS',
-            'NHD',
-            'NORMALIZED_HAMMING_DISTANCE'
-        ]
+            ]
     
-    def list(self) -> List[str]:
+    def list(self) -> list[str]:
         return self._available_metrics
     
     def metric(self, metric_name: str):
