@@ -12,7 +12,8 @@ class LanguageContruct(abc.ABC):
         Initializes LanguageContruct.
         
         Parameters:
-        cursor (clang.cindex.Cursor): Cursor that points to place in Abstract syntax tree of that language construct.
+        cursor (clang.cindex.Cursor): Cursor that points to place in 
+        Abstract syntax tree of that language construct.
         '''
         self.cursor = cursor
     
@@ -30,10 +31,12 @@ class LanguageContruct(abc.ABC):
     @abc.abstractmethod
     def add_construct(self, contruct: 'LanguageContruct'):
         '''
-        Adds new language construct as a child of current language construct.
+        Adds new language construct as a child of current language 
+        construct.
         
         Parameters:
-        contruct (LanguageContruct): Language construct to add as a child.
+        contruct (LanguageContruct): Language construct to add as a 
+        child.
         '''
         pass
 

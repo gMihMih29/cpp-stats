@@ -68,6 +68,7 @@ class CppStats(object):
         
         return (
             f'<report>\n'
-            f'    <repository name="path">{self.path_to_repo}</repository>\n'
+            f'    <repository name="path">'
+            f'{self._path_to_repo}</repository>\n'
             f'</report>'
         )

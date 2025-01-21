@@ -10,10 +10,12 @@ class MetricCalculator(abc.ABC):
     @abc.abstractmethod
     def __call__(self, node: clang.cindex.Cursor) -> list[Metric]:
         '''
-        Calculates metrics for a given node that represents function, method, class or etc.
+        Calculates metrics for a given node that represents function, 
+        method, class or etc.
 
         Parameters:
-        node (clang.cindex.Cursor): Node for which metrics are calculated.
+        node (clang.cindex.Cursor): Node for which metrics are 
+        calculated.
 
         Returns:
         list[Metric]: List of metrics calculated for node.
@@ -24,7 +26,8 @@ class MetricCalculator(abc.ABC):
     @abc.abstractmethod
     def observed_cursors(self) -> list[clang.cindex.CursorKind]:
         '''
-        Returns list of cursor kinds that can be passed as an argument for __call__.
+        Returns list of cursor kinds that can be passed as an argument 
+        for __call__.
 
         Returns:
         list[clang.cindex.CursorKind]: List of observed cursor kinds.
