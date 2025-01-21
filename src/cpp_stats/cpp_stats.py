@@ -1,8 +1,18 @@
 from typing import List
 
 class CppStats(object):
+    '''
+    Class for calculating C++ metrics in a given repository.
+    '''
 
     def __init__(self, path_to_repo: str):
+        '''
+        Initializes CppStats object.
+        
+        Parameters:
+        path_to_repo (str): Path to the repository.
+        '''
+        
         self._path_to_repo = path_to_repo
         self._available_metrics = [
             'NUMBER_OF_CLASSES',
@@ -35,12 +45,27 @@ class CppStats(object):
             ]
     
     def list(self) -> list[str]:
+        '''
+        Returns list of all available metrics.
+        '''
+        
         return self._available_metrics
     
     def metric(self, metric_name: str):
+        '''
+        Returns metric by name.
+        
+        Parameters:
+        metric_name (str): Metric name.
+        '''
+        
         pass
     
     def as_xml(self):
+        '''
+        Returns report with all metrics as XML for a given repository.
+        '''
+        
         return (
             f'<report>\n'
             f'    <repository name="path">{self.path_to_repo}</repository>\n'
