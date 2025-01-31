@@ -9,9 +9,11 @@ from pathlib import Path
 def sieve_c_cxx_files(path_to_repo: str) -> list[Path] | None:
     '''
     Returns list of C/C++ files, what have matching extensions: 
-    `.h`, `.hpp`, `.C`, `.cc`, `.cpp`, `.CPP`, `.c++`, `.cp`, or `.cxx`.
+    `.h`, `.hpp`, `.C`, `.cc`, `.cpp`, `.CPP`, `.c++`, `.cp`, 
+    or `.cxx`.
     
-    Files that located in directories specified in `.gitignore` or `.gitmodules` are ignored.
+    Files that located in directories specified in `.gitignore` 
+    or `.gitmodules` are ignored.
     
     Parameters:
     path_to_repo (str): Path to the repository.
