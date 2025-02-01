@@ -20,7 +20,24 @@ def sieve_c_cxx_files(path_to_repo: str) -> list[Path] | None:
     '''
     if path_to_repo is None:
         return None
-    return []
+
+    submodules_paths = _locate_file(path_to_repo, '.gitmodules', [])
+    submodules_dirs = []
+    for p in submodules_paths:
+        submodules_dirs += _get_git_modules_dirs(p)
+
+    gitignore_paths = _locate_file(path_to_repo, '.gitignore', submodules_dirs)
+    gitignore_dirs = []
+    for p in gitignore_paths:
+        gitignore_dirs += _get_git_ignore_dirs(p)
+
+    banned_dirs = submodules_dirs + gitignore_dirs
+
+    c_cxx_files = []
+    for ext in _possible_extensions:
+        c_cxx_files += _locate_file(path_to_repo, ext, banned_dirs)
+    c_cxx_files = set(c_cxx_files)
+    return list(c_cxx_files)
 
 _possible_extensions = ['*.h', '*.hpp', '*.C', '*.cc', '*.cpp',
                         '*.CPP', '*.c++', '*.cp', '*.cxx']
