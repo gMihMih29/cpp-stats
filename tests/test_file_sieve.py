@@ -3,6 +3,9 @@ from pathlib import Path
 
 import cpp_stats.file_sieve
 
+def assert_lists_equal_unordered(expected, actual):
+    assert sorted(expected) == sorted(actual), f"Expected: {expected}, Actual: {actual}"
+
 def rename_git_ignore_and_modules(repo_path: Path, to_test: bool = True):
     '''
     Renames `test.gitignore` to `.gitignore` and 
@@ -71,7 +74,7 @@ def test_find_gitignore_1(repo: Path):
 
     result = cpp_stats.file_sieve._locate_file(repo, file_to_locate, [])
 
-    assert correct == result
+    assert_lists_equal_unordered(correct, result)
 
 def test_find_gitignore_2(repo_with_gitignore: Path):
     '''
@@ -85,7 +88,7 @@ def test_find_gitignore_2(repo_with_gitignore: Path):
 
     result = cpp_stats.file_sieve._locate_file(repo_with_gitignore, file_to_locate, [])
 
-    assert correct == result
+    assert_lists_equal_unordered(correct, result)
 
 def test_find_gitignore_3(repo_with_2gitignore: Path):
     '''
@@ -100,7 +103,7 @@ def test_find_gitignore_3(repo_with_2gitignore: Path):
 
     result = cpp_stats.file_sieve._locate_file(repo_with_2gitignore, file_to_locate, [])
 
-    assert correct == result
+    assert_lists_equal_unordered(correct, result)
 
 def test_find_gitignore_with_banned_dir_1(repo_with_2gitignore: Path):
     '''
@@ -117,7 +120,7 @@ def test_find_gitignore_with_banned_dir_1(repo_with_2gitignore: Path):
 
     result = cpp_stats.file_sieve._locate_file(repo_with_2gitignore, file_to_locate, banned_dirs)
 
-    assert correct == result
+    assert_lists_equal_unordered(correct, result)
 
 def test_list_gitignore_dirs_1(repo_with_gitignore: Path):
     gitignore_path = repo_with_gitignore.joinpath('.gitignore')
@@ -127,7 +130,7 @@ def test_list_gitignore_dirs_1(repo_with_gitignore: Path):
 
     result = cpp_stats.file_sieve._get_git_ignore_dirs(gitignore_path)
 
-    assert correct == result
+    assert_lists_equal_unordered(correct, result)
 
 def test_list_gitignore_dirs_2(repo_with_2gitignore: Path):
     gitignore_path = repo_with_2gitignore.joinpath('.gitignore')
@@ -137,7 +140,7 @@ def test_list_gitignore_dirs_2(repo_with_2gitignore: Path):
 
     result = cpp_stats.file_sieve._get_git_ignore_dirs(gitignore_path)
 
-    assert correct == result
+    assert_lists_equal_unordered(correct, result)
 
 def test_list_gitignore_dirs_3(repo_with_2gitignore: Path):
     gitignore_path = repo_with_2gitignore.joinpath('folder').joinpath('.gitignore')
@@ -147,7 +150,7 @@ def test_list_gitignore_dirs_3(repo_with_2gitignore: Path):
 
     result = cpp_stats.file_sieve._get_git_ignore_dirs(gitignore_path)
 
-    assert correct == result
+    assert_lists_equal_unordered(correct, result)
 
 def test_list_git_modules_dirs_1(repo_with_ignr_modules: Path):
     gitmodules_path = repo_with_ignr_modules.joinpath('.gitmodules')
@@ -158,4 +161,41 @@ def test_list_git_modules_dirs_1(repo_with_ignr_modules: Path):
 
     result = cpp_stats.file_sieve._get_git_modules_dirs(gitmodules_path)
 
-    assert correct == result
+    assert_lists_equal_unordered(correct, result)
+
+def test_sieve_c_cxx_files_1(repo: Path):
+    correct = [
+        repo.joinpath('main.cpp')
+    ]
+
+    result = cpp_stats.file_sieve.sieve_c_cxx_files(repo)
+
+    assert_lists_equal_unordered(correct, result)
+
+def test_sieve_c_cxx_files_2(repo_with_gitignore: Path):
+    correct = [
+        repo_with_gitignore.joinpath('main.cpp')
+    ]
+
+    result = cpp_stats.file_sieve.sieve_c_cxx_files(repo_with_gitignore)
+
+    assert_lists_equal_unordered(correct, result)
+
+def test_sieve_c_cxx_files_3(repo_with_2gitignore: Path):
+    correct = [
+        repo_with_2gitignore.joinpath('main.cpp')
+    ]
+
+    result = cpp_stats.file_sieve.sieve_c_cxx_files(repo_with_2gitignore)
+
+    assert_lists_equal_unordered(correct, result)
+
+def test_sieve_c_cxx_files_4(repo_with_ignr_modules: Path):
+    correct = [
+        repo_with_ignr_modules.joinpath('main.cpp'),
+        repo_with_ignr_modules.joinpath('src').joinpath('class.hpp'),
+    ]
+
+    result = cpp_stats.file_sieve.sieve_c_cxx_files(repo_with_ignr_modules)
+
+    assert_lists_equal_unordered(correct, result)
