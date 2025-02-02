@@ -32,7 +32,7 @@ def test_number_of_c_cxx_files_3(repo_with_gitignore: Path):
 
 def test_number_of_c_cxx_files_4(repo_with_ignr_modules: Path):
     stats = CppStats(str(repo_with_ignr_modules))
-    expected = 2
+    expected = 3
 
     actual = stats.metric('NUMBER_OF_C_C++_FILES')
 

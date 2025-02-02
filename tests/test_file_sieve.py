@@ -181,6 +181,7 @@ def test_sieve_c_cxx_files_4(repo_with_ignr_modules: Path):
     '''
     expected = [
         repo_with_ignr_modules.joinpath('main.cpp'),
+        repo_with_ignr_modules.joinpath('src').joinpath('serial_port.c'),
         repo_with_ignr_modules.joinpath('src').joinpath('class.hpp'),
     ]
 

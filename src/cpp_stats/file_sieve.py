@@ -39,7 +39,7 @@ def sieve_c_cxx_files(path_to_repo: str) -> list[Path] | None:
     c_cxx_files = set(c_cxx_files)
     return list(c_cxx_files)
 
-_possible_extensions = ['*.h', '*.hpp', '*.C', '*.cc', '*.cpp',
+_possible_extensions = ['*.h', '*.hpp', '*.c', '*.C', '*.cc', '*.cpp',
                         '*.CPP', '*.c++', '*.cp', '*.cxx']
 
 def _locate_file(path_to_search: Path, pattern: str,
