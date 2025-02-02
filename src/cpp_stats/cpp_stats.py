@@ -51,7 +51,7 @@ class CppStats(object):
             'LCC',
             'CAMC',
             ]
-        
+
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))
 
     def list(self) -> list[str]:

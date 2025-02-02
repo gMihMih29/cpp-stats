@@ -42,10 +42,19 @@ def sieve_c_cxx_files(path_to_repo: str) -> list[Path] | None:
 _possible_extensions = ['*.h', '*.hpp', '*.C', '*.cc', '*.cpp',
                         '*.CPP', '*.c++', '*.cp', '*.cxx']
 
-def _locate_file(path_to_search: Path, file_to_find: str,
-                 banned_dirs: list[Path]) -> list[Path] | None:
+def _locate_file(path_to_search: Path, pattern: str,
+                 banned_dirs: list[Path]) -> list[Path]:
+    '''
+    Finds all files that match `pattern` inside `path_to_search` directory
+    ignoring `banned_dirs`
+    
+    Parameters:
+    `path_to_search` (`pathlib.Path`): path to starting directory
+    `pattern` (`str`): pattern to find
+    `banned_dirs` (`list[pathlib.Path]`): directories that will be ignored during search
+    '''
     paths = []
-    for entry in path_to_search.rglob(file_to_find):
+    for entry in path_to_search.rglob(pattern):
         is_inside_banned_dirs = False
         for b_dir in banned_dirs:
             if entry.is_relative_to(b_dir):
@@ -56,6 +65,12 @@ def _locate_file(path_to_search: Path, file_to_find: str,
     return paths
 
 def _get_git_modules_dirs(git_modules_path: Path) -> list[Path]:
+    '''
+    Finds all directories that listed in `.gitmodules` file located at `git_modules_path`
+    
+    Parameters:
+    `git_modules_path` (`pathlib.Path`): path to `.gitmodules`
+    '''
     parent_directory = git_modules_path.parent
     paths = []
     with open(git_modules_path, 'r') as f:
@@ -68,6 +83,12 @@ def _get_git_modules_dirs(git_modules_path: Path) -> list[Path]:
     return paths
 
 def _get_git_ignore_dirs(git_ignore_path: Path) -> list[Path]:
+    '''
+    Finds all directories that listed in `.gitignore` file located at `git_ignore_path`
+    
+    Parameters:
+    `git_ignore_path` (`pathlib.Path`): path to `.gitignore`
+    '''
     parent_directory = git_ignore_path.parent
     paths = []
     with open(git_ignore_path, 'r') as f:
