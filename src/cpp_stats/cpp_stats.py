@@ -1,3 +1,12 @@
+'''
+Main class for creating report about quality of C/C++ repository.
+'''
+
+from pathlib import Path
+from datetime import datetime
+
+from cpp_stats.file_sieve import sieve_c_cxx_files
+
 class CppStats(object):
     '''
     Class for calculating C++ metrics in a given repository.
@@ -13,6 +22,7 @@ class CppStats(object):
 
         self._path_to_repo = path_to_repo
         self._available_metrics = [
+            'NUMBER_OF_C_C++_FILES',
             'NUMBER_OF_CLASSES',
             'MEAN_NUMBER_OF_METHODS_PER_CLASS',
             'MAX_NUMBER_OF_METHODS_PER_CLASS',
@@ -41,6 +51,8 @@ class CppStats(object):
             'LCC',
             'CAMC',
             ]
+        
+        self._files = sieve_c_cxx_files(Path(self._path_to_repo))
 
     def list(self) -> list[str]:
         '''
@@ -56,8 +68,9 @@ class CppStats(object):
         Parameters:
         metric_name (str): Metric name.
         '''
-
-        pass
+        if metric_name == 'NUMBER_OF_C_C++_FILES':
+            return len(self._files)
+        return None
 
     def as_xml(self):
         '''
@@ -66,7 +79,11 @@ class CppStats(object):
 
         return (
             f'<report>\n'
-            f'    <repository name="path">'
-            f'{self._path_to_repo}</repository>\n'
-            f'</report>'
+            f'    <report-time>{datetime.now().strftime("%d.%m.%Y")}</report-time>\n'
+            f'    <repository-path>{self._path_to_repo}</repository-path>\n'
+            f'    <metrics>\n'
+            f'        <metric name="NUMBER_OF_C_C++_FILES">'
+            f'{self.metric("NUMBER_OF_C_C++_FILES")}</metric>\n'
+            f'    </metrics>\n'
+            f'</report>\n'
         )
