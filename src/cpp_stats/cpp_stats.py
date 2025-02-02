@@ -7,7 +7,7 @@ from datetime import datetime
 
 from cpp_stats.file_sieve import sieve_c_cxx_files
 
-class CppStats(object):
+class CppStats:
     '''
     Class for calculating C++ metrics in a given repository.
     '''

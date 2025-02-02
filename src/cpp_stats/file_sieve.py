@@ -1,7 +1,7 @@
 '''
-Modules that sieves all files that are specified in .gitignore 
-or are located inside ignored directories, which are listed in
-.gitignore or .gitmodules
+Module that sieves all files that are specified in `.gitignore` 
+or located inside ignored directories, which are listed in
+`.gitignore` as ignored or `.gitmodules` as submodules.
 '''
 
 from pathlib import Path
@@ -46,12 +46,12 @@ def _locate_file(path_to_search: Path, pattern: str,
                  banned_dirs: list[Path]) -> list[Path]:
     '''
     Finds all files that match `pattern` inside `path_to_search` directory
-    ignoring `banned_dirs`
+    ignoring `banned_dirs`.
     
     Parameters:
-    `path_to_search` (`pathlib.Path`): path to starting directory
-    `pattern` (`str`): pattern to find
-    `banned_dirs` (`list[pathlib.Path]`): directories that will be ignored during search
+    `path_to_search` (`pathlib.Path`): path to starting directory.
+    `pattern` (`str`): pattern to find.
+    `banned_dirs` (`list[pathlib.Path]`): directories that will be ignored during search.
     '''
     paths = []
     for entry in path_to_search.rglob(pattern):
@@ -66,10 +66,10 @@ def _locate_file(path_to_search: Path, pattern: str,
 
 def _get_git_modules_dirs(git_modules_path: Path) -> list[Path]:
     '''
-    Finds all directories that listed in `.gitmodules` file located at `git_modules_path`
+    Finds all directories that listed in `.gitmodules` file located at `git_modules_path`.
     
     Parameters:
-    `git_modules_path` (`pathlib.Path`): path to `.gitmodules`
+    `git_modules_path` (`pathlib.Path`): path to `.gitmodules`.
     '''
     parent_directory = git_modules_path.parent
     paths = []
@@ -84,10 +84,10 @@ def _get_git_modules_dirs(git_modules_path: Path) -> list[Path]:
 
 def _get_git_ignore_dirs(git_ignore_path: Path) -> list[Path]:
     '''
-    Finds all directories that listed in `.gitignore` file located at `git_ignore_path`
+    Finds all directories that listed in `.gitignore` file located at `git_ignore_path`.
     
     Parameters:
-    `git_ignore_path` (`pathlib.Path`): path to `.gitignore`
+    `git_ignore_path` (`pathlib.Path`): path to `.gitignore`.
     '''
     parent_directory = git_ignore_path.parent
     paths = []
