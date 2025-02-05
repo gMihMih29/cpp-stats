@@ -164,3 +164,4 @@ cython_debug/
 
 # Default report file
 report.xml
+coverage.lcov
