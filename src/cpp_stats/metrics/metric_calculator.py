@@ -1,3 +1,7 @@
+'''
+Base classes for metrics and calculators.
+'''
+
 from pathlib import Path
 
 import clang.cindex
@@ -15,7 +19,6 @@ class Metric:
         Returns metric value. Should be called since metric can be summarization of many files,
         namespaces, classes and etc.
         '''
-        pass
 
 class BasicMetricCalculator:
     '''
@@ -32,8 +35,6 @@ class BasicMetricCalculator:
         Returns:
         list[Metric]: List of metrics calculated for set of files.
         '''
-
-        pass
 
 class ClangMetricCalculator:
     '''
@@ -53,8 +54,6 @@ class ClangMetricCalculator:
         list[Metric]: List of metrics calculated for node.
         '''
 
-        pass
-
     def observed_cursors(self) -> list[clang.cindex.CursorKind]:
         '''
         Returns list of cursor kinds that can be passed as an argument 
@@ -63,5 +62,3 @@ class ClangMetricCalculator:
         Returns:
         list[clang.cindex.CursorKind]: List of observed cursor kinds.
         '''
-
-        pass
