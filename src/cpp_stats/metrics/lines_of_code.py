@@ -1,3 +1,7 @@
+'''
+Module for LINES_OF_CODE metric.
+'''
+
 from pathlib import Path
 
 from cpp_stats.metrics.metric_calculator import Metric, BasicMetricCalculator

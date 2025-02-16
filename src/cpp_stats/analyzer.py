@@ -1,3 +1,7 @@
+'''
+Main class for calculating metrics.
+'''
+
 from pathlib import Path
 
 from cpp_stats.metrics.lines_of_code import LinesOfCodeCalculator
