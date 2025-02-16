@@ -21,6 +21,3 @@ def main(path_to_repo, report):
 
 if __name__ == "__main__":
     main()
-    
-def dummy_function():
-    print("Hello world!")

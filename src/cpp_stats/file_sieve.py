@@ -106,3 +106,14 @@ def _get_git_ignore_dirs(git_ignore_path: Path) -> list[Path]:
             if p.is_dir():
                 paths.append(p)
     return paths
+
+    
+def dummy_function():
+    print("Hello world!")
+    print("Hello world!")
+    print("Hello world!")
+    print("Hello world!")
+    print("Hello world!")
+    print("Hello world!")
+    print("Hello world!")
+    print("Hello world!")
