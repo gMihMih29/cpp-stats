@@ -26,33 +26,33 @@ class CppStats:
         self._available_metrics = [
             'NUMBER_OF_C_C++_FILES',
             'LINES_OF_CODE',
-            'NUMBER_OF_CLASSES',
-            'MEAN_NUMBER_OF_METHODS_PER_CLASS',
-            'MAX_NUMBER_OF_METHODS_PER_CLASS',
-            'MEAN_LENGTH_OF_METHODS',
-            'MAX_LENGTH_OF_METHODS',
-            'CYCLOMATIC_COMPLEXITY',
-            'MEAN_CYCLOMATIC_COMPLEXITY',
-            'MAX_CYCLOMATIC_COMPLEXITY', 
-            'COGNITIVE_COMPLEXITY', 
-            'MEAN_COGNITIVE_COMPLEXITY', 
-            'MAX_COGNITIVE_COMPLEXITY', 
-            'HALSTEAD_PROGRAM_VOCABULARY',
-            'HALSTEAD_PROGRAM_LENGTH',
-            'HALSTEAD_CALCULATED_ESTIMATED_PROGRAM_LENGTH',
-            'HALSTEAD_VOLUME',
-            'HALSTEAD_DIFFICULTY',
-            'HALSTEAD_EFFORT',
-            'HALSTEAD_TIME_REQUIRED',
-            'HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
-            'MAINTAINABILITY_INDEX',
-            'LCOM',
-            'LCOM2',
-            'LCOM3',
-            'LCOM4',
-            'TCC',
-            'LCC',
-            'CAMC',
+            # 'NUMBER_OF_CLASSES',
+            # 'MEAN_NUMBER_OF_METHODS_PER_CLASS',
+            # 'MAX_NUMBER_OF_METHODS_PER_CLASS',
+            # 'MEAN_LENGTH_OF_METHODS',
+            # 'MAX_LENGTH_OF_METHODS',
+            # 'CYCLOMATIC_COMPLEXITY',
+            # 'MEAN_CYCLOMATIC_COMPLEXITY',
+            # 'MAX_CYCLOMATIC_COMPLEXITY', 
+            # 'COGNITIVE_COMPLEXITY', 
+            # 'MEAN_COGNITIVE_COMPLEXITY', 
+            # 'MAX_COGNITIVE_COMPLEXITY', 
+            # 'HALSTEAD_PROGRAM_VOCABULARY',
+            # 'HALSTEAD_PROGRAM_LENGTH',
+            # 'HALSTEAD_CALCULATED_ESTIMATED_PROGRAM_LENGTH',
+            # 'HALSTEAD_VOLUME',
+            # 'HALSTEAD_DIFFICULTY',
+            # 'HALSTEAD_EFFORT',
+            # 'HALSTEAD_TIME_REQUIRED',
+            # 'HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
+            # 'MAINTAINABILITY_INDEX',
+            # 'LCOM',
+            # 'LCOM2',
+            # 'LCOM3',
+            # 'LCOM4',
+            # 'TCC',
+            # 'LCC',
+            # 'CAMC',
             ]
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))
@@ -92,7 +92,7 @@ class CppStats:
             f'        <metric name="NUMBER_OF_C_C++_FILES">'
             f'{self.metric("NUMBER_OF_C_C++_FILES")}</metric>\n'
             f'        <metric name="LINES_OF_CODE">'
-            f'{self.metric("LINES_OF_CODE")}</metric>\n'
+            f'{self.metric("LINES_OF_CODE")[1]}</metric>\n'
             f'    </metrics>\n'
             f'</report>\n'
         )

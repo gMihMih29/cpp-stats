@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from cpp_stats.metrics.lines_of_code import LinesOfCodeCalculator
-from cpp_stats.metrics.metric import Metric
+from cpp_stats.metrics.metric_calculator import Metric
 
 class CodeAnalyzer:
     '''
@@ -38,4 +38,4 @@ class CodeAnalyzer:
             self._cache[metric_name] = self._basic_calculators[metric_name](self._files)
         if self._use_clang and self._clang_calculators[metric_name] is not None:
             self._cache[metric_name] = self._clang_calculators[metric_name](self._ast_tree)
-        return self._cache.get(metric_name, None)
+        return self._cache.get(metric_name, (None, None))
