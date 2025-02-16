@@ -23,7 +23,7 @@ class LinesOfCodeMetric(Metric):
 
     def __add__(self, other):
         if not isinstance(other, LinesOfCodeMetric):
-            return NotImplemented
+            raise NotImplementedError
         return LinesOfCodeMetric(self.value + other.value)
 
     def get(self) -> tuple[str, float]:
@@ -38,7 +38,7 @@ class LinesOfCodeCalculator(BasicMetricCalculator):
     Calculates LINES_OF_CODE.
     '''
 
-    def __call__(self, file_paths: list[Path]) -> list[Metric]:
+    def __call__(self, file_paths: list[Path]) -> Metric:
         cnt = 0
         for file_path in file_paths:
             with open(file_path, 'r') as f:
