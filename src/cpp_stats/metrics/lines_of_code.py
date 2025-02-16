@@ -1,7 +1,6 @@
 from pathlib import Path
 
-from cpp_stats.metrics.metric_calculator import BasicMetricCalculator
-from cpp_stats.metrics.metric import Metric
+from cpp_stats.metrics.metric_calculator import Metric, BasicMetricCalculator
 
 METRIC_NAME = 'LINES_OF_CODE'
 
