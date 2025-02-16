@@ -25,7 +25,7 @@ class BasicMetricCalculator:
     Class for calculating specific list of metrics.
     '''
 
-    def __call__(self, file_paths: list[Path]) -> list[Metric]:
+    def __call__(self, file_paths: list[Path]) -> Metric:
         '''
         Calculates metrics for a given set of C/C++ files.
 
@@ -41,7 +41,7 @@ class ClangMetricCalculator:
     Class for calculating specific list of metrics.
     '''
 
-    def __call__(self, node: clang.cindex.Cursor) -> list[Metric]:
+    def __call__(self, node: clang.cindex.Cursor) -> Metric:
         '''
         Calculates metrics for a given node that represents function, 
         method, class or etc.
