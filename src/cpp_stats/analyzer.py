@@ -36,10 +36,10 @@ class CodeAnalyzer:
         Parameters:
         metric_name (str): Metric name.
         '''
-        if self._cache[metric_name] is not None:
+        if self._cache.get(metric_name, None) is not None:
             return self._cache[metric_name]
-        if self._basic_calculators[metric_name] is not None:
+        if self._basic_calculators.get(metric_name, None) is not None:
             self._cache[metric_name] = self._basic_calculators[metric_name](self._files)
-        if self._use_clang and self._clang_calculators[metric_name] is not None:
+        if self._use_clang and self._clang_calculators.get(metric_name, None) is not None:
             self._cache[metric_name] = self._clang_calculators[metric_name](self._ast_tree)
         return self._cache.get(metric_name, (None, None))
