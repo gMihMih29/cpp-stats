@@ -22,36 +22,36 @@ class Metric:
 
 class BasicMetricCalculator:
     '''
-    Class for calculating specific list of metrics.
+    Class for calculating specific metric.
     '''
 
     def __call__(self, file_paths: list[Path]) -> Metric:
         '''
-        Calculates metrics for a given set of C/C++ files.
+        Calculates metric for a given set of C/C++ files.
 
         Parameters:
         file_paths (list[Path]): paths to C/C++ files
 
         Returns:
-        list[Metric]: List of metrics calculated for set of files.
+        Metric: Metrics calculated for set of files.
         '''
 
 class ClangMetricCalculator:
     '''
-    Class for calculating specific list of metrics.
+    Class for calculating specific metric.
     '''
 
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
         '''
-        Calculates metrics for a given node that represents function, 
+        Calculates metric for a given node that represents function, 
         method, class or etc.
 
         Parameters:
-        node (clang.cindex.Cursor): Node for which metrics are 
+        node (clang.cindex.Cursor): Node for which metric is 
         calculated.
 
         Returns:
-        list[Metric]: List of metrics calculated for node.
+        Metric: Metrics calculated for node.
         '''
 
     def observed_cursors(self) -> list[clang.cindex.CursorKind]:
