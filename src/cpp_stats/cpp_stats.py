@@ -6,53 +6,57 @@ from pathlib import Path
 from datetime import datetime
 
 from cpp_stats.file_sieve import sieve_c_cxx_files
+from cpp_stats.analyzer import CodeAnalyzer
 
 class CppStats:
     '''
     Class for calculating C++ metrics in a given repository.
     '''
 
-    def __init__(self, path_to_repo: str):
+    def __init__(self, path_to_repo: str, use_clang: bool = False):
         '''
         Initializes CppStats object.
         
         Parameters:
         path_to_repo (str): Path to the repository.
+        use_clang (bool): Whether to use Clang or not.
         '''
 
         self._path_to_repo = path_to_repo
         self._available_metrics = [
             'NUMBER_OF_C_C++_FILES',
-            'NUMBER_OF_CLASSES',
-            'MEAN_NUMBER_OF_METHODS_PER_CLASS',
-            'MAX_NUMBER_OF_METHODS_PER_CLASS',
-            'MEAN_LENGTH_OF_METHODS',
-            'MAX_LENGTH_OF_METHODS',
-            'CYCLOMATIC_COMPLEXITY',
-            'MEAN_CYCLOMATIC_COMPLEXITY',
-            'MAX_CYCLOMATIC_COMPLEXITY', 
-            'COGNITIVE_COMPLEXITY', 
-            'MEAN_COGNITIVE_COMPLEXITY', 
-            'MAX_COGNITIVE_COMPLEXITY', 
-            'HALSTEAD_PROGRAM_VOCABULARY',
-            'HALSTEAD_PROGRAM_LENGTH',
-            'HALSTEAD_CALCULATED_ESTIMATED_PROGRAM_LENGTH',
-            'HALSTEAD_VOLUME',
-            'HALSTEAD_DIFFICULTY',
-            'HALSTEAD_EFFORT',
-            'HALSTEAD_TIME_REQUIRED',
-            'HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
-            'MAINTAINABILITY_INDEX',
-            'LCOM',
-            'LCOM2',
-            'LCOM3',
-            'LCOM4',
-            'TCC',
-            'LCC',
-            'CAMC',
+            'LINES_OF_CODE',
+            # 'NUMBER_OF_CLASSES',
+            # 'MEAN_NUMBER_OF_METHODS_PER_CLASS',
+            # 'MAX_NUMBER_OF_METHODS_PER_CLASS',
+            # 'MEAN_LENGTH_OF_METHODS',
+            # 'MAX_LENGTH_OF_METHODS',
+            # 'CYCLOMATIC_COMPLEXITY',
+            # 'MEAN_CYCLOMATIC_COMPLEXITY',
+            # 'MAX_CYCLOMATIC_COMPLEXITY', 
+            # 'COGNITIVE_COMPLEXITY', 
+            # 'MEAN_COGNITIVE_COMPLEXITY', 
+            # 'MAX_COGNITIVE_COMPLEXITY', 
+            # 'HALSTEAD_PROGRAM_VOCABULARY',
+            # 'HALSTEAD_PROGRAM_LENGTH',
+            # 'HALSTEAD_CALCULATED_ESTIMATED_PROGRAM_LENGTH',
+            # 'HALSTEAD_VOLUME',
+            # 'HALSTEAD_DIFFICULTY',
+            # 'HALSTEAD_EFFORT',
+            # 'HALSTEAD_TIME_REQUIRED',
+            # 'HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
+            # 'MAINTAINABILITY_INDEX',
+            # 'LCOM',
+            # 'LCOM2',
+            # 'LCOM3',
+            # 'LCOM4',
+            # 'TCC',
+            # 'LCC',
+            # 'CAMC',
             ]
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))
+        self._analyzer = CodeAnalyzer(self._files, use_clang)
 
     def list(self) -> list[str]:
         '''
@@ -70,7 +74,10 @@ class CppStats:
         '''
         if metric_name == 'NUMBER_OF_C_C++_FILES':
             return len(self._files)
-        return None
+        metric = self._analyzer.metric(metric_name)
+        if metric is None:
+            return None
+        return metric.get()
 
     def as_xml(self):
         '''
@@ -84,6 +91,8 @@ class CppStats:
             f'    <metrics>\n'
             f'        <metric name="NUMBER_OF_C_C++_FILES">'
             f'{self.metric("NUMBER_OF_C_C++_FILES")}</metric>\n'
+            f'        <metric name="LINES_OF_CODE">'
+            f'{self.metric("LINES_OF_CODE")[1]}</metric>\n'
             f'    </metrics>\n'
             f'</report>\n'
         )
