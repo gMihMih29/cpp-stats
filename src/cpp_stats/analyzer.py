@@ -6,6 +6,7 @@ from pathlib import Path
 
 from cpp_stats.metrics.lines_of_code import LinesOfCodeCalculator
 from cpp_stats.metrics.metric_calculator import Metric
+from cpp_stats.ast.ast_tree import get_ast_tree
 
 class CodeAnalyzer:
     '''
@@ -17,7 +18,7 @@ class CodeAnalyzer:
         self._use_clang = use_clang
         self._ast_tree = None
         if use_clang:
-            self._ast_tree = None
+            self._ast_tree = get_ast_tree(c_cxx_files)
         self._basic_calculators = {
             'LINES_OF_CODE' : LinesOfCodeCalculator(),
         }

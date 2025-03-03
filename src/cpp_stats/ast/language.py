@@ -22,8 +22,8 @@ class LanguageContruct(abc.ABC):
         cursor (clang.cindex.Cursor): Cursor that points to place in 
         Abstract syntax tree of that language construct.
         '''
-        self._cursor = cursor
-        self._children = Dict[str, LanguageContruct]
+        self.cursor = cursor
+        self._children = dict()
 
     def get_metric(self, calculator: ClangMetricCalculator) -> Metric:
         '''
@@ -32,6 +32,10 @@ class LanguageContruct(abc.ABC):
         Parameters:
         metrics_names (list[str]): List of requested metrics names.
         '''
+        m = calculator(self.cursor)
+        for _, value in self._children:
+            m += calculator(value.cursor)
+        return m
 
     def add_construct(self, stack: list[clang.cindex.Cursor]):
         '''
@@ -47,8 +51,9 @@ class LanguageContruct(abc.ABC):
         cur_cursor = stack.pop()
         cur_construct = self._children.get(cur_cursor.displayname, None)
         if cur_construct is None:
-            self._children[cur_cursor.displayname] = cur_construct = _build_lang_contruct(cur_cursor)
+            cur_construct = _build_lang_contruct(cur_cursor)
         if cur_construct is not None:
+            self._children[cur_cursor.displayname] = cur_construct
             self._children[cur_cursor.displayname].add_construct(stack)
 
 class Lambda(LanguageContruct):
@@ -59,9 +64,6 @@ class Lambda(LanguageContruct):
     def __init__(self, cursor: clang.cindex.Cursor):
         super().__init__(cursor)
 
-    def get_metrics(self, metrics_names: list[str]) -> list[Metric]:
-        pass
-
 class Function(LanguageContruct):
     '''
     Class that represents function.
@@ -69,9 +71,6 @@ class Function(LanguageContruct):
 
     def __init__(self, cursor: clang.cindex.Cursor):
         super().__init__(cursor)
-
-    def get_metrics(self, metrics_names: list[str]) -> list[Metric]:
-        pass
 
 class Method(LanguageContruct):
     '''
@@ -81,9 +80,6 @@ class Method(LanguageContruct):
     def __init__(self, cursor: clang.cindex.Cursor):
         super().__init__(cursor)
 
-    def get_metrics(self, metrics_names: list[str]) -> list[Metric]:
-        pass
-
 class Class(LanguageContruct):
     '''
     Class that represents class from C++.
@@ -91,9 +87,6 @@ class Class(LanguageContruct):
 
     def __init__(self, cursor: clang.cindex.Cursor):
         super().__init__(cursor)
-
-    def get_metrics(self, metrics_names: list[str]) -> list[Metric]:
-        pass
 
 class Structure(LanguageContruct):
     '''
@@ -103,9 +96,6 @@ class Structure(LanguageContruct):
     def __init__(self, cursor: clang.cindex.Cursor):
         super().__init__(cursor)
 
-    def get_metrics(self, metrics_names: list[str]) -> list[Metric]:
-        pass
-
 class Namespace(LanguageContruct):
     '''
     Class that represents namespace.
@@ -113,9 +103,6 @@ class Namespace(LanguageContruct):
 
     def __init__(self, cursor: clang.cindex.Cursor = None):
         super().__init__(cursor)
-
-    def get_metrics(self, metrics_names: list[str]) -> list[Metric]:
-        pass
 
 def _build_lang_contruct(cursor: clang.cindex.Cursor) -> LanguageContruct:
     if cursor.kind == clang.cindex.CursorKind.NAMESPACE:
