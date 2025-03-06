@@ -12,7 +12,8 @@ class NumberOfClassesMetric(Metric):
     '''
     Represents NUMBER_OF_CLASSES metric.
     '''
-    def __init__(self, names: set):
+
+    def __init__(self, value: int):
         '''
         Initializes metric.
         
@@ -20,18 +21,18 @@ class NumberOfClassesMetric(Metric):
         value (float): Metric value.
         '''
         super().__init__(METRIC_NAME)
-        self.names = names
+        self.value = value
 
     def __add__(self, other):
         if not isinstance(other, NumberOfClassesMetric):
             raise NotImplementedError
-        return NumberOfClassesMetric(self.names | other.names)
+        return NumberOfClassesMetric(self.value + other.value)
 
     def get(self) -> tuple[str, float]:
         '''
         Returns metric value.
         '''
-        return METRIC_NAME, len(self.names)
+        return METRIC_NAME, self.value
 
 class NumberOfClassesCalculator(ClangMetricCalculator):
     '''
@@ -40,13 +41,10 @@ class NumberOfClassesCalculator(ClangMetricCalculator):
 
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
         if node.kind != clang.cindex.CursorKind.CLASS_DECL and node.get_definition() is not None:
-            return NumberOfClassesMetric(set([]))
-        name = node.displayname
-        cur = node.semantic_parent
-        while cur.kind != clang.cindex.CursorKind.TRANSLATION_UNIT:
-            name += f"::{cur.displayname}"
-            cur = cur.semantic_parent
-        return NumberOfClassesMetric(set([name]))
+            return NumberOfClassesMetric(0)
+        for _ in node.get_children():
+            return NumberOfClassesMetric(0)
+        return NumberOfClassesMetric(1)
 
     def observed_cursors(self) -> list[clang.cindex.CursorKind]:
         '''
