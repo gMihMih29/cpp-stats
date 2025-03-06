@@ -7,7 +7,7 @@ from pathlib import Path
 import clang.cindex
 
 from cpp_stats.metrics.metric_calculator import ClangMetricCalculator, Metric
-from cpp_stats.ast.language import LanguageContruct, Namespace
+from cpp_stats.ast.language import Namespace
 
 def get_ast_tree(c_cxx_files: list[Path]) -> Namespace:
     '''
