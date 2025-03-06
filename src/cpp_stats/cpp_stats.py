@@ -93,6 +93,8 @@ class CppStats:
             f'{self.metric("NUMBER_OF_C_C++_FILES")}</metric>\n'
             f'        <metric name="LINES_OF_CODE">'
             f'{self.metric("LINES_OF_CODE")[1]}</metric>\n'
+            f'        <metric name="NUMBER_OF_CLASSES">'
+            f'{self.metric("NUMBER_OF_CLASSES")[1]}</metric>\n'
             f'    </metrics>\n'
             f'</report>\n'
         )
