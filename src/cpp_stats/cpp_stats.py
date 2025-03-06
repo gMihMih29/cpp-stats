@@ -26,7 +26,7 @@ class CppStats:
         self._available_metrics = [
             'NUMBER_OF_C_C++_FILES',
             'LINES_OF_CODE',
-            # 'NUMBER_OF_CLASSES',
+            'NUMBER_OF_CLASSES',
             # 'MEAN_NUMBER_OF_METHODS_PER_CLASS',
             # 'MAX_NUMBER_OF_METHODS_PER_CLASS',
             # 'MEAN_LENGTH_OF_METHODS',
