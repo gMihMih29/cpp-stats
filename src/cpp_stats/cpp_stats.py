@@ -57,7 +57,7 @@ class CppStats:
             ]
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))
-        self._analyzer = CodeAnalyzer(self._files, 'D:\\Program_Files\\mingw64\\bin\\libclang.dll')
+        self._analyzer = CodeAnalyzer(self._files, os.getenv('LIBCLANG_LIBRARY_PATH'))
 
     def list(self) -> list[str]:
         '''
