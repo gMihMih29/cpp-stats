@@ -4,6 +4,7 @@ Main class for creating report about quality of C/C++ repository.
 
 from pathlib import Path
 from datetime import datetime
+import os
 
 from cpp_stats.file_sieve import sieve_c_cxx_files
 from cpp_stats.analyzer import CodeAnalyzer
@@ -56,7 +57,7 @@ class CppStats:
             ]
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))
-        self._analyzer = CodeAnalyzer(self._files, use_clang)
+        self._analyzer = CodeAnalyzer(self._files, 'D:\\Program_Files\\mingw64\\bin\\libclang.dll')
 
     def list(self) -> list[str]:
         '''

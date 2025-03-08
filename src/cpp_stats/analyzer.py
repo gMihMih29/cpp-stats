@@ -3,6 +3,7 @@ Main class for calculating metrics.
 '''
 
 from pathlib import Path
+import clang.cindex
 
 from cpp_stats.metrics.lines_of_code import LinesOfCodeCalculator
 from cpp_stats.metrics.number_of_classes import NumberOfClassesCalculator
@@ -14,9 +15,8 @@ class CodeAnalyzer:
     Provides calculated metrics.
     '''
 
-    def __init__(self, c_cxx_files: list[Path], use_clang: bool = False):
+    def __init__(self, c_cxx_files: list[Path], clang_path: str = None):
         self._files = c_cxx_files
-        self._use_clang = use_clang
         self._ast_tree = None
         self._basic_calculators = {
             'LINES_OF_CODE' : LinesOfCodeCalculator(),
@@ -29,7 +29,10 @@ class CodeAnalyzer:
             'NUMBER_OF_CLASSES' : None,
         }
         self._clang_cache = None
-        if use_clang:
+        self._use_clang = False
+        if clang_path is not None:
+            self._use_clang = True
+            clang.cindex.Config.set_library_file(clang_path)
             self._clang_cache = analyze_ast(c_cxx_files, self._clang_calculators)
 
     def metric(self, metric_name: str) -> Metric | None:

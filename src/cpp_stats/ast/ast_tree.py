@@ -17,7 +17,6 @@ def get_ast_tree(c_cxx_files: list[Path]) -> Namespace:
     c_cxx_files (list[Path]): C/C++ files to parse.
     '''
     # Path will be configurable in config.yaml
-    clang.cindex.Config.set_library_file('D:\\Program_Files\\mingw64\\bin\\libclang.dll')
     index = clang.cindex.Index.create()
     global_namespace = Namespace()
     for i, file_path in enumerate(c_cxx_files):
