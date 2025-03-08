@@ -40,7 +40,7 @@ class NumberOfClassesCalculator(ClangMetricCalculator):
     '''
 
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
-        if node.kind != clang.cindex.CursorKind.CLASS_DECL or node.get_definition() is not None:
+        if node.kind != clang.cindex.CursorKind.CLASS_DECL or node.is_definition():
             return NumberOfClassesMetric(0)
         for _ in node.get_children():
             return NumberOfClassesMetric(0)
