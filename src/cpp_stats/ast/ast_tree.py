@@ -44,7 +44,7 @@ def _parse_children(
         global_namespace.add_construct(semantic_parents_stack)
         _parse_children(global_namespace, child, analyzed_file)
 
-def analyze_ast(c_cxx_files: list[Path], calculators: dict[str, ClangMetricCalculator]) -> dict[str, Metric]:
+def analyze_ast(index: clang.cindex.Index, c_cxx_files: list[Path], calculators: dict[str, ClangMetricCalculator]) -> dict[str, Metric]:
     '''
     Analyzes ast based on `c_cxx_files` and calculates metrics using `calculators`
     
@@ -55,8 +55,6 @@ def analyze_ast(c_cxx_files: list[Path], calculators: dict[str, ClangMetricCalcu
     Returns:
     `dict[str, Metric]`: dictionary with all metrics calculated by `calculators`.
     '''
-    clang.cindex.Config.set_library_file('D:\\Program_Files\\mingw64\\bin\\libclang.dll')
-    index = clang.cindex.Index.create()
     result = dict()
     for i, file_path in enumerate(c_cxx_files):
         translation_unit = index.parse(file_path, args=['-x', 'c++'])

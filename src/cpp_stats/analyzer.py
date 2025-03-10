@@ -33,7 +33,8 @@ class CodeAnalyzer:
         if clang_path is not None:
             self._use_clang = True
             clang.cindex.Config.set_library_file(clang_path)
-            self._clang_cache = analyze_ast(c_cxx_files, self._clang_calculators)
+            index = clang.cindex.Index.create()
+            self._clang_cache = analyze_ast(index, c_cxx_files, self._clang_calculators)
 
     def metric(self, metric_name: str) -> Metric | None:
         '''
