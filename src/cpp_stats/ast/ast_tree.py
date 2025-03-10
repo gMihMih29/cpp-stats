@@ -7,7 +7,6 @@ from pathlib import Path
 import clang.cindex
 
 from cpp_stats.metrics.metric_calculator import ClangMetricCalculator, Metric
-from cpp_stats.ast.language import Namespace
 
 def analyze_ast(index: clang.cindex.Index, c_cxx_files: list[Path], calculators: dict[str, ClangMetricCalculator]) -> dict[str, Metric]:
     '''
