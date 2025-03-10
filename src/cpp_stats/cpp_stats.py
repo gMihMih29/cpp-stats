@@ -22,7 +22,7 @@ class CppStats:
         path_to_repo (str): Path to the repository.
         use_clang (bool): Whether to use Clang or not.
         '''
-
+        self._use_clang = use_clang
         self._path_to_repo = path_to_repo
         self._available_metrics = [
             'NUMBER_OF_C_C++_FILES',
@@ -88,6 +88,25 @@ class CppStats:
         Returns report with all metrics as XML for a given repository.
         '''
 
+        if self._use_clang:
+            return self.__clang_report()
+        return self.__regular_report()
+
+    def __regular_report(self) -> str:
+        return (
+            f'<report>\n'
+            f'    <report-time>{datetime.now().strftime("%d.%m.%Y")}</report-time>\n'
+            f'    <repository-path>{self._path_to_repo}</repository-path>\n'
+            f'    <metrics>\n'
+            f'        <metric name="NUMBER_OF_C_C++_FILES">'
+            f'{self.metric("NUMBER_OF_C_C++_FILES")}</metric>\n'
+            f'        <metric name="LINES_OF_CODE">'
+            f'{self.metric("LINES_OF_CODE")[1]}</metric>\n'
+            f'    </metrics>\n'
+            f'</report>\n'
+        )
+
+    def __clang_report(self) -> str:
         return (
             f'<report>\n'
             f'    <report-time>{datetime.now().strftime("%d.%m.%Y")}</report-time>\n'
