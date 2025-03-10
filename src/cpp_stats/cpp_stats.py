@@ -57,7 +57,10 @@ class CppStats:
             ]
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))
-        self._analyzer = CodeAnalyzer(self._files, os.getenv('LIBCLANG_LIBRARY_PATH'))
+        if use_clang:
+            self._analyzer = CodeAnalyzer(self._files, os.getenv('LIBCLANG_LIBRARY_PATH'))
+        else:
+            self._analyzer = CodeAnalyzer(self._files, None)
 
     def list(self) -> list[str]:
         '''
