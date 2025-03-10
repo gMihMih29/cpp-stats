@@ -73,7 +73,7 @@ def _analyze_children(
     analyzed_file: str
     ):
     for child in cursor.get_children():
-        if child.location.file is None or child.location.file.name != analyzed_file:
+        if child.location.file is None or child.translation_unit.spelling != child.location.file.name:
             continue
         for clc in calculators.items():
             metric = clc[1](child)
