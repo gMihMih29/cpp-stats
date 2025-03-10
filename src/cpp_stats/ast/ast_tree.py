@@ -9,41 +9,6 @@ import clang.cindex
 from cpp_stats.metrics.metric_calculator import ClangMetricCalculator, Metric
 from cpp_stats.ast.language import Namespace
 
-def get_ast_tree(c_cxx_files: list[Path]) -> Namespace:
-    '''
-    Constructs ast based on files given in arguments.
-    
-    Parameters:
-    c_cxx_files (list[Path]): C/C++ files to parse.
-    '''
-    # Path will be configurable in config.yaml
-    index = clang.cindex.Index.create()
-    global_namespace = Namespace()
-    for i, file_path in enumerate(c_cxx_files):
-        translation_unit = index.parse(file_path, args=['-x', 'c++'])
-        _parse_children(
-            global_namespace,
-            translation_unit.cursor,
-            str(file_path.resolve())
-        )
-    return global_namespace
-
-def _parse_children(
-    global_namespace: Namespace,
-    current: clang.cindex.Cursor,
-    analyzed_file: str
-    ):
-    for child in current.get_children():
-        if child.location.file is None or child.location.file.name != analyzed_file:
-            continue
-        semantic_parents_stack = []
-        cur = child
-        while cur is not None and cur.kind != clang.cindex.CursorKind.TRANSLATION_UNIT:
-            semantic_parents_stack.append(cur)
-            cur = cur.semantic_parent
-        global_namespace.add_construct(semantic_parents_stack)
-        _parse_children(global_namespace, child, analyzed_file)
-
 def analyze_ast(index: clang.cindex.Index, c_cxx_files: list[Path], calculators: dict[str, ClangMetricCalculator]) -> dict[str, Metric]:
     '''
     Analyzes ast based on `c_cxx_files` and calculates metrics using `calculators`
