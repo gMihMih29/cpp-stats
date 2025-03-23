@@ -30,7 +30,9 @@ jobs:
           platform: x64
       
       - name: Find Clang
-        run: sudo find / -name 'libclang'
+        run: | 
+          sudo apt install clang
+          sudo find / -name 'libclang'
 
       - name: Check Python version
         run: python3 --version
