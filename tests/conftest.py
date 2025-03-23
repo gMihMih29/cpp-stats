@@ -82,20 +82,16 @@ def repo_with_ignr_modules():
     rename_git_ignore_and_modules(repo_path, True)
 
 @pytest.fixture
-def clang_index(request):
+def clang_index():
     '''
     Initializes Clang using environment variable `LIBCLANG_LIBRARY_PATH`
     '''
     libclang_path = os.getenv("LIBCLANG_LIBRARY_PATH")
     if libclang_path is None:
-        print("libclang_path is None ", libclang_path)
-        assert False
         pytest.skip('Clang cannot be found using env variable LIBCLANG_LIBRARY_PATH')
     os.environ["LIBCLANG_LIBRARY_PATH"] = libclang_path
     print(os.environ["LIBCLANG_LIBRARY_PATH"])
     index = utils.clang.clang_index()
     if index is None:
-        print("index is None ", libclang_path)
-        assert False
         pytest.skip('Clang cannot be found using env variable LIBCLANG_LIBRARY_PATH')
     yield index
