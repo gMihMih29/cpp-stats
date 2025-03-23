@@ -38,7 +38,7 @@ jobs:
         run: python3 --version
 
       - name: Install dependencies
-        run: pip install coverage pytest pytest-env clang=18 pylint click
+        run: pip install coverage pytest pytest-env clang==18 pylint click
 
       - name: Generate coverage report
         run: coverage run -m pytest . --env-libclang-path=/usr/lib/x86_64-linux-gnu/libclang-18.so
