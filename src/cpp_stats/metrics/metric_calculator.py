@@ -29,6 +29,7 @@ class Metric:
         '''
         return self._name
 
+# pylint: disable=R0903
 class BasicMetricCalculator:
     '''
     Class for calculating specific metric.
@@ -63,11 +64,11 @@ class ClangMetricCalculator:
         Metric: Metrics calculated for node.
         '''
 
-    def observed_cursors(self) -> list[clang.cindex.CursorKind]:
+    def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
         '''
-        Returns list of cursor kinds that can be passed as an argument 
-        for __call__.
+        Validates that given cursor can be used for calculation 
+        by this calculator in `__call__`.
 
         Returns:
-        list[clang.cindex.CursorKind]: List of observed cursor kinds.
+        bool: can cursor be used for calculation or not.
         '''

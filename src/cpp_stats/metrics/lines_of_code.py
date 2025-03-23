@@ -33,7 +33,7 @@ class LinesOfCodeMetric(Metric):
         '''
         return METRIC_NAME, self.value
 
-
+# pylint: disable=R0903
 class LinesOfCodeCalculator(BasicMetricCalculator):
     '''
     Calculates LINES_OF_CODE.
@@ -42,7 +42,7 @@ class LinesOfCodeCalculator(BasicMetricCalculator):
     def __call__(self, file_paths: list[Path]) -> Metric:
         cnt = 0
         for file_path in file_paths:
-            with open(file_path, 'r') as f:
+            with open(file_path, 'r', encoding='utf-8') as f:
                 while f.readline():
                     cnt += 1
         return LinesOfCodeMetric(cnt)
