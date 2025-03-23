@@ -31,8 +31,8 @@ jobs:
       
       - name: Find Clang
         run: | 
-          sudo apt install clang
-          sudo find / -name 'libclang'
+          sudo apt install clang libclang-dev
+          sudo find / -name 'libclang*.so'
 
       - name: Check Python version
         run: python3 --version
