@@ -3,7 +3,6 @@ import pytest
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.metrics.number_of_classes import NumberOfClassesCalculator, NumberOfClassesMetric
 
-import utils.clang
 import clang.cindex
 
 def test_when_add_two_noc_metrics_then_sum_values():
@@ -22,10 +21,6 @@ def test_when_sum_with_unknown_metric_then_not_implemented():
     with pytest.raises(NotImplementedError):
         m1 + m2
 
-@pytest.mark.skipif(
-    (utils.clang.clang_index() is None),
-    reason="Clang cannot be found using env variable LIBCLANG_LIBRARY_PATH"
-)
 def test_when_definition_then_assert_class(clang_index: clang.cindex.Index):
     calculator = NumberOfClassesCalculator()
     tu = clang_index.parse(".\\tests\\data\\analyze\\definition.hpp", args=['-x', 'c++'])
@@ -43,10 +38,6 @@ def test_when_definition_then_assert_class(clang_index: clang.cindex.Index):
     _, actual = metric.get()
     assert expected == actual
 
-@pytest.mark.skipif(
-    (utils.clang.clang_index() is None),
-    reason="Clang cannot be found using env variable LIBCLANG_LIBRARY_PATH"
-)
 def test_when_declaration_then_assert_not_class(clang_index: clang.cindex.Index):
     calculator = NumberOfClassesCalculator()
     tu = clang_index.parse(".\\tests\\data\\analyze\\declaration.hpp", args=['-x', 'c++'])

@@ -30,14 +30,16 @@ def pytest_addoption(parser):
     parser.addoption("--env-libclang-path", action="store", default=None,
                      help="LIBCLANG_LIBRARY_PATH")
 
-@pytest.fixture(scope='session', autouse=True)
-def set_env(request):
-    '''
-    Sets environment variables for tests.
-    '''
-    libclang_path = request.config.getoption("--env-libclang-path")
-    if libclang_path is not None:
-        os.environ["LIBCLANG_LIBRARY_PATH"] = libclang_path
+# @pytest.fixture(scope='session', autouse=True)
+# def set_env(request):
+#     '''
+#     Sets environment variables for tests.
+#     '''
+#     libclang_path = request.config.getoption("--env-libclang-path")
+#     if libclang_path is not None:
+#         os.environ["LIBCLANG_LIBRARY_PATH"] = libclang_path
+#         print(os.environ["LIBCLANG_LIBRARY_PATH"])
+#         assert False
 
 @pytest.fixture
 def repo():
@@ -80,8 +82,16 @@ def repo_with_ignr_modules():
     rename_git_ignore_and_modules(repo_path, True)
 
 @pytest.fixture
-def clang_index():
+def clang_index(request):
     '''
     Initializes Clang using environment variable `LIBCLANG_LIBRARY_PATH`
     '''
-    yield utils.clang.clang_index()
+    libclang_path = request.config.getoption("--env-libclang-path")
+    if libclang_path is None:
+        pytest.skip('Clang cannot be found using env variable LIBCLANG_LIBRARY_PATH')
+    os.environ["LIBCLANG_LIBRARY_PATH"] = libclang_path
+    print(os.environ["LIBCLANG_LIBRARY_PATH"])
+    index = utils.clang.clang_index()
+    if index is None:
+        pytest.skip('Clang cannot be found using env variable LIBCLANG_LIBRARY_PATH')
+    yield index
