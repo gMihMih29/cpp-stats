@@ -11,7 +11,7 @@ jobs:
       contents: write
 
     env:
-      LIBCLANG_LIBRARY_PATH: /usr/lib/llvm-18/lib/libclang.so
+      LIBCLANG_LIBRARY_PATH: /usr/lib/x86_64-linux-gnu/libclang-17.so
 
     steps:
       - name: Check out source code
@@ -23,16 +23,8 @@ jobs:
           python-version: '3.10'
 
       - name: Install Clang
-        uses: egor-tensin/setup-clang@v1
-        with:
-          version: latest
-          platform: x64
-
-      - name: Prepare Clang
         run: |
           sudo apt install clang libclang-17-dev
-          sudo find / -name 'libclang*.so'
-          export LIBCLANG_LIBRARY_PATH="$LIBCLANG_LIBRARY_PATH"
 
       - name: Check Python version
         run: python3 --version
@@ -41,7 +33,7 @@ jobs:
         run: pip install coverage pytest pytest-env clang==17.0.6 pylint click
 
       - name: Generate coverage report
-        run: coverage run -m pytest . --env-libclang-path=/usr/lib/x86_64-linux-gnu/libclang-17.so
+        run: coverage run -m pytest . --env-libclang-path=$LIBCLANG_LIBRARY_PATH
 
       - name: Coverage comment
         id: coverage_comment
