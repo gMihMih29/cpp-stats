@@ -61,7 +61,7 @@ jobs:
         run: python3 --version
       
       - name: Install dependencies
-        run: pip install coverage pytest clang pylint click
+        run: pip install coverage pytest clang==17.0.6 pylint click
       
       - name: Run PyLint
         run: pylint ./src
