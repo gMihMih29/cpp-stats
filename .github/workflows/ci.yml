@@ -38,7 +38,7 @@ jobs:
         run: pip install coverage pytest clang pylint click
 
       - name: Generate coverage report
-        run: coverage run -m pytest .
+        run: coverage run -m pytest . --env-libclang-path=$LIBCLANG_LIBRARY_PATH
 
       - name: Coverage comment
         id: coverage_comment
