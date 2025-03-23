@@ -86,7 +86,7 @@ def clang_index(request):
     '''
     Initializes Clang using environment variable `LIBCLANG_LIBRARY_PATH`
     '''
-    libclang_path = request.config.getoption("--env-libclang-path")
+    libclang_path = os.getenv("LIBCLANG_LIBRARY_PATH")
     if libclang_path is None:
         print("libclang_path is None ", libclang_path)
         assert False
