@@ -29,7 +29,7 @@ jobs:
         run: python3 --version
 
       - name: Install dependencies
-        run: pip install coverage pytest pytest-env clang==17.0.6 pylint click
+        run: pip install coverage pytest clang==17.0.6 pylint click
 
       - name: Generate coverage report
         run: coverage run -m pytest . --env-libclang-path=$LIBCLANG_LIBRARY_PATH
