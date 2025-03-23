@@ -26,7 +26,7 @@ jobs:
         run: sudo apt install clang libclang-17-dev
 
       - name: Install dependencies
-        run: pip install coverage pytest clang==17.0.6 pylint click
+        run: pip install coverage pytest clang==17.0.6 click
 
       - name: Generate coverage report
         run: coverage run -m pytest .
