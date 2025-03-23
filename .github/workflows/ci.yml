@@ -29,7 +29,7 @@ jobs:
           platform: x64
 
       - name: Prepare Clang
-        run: export LIBCLANG_LIBRARY_PATH="/usr/lib/llvm-18/lib/libclang.so"
+        run: export LIBCLANG_LIBRARY_PATH="$LIBCLANG_LIBRARY_PATH"
 
       - name: Check Python version
         run: python3 --version
