@@ -87,6 +87,8 @@ def clang_index(request):
     Initializes Clang using environment variable `LIBCLANG_LIBRARY_PATH`
     '''
     libclang_path = request.config.getoption("--env-libclang-path")
+    print("Libclang: ", libclang_path)
+    assert False
     if libclang_path is None:
         pytest.skip('Clang cannot be found using env variable LIBCLANG_LIBRARY_PATH')
     os.environ["LIBCLANG_LIBRARY_PATH"] = libclang_path
