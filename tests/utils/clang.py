@@ -13,5 +13,6 @@ def clang_index():
         clang.cindex.Config.set_library_file(os.getenv('LIBCLANG_LIBRARY_PATH'))
         print("(os.getenv('LIBCLANG_LIBRARY_PATH'): ", os.getenv('LIBCLANG_LIBRARY_PATH'))
         return clang.cindex.Index.create()
-    except Exception:
+    except Exception as ex:
+        print(ex)
         return None
