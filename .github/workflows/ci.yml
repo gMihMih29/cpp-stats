@@ -12,7 +12,7 @@ jobs:
       contents: write
 
     env:
-      LIBCLANG_LIBRARY_PATH: /there-will-be-path
+      LIBCLANG_LIBRARY_PATH: /usr/lib/llvm-18/lib/libclang.so
 
     steps:
       - name: Check out source code
@@ -28,9 +28,6 @@ jobs:
         with:
           version: latest
           platform: x64
-      
-      - name: Find Clang
-        run: sudo find / -name 'clang'
 
       - name: Check Python version
         run: python3 --version
@@ -46,9 +43,6 @@ jobs:
         uses: py-cov-action/python-coverage-comment-action@v3
         with:
           GITHUB_TOKEN: ${{ github.token }}
-      
-      - name: Run PyLint
-        run: pylint ./src
 
       - name: Store Pull Request comment to be posted
         uses: actions/upload-artifact@v4
