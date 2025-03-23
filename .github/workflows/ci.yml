@@ -23,7 +23,7 @@ jobs:
         run: python3 --version
       
       - name: Install dependencies
-        run: pip install coverage pytest clang
+        run: pip install coverage pytest clang pylint
 
       - name: Generate coverage report
         run: coverage run -m pytest .
