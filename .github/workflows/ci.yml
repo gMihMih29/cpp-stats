@@ -41,7 +41,7 @@ jobs:
         run: pip install coverage pytest pytest-env clang==17.0.6 pylint click
 
       - name: Generate coverage report
-        run: coverage run -m pytest . --env-libclang-path= /usr/lib/x86_64-linux-gnu/libclang-17.so
+        run: coverage run -m pytest . --env-libclang-path=/usr/lib/x86_64-linux-gnu/libclang-17.so
 
       - name: Coverage comment
         id: coverage_comment
