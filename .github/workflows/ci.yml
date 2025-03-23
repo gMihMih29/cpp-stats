@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  run-tests:
+  tests:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -23,7 +23,7 @@ jobs:
         run: python3 --version
       
       - name: Install dependencies
-        run: pip install coverage pytest clang pylint
+        run: pip install coverage pytest clang pylint click
 
       - name: Generate coverage report
         run: coverage run -m pytest .
@@ -45,3 +45,25 @@ jobs:
           name: python-coverage-comment-action
           # If you use a different name, update COMMENT_FILENAME accordingly
           path: python-coverage-comment-action.txt
+  code-style:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+      
+      - name: Check Python version
+        run: python3 --version
+      
+      - name: Install dependencies
+        run: pip install coverage pytest clang pylint click
+      
+      - name: Run PyLint
+        run: pylint ./src
