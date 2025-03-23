@@ -30,7 +30,7 @@ jobs:
 
       - name: Prepare Clang
         run: |
-          sudo apt install clang libclang-cpp17-dev
+          sudo apt install clang libclang-17-dev
           sudo find / -name 'libclang*.so'
           export LIBCLANG_LIBRARY_PATH="$LIBCLANG_LIBRARY_PATH"
 
