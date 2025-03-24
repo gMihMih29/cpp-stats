@@ -50,7 +50,7 @@ class MeanCognitiveComplexityMetric(Metric):
     def __add__(self, other):
         if not isinstance(other, MeanCognitiveComplexityMetric):
             raise NotImplementedError
-        return MeanCognitiveComplexityMetric(self.sum_value + other.sum_value, self.cnt + self.cnt)
+        return MeanCognitiveComplexityMetric(self.sum_value + other.sum_value, other.cnt + self.cnt)
 
     def get(self) -> tuple[str, float]:
         '''
