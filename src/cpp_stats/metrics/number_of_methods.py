@@ -19,7 +19,6 @@ def _merge_metric_data(lhv: dict[str, int], rhv: dict[str, int]):
             new_data[class_name] += cnt
     return new_data
 
-
 class MeanNumberOfMethodsMetric(Metric):
     '''
     Represents MEAN_NUMBER_OF_METHODS_PER_CLASS metric.
