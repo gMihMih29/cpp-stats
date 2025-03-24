@@ -5,6 +5,7 @@ Module for MEAN_LENGTH_OF_METHODS and MAX_LENGTH_OF_METHODS metrics.
 import clang.cindex
 
 from cpp_stats.metrics.metric_calculator import Metric, ClangMetricCalculator
+from cpp_stats.metrics.utils import mangle_cursor_name
 
 MEAN_NUMBER_OF_METHODS_PER_CLASS = 'MEAN_NUMBER_OF_METHODS_PER_CLASS'
 MAX_NUMBER_OF_METHODS_PER_CLASS = 'MAX_NUMBER_OF_METHODS_PER_CLASS'
@@ -17,6 +18,7 @@ def _merge_metric_data(lhv: dict[str, int], rhv: dict[str, int]):
         else:
             new_data[class_name] += cnt
     return new_data
+
 
 class MeanNumberOfMethodsMetric(Metric):
     '''
@@ -61,7 +63,7 @@ class MeanNumberOfMethodsCalculator(ClangMetricCalculator):
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
         if not self.validate_cursor(node):
             return MeanNumberOfMethodsMetric({})
-        return MeanNumberOfMethodsMetric({node.semantic_parent.displayname: 1})
+        return MeanNumberOfMethodsMetric({mangle_cursor_name(node.semantic_parent): 1})
 
     def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
         '''
@@ -112,7 +114,7 @@ class MaxNumberOfMethodsCalculator(ClangMetricCalculator):
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
         if not self.validate_cursor(node):
             return MaxNumberOfMethodsMetric({})
-        return MaxNumberOfMethodsMetric({node.semantic_parent.displayname: 1})
+        return MaxNumberOfMethodsMetric({mangle_cursor_name(node.semantic_parent): 1})
 
     def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
         '''
