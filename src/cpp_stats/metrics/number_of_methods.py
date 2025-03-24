@@ -1,5 +1,5 @@
 '''
-Module for MEAN_LENGTH_OF_METHODS and MAX_LENGTH_OF_METHODS metrics.
+Module for MEAN_NUMBER_OF_METHODS_PER_CLASS and MAX_NUMBER_OF_METHODS_PER_CLASS metrics.
 '''
 
 import clang.cindex
