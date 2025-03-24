@@ -16,7 +16,7 @@ def _merge_metric_data(lhv: dict[str, int], rhv: dict[str, int]):
             new_data[class_name] = cnt
         else:
             new_data[class_name] += cnt
-    return rhv
+    return new_data
 
 class MeanNumberOfMethodsMetric(Metric):
     '''
@@ -50,7 +50,7 @@ class MeanNumberOfMethodsMetric(Metric):
             sum_methods += cnt
         value = 0
         if cnt_classes != 0:
-            value = sum / cnt_classes
+            value = sum_methods / cnt_classes
         return MEAN_NUMBER_OF_METHODS_PER_CLASS, value
 
 class MeanNumberOfMethodsCalculator(ClangMetricCalculator):
@@ -100,7 +100,7 @@ class MaxNumberOfMethodsMetric(Metric):
         Returns metric value.
         '''
         max_value = 0
-        for _, cnt in self._data.values():
+        for cnt in self._data.values():
             max_value = max(max_value, cnt)
         return MAX_NUMBER_OF_METHODS_PER_CLASS, max_value
 
