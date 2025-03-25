@@ -1,11 +1,51 @@
 name: CI
 
 on:
-  push:
   pull_request:
 
 jobs:
-  run-tests:
+  tests:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+
+    env:
+      LIBCLANG_LIBRARY_PATH: /usr/lib/x86_64-linux-gnu/libclang-17.so
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+
+      - name: Install Clang
+        run: sudo apt install clang libclang-17-dev
+
+      - name: Install dependencies
+        run: pip install coverage pytest clang==17.0.6 click
+
+      - name: Generate coverage report
+        run: coverage run --include=src/* -m pytest .
+
+      - name: Coverage comment
+        id: coverage_comment
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Store Pull Request comment to be posted
+        uses: actions/upload-artifact@v4
+        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
+        with:
+          # If you use a different name, update COMMENT_ARTIFACT_NAME accordingly
+          name: python-coverage-comment-action
+          # If you use a different name, update COMMENT_FILENAME accordingly
+          path: python-coverage-comment-action.txt
+  code-style:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -23,22 +63,7 @@ jobs:
         run: python3 --version
       
       - name: Install dependencies
-        run: pip install coverage pytest clang
-
-      - name: Generate coverage report
-        run: coverage run -m pytest .
-
-      - name: Coverage comment
-        id: coverage_comment
-        uses: py-cov-action/python-coverage-comment-action@v3
-        with:
-          GITHUB_TOKEN: ${{ github.token }}
-
-      - name: Store Pull Request comment to be posted
-        uses: actions/upload-artifact@v4
-        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
-        with:
-          # If you use a different name, update COMMENT_ARTIFACT_NAME accordingly
-          name: python-coverage-comment-action
-          # If you use a different name, update COMMENT_FILENAME accordingly
-          path: python-coverage-comment-action.txt
+        run: pip install coverage pytest clang pylint click
+      
+      - name: Run PyLint
+        run: pylint ./src

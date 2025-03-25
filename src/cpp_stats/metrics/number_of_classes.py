@@ -40,17 +40,17 @@ class NumberOfClassesCalculator(ClangMetricCalculator):
     '''
 
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
-        if node.kind != clang.cindex.CursorKind.CLASS_DECL or not node.is_definition():
+        if not self.validate_cursor(node):
             return NumberOfClassesMetric(0)
         return NumberOfClassesMetric(1)
 
-    def observed_cursors(self) -> list[clang.cindex.CursorKind]:
+    def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
         '''
-        Returns list of cursor kinds that can be passed as an argument 
-        for __call__.
+        Validates that given cursor can be used for calculation 
+        by this calculator in `__call__`.
 
         Returns:
-        list[clang.cindex.CursorKind]: List of observed cursor kinds.
+        bool: can cursor be used for calculation or not.
         '''
-        return [clang.cindex.CursorKind.CLASS_DECL]
+        return cursor.kind == clang.cindex.CursorKind.CLASS_DECL and cursor.is_definition()
                 

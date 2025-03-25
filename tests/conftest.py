@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 import pytest
 
@@ -67,4 +68,12 @@ def clang_index():
     '''
     Initializes Clang using environment variable `LIBCLANG_LIBRARY_PATH`
     '''
-    yield utils.clang.clang_index()
+    libclang_path = os.getenv("LIBCLANG_LIBRARY_PATH")
+    if libclang_path is None:
+        pytest.skip('Clang cannot be found using env variable LIBCLANG_LIBRARY_PATH')
+    os.environ["LIBCLANG_LIBRARY_PATH"] = libclang_path
+    print(os.environ["LIBCLANG_LIBRARY_PATH"])
+    index = utils.clang.clang_index()
+    if index is None:
+        pytest.skip('Clang cannot be found using env variable LIBCLANG_LIBRARY_PATH')
+    yield index

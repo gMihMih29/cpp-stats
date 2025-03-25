@@ -73,7 +73,7 @@ def _get_git_modules_dirs(git_modules_path: Path) -> list[Path]:
     '''
     parent_directory = git_modules_path.parent
     paths = []
-    with open(git_modules_path, 'r') as f:
+    with open(git_modules_path, 'r', encoding='utf-8') as f:
         while (line := f.readline()):
             line = line.lstrip().rstrip()
             if not line.startswith('path = '):
@@ -91,7 +91,7 @@ def _get_git_ignore_dirs(git_ignore_path: Path) -> list[Path]:
     '''
     parent_directory = git_ignore_path.parent
     paths = []
-    with open(git_ignore_path, 'r') as f:
+    with open(git_ignore_path, 'r', encoding='utf-8') as f:
         while (line := f.readline()):
             line = line.lstrip()
             if len(line) == 0:

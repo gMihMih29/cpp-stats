@@ -10,6 +10,7 @@ from cpp_stats.metrics.number_of_classes import NumberOfClassesCalculator
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.ast.ast_tree import analyze_ast
 
+# pylint: disable=R0903
 class CodeAnalyzer:
     '''
     Provides calculated metrics.
