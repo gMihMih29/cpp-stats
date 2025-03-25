@@ -53,4 +53,3 @@ class NumberOfClassesCalculator(ClangMetricCalculator):
         bool: can cursor be used for calculation or not.
         '''
         return cursor.kind == clang.cindex.CursorKind.CLASS_DECL and cursor.is_definition()
-                

@@ -30,8 +30,8 @@ class CppStats:
             'NUMBER_OF_CLASSES',
             # 'MEAN_NUMBER_OF_METHODS_PER_CLASS',
             # 'MAX_NUMBER_OF_METHODS_PER_CLASS',
-            # 'MEAN_LENGTH_OF_METHODS',
-            # 'MAX_LENGTH_OF_METHODS',
+            'MEAN_LENGTH_OF_METHODS',
+            'MAX_LENGTH_OF_METHODS',
             # 'CYCLOMATIC_COMPLEXITY',
             # 'MEAN_CYCLOMATIC_COMPLEXITY',
             # 'MAX_CYCLOMATIC_COMPLEXITY',
@@ -77,7 +77,7 @@ class CppStats:
         metric_name (str): Metric name.
         '''
         if metric_name == 'NUMBER_OF_C_C++_FILES':
-            return len(self._files)
+            return metric_name, len(self._files)
         metric = self._analyzer.metric(metric_name)
         if metric is None:
             return None
@@ -107,17 +107,16 @@ class CppStats:
         )
 
     def __clang_report(self) -> str:
+        metric_part = ''
+        for metric_name in self._available_metrics:
+            metric_part += (f'        <metric name="{metric_name}">'
+                            f'{self.metric(metric_name)[1]}</metric>\n')
         return (
             f'<report>\n'
             f'    <report-time>{datetime.now().strftime("%d.%m.%Y")}</report-time>\n'
             f'    <repository-path>{self._path_to_repo}</repository-path>\n'
             f'    <metrics>\n'
-            f'        <metric name="NUMBER_OF_C_C++_FILES">'
-            f'{self.metric("NUMBER_OF_C_C++_FILES")}</metric>\n'
-            f'        <metric name="LINES_OF_CODE">'
-            f'{self.metric("LINES_OF_CODE")[1]}</metric>\n'
-            f'        <metric name="NUMBER_OF_CLASSES">'
-            f'{self.metric("NUMBER_OF_CLASSES")[1]}</metric>\n'
+            f'{metric_part}'
             f'    </metrics>\n'
             f'</report>\n'
         )

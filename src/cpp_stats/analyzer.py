@@ -7,6 +7,8 @@ import clang.cindex
 
 from cpp_stats.metrics.lines_of_code import LinesOfCodeCalculator
 from cpp_stats.metrics.number_of_classes import NumberOfClassesCalculator
+from cpp_stats.metrics.length_of_method import MeanLengthOfMethodsCalculator
+from cpp_stats.metrics.length_of_method import MaxLengthOfMethodsCalculator
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.ast.ast_tree import analyze_ast
 
@@ -24,6 +26,8 @@ class CodeAnalyzer:
         }
         self._clang_calculators = {
             'NUMBER_OF_CLASSES' : NumberOfClassesCalculator(),
+            'MEAN_LENGTH_OF_METHODS': MeanLengthOfMethodsCalculator(),
+            'MAX_LENGTH_OF_METHODS': MaxLengthOfMethodsCalculator()
         }
         self._cache = {
             'LINES_OF_CODE' : None,
