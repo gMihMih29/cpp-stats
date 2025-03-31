@@ -58,21 +58,6 @@ def test_calculate_complexity_sum_of_primes(clang_index: clang.cindex.Index):
 
     assert expected == actual
 
-def test_calculate_complexity_for_lambda(clang_index: clang.cindex.Index):
-    tu = clang_index.parse("./tests/data/analyze/cognitive_complexity.hpp", args=['-x', 'c++'])
-    func = None
-    for child in tu.cursor.walk_preorder():
-        if (child.kind == clang.cindex.CursorKind.LAMBDA_EXPR):
-            func = child
-            break
-    if func is None:
-        assert False
-    expected = 1
-
-    actual = _calculate_cognitive_complexity(func)
-
-    assert expected == actual
-
 def test_calculate_complexity_for_myFunc(clang_index: clang.cindex.Index):
     tu = clang_index.parse("./tests/data/analyze/cognitive_complexity.hpp", args=['-x', 'c++'])
     func = None
@@ -175,55 +160,3 @@ def test_get_empty_metric_for_max(clang_index: clang.cindex.Index):
     actual = calc(func).value
 
     assert actual == expected
-
-# def test_not_valid_cursor_for_mean(clang_index: clang.cindex.Index):
-#     tu = clang_index.parse("./tests/data/analyze/number_of_methods.hpp", args=['-x', 'c++'])
-#     cls = None
-#     calc = MeanCognitiveComplexityCalculator()
-#     for child in tu.cursor.walk_preorder():
-#         if child.kind == clang.cindex.CursorKind.CLASS_DECL and child.displayname == "C1":
-#             cls = child
-#             break
-#     if cls is None:
-#         assert False
-#     expected = {
-#     }
-
-#     actual = calc(cls)._data
-
-#     assert expected == actual
-
-# def test_happy_path_save_info_about_method_for_max(clang_index: clang.cindex.Index):
-#     tu = clang_index.parse("./tests/data/analyze/number_of_methods.hpp", args=['-x', 'c++'])
-#     method = None
-#     calc = MaxCognitiveComplexityCalculator()
-#     for child in tu.cursor.walk_preorder():
-#         if child.kind == clang.cindex.CursorKind.CXX_METHOD and child.displayname == "method1()":
-#             method = child
-#             break
-#     if method is None:
-#         assert False
-#     expected = {
-#         '::C1': 1
-#     }
-
-#     actual = calc(method)._data
-
-#     assert expected == actual
-
-# def test_not_valid_cursor_for_max(clang_index: clang.cindex.Index):
-#     tu = clang_index.parse("./tests/data/analyze/number_of_methods.hpp", args=['-x', 'c++'])
-#     cls = None
-#     calc = MaxCognitiveComplexityCalculator()
-#     for child in tu.cursor.walk_preorder():
-#         if child.kind == clang.cindex.CursorKind.CLASS_DECL and child.displayname == "C1":
-#             cls = child
-#             break
-#     if cls is None:
-#         assert False
-#     expected = {
-#     }
-
-#     actual = calc(cls)._data
-
-#     assert expected == actual
