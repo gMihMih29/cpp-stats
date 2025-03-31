@@ -58,22 +58,6 @@ def test_calculate_complexity_sum_of_primes(clang_index: clang.cindex.Index):
 
     assert expected == actual
 
-def test_calculate_complexity_with_inner_lambda(clang_index: clang.cindex.Index):
-    tu = clang_index.parse("./tests/data/analyze/cognitive_complexity.hpp", args=['-x', 'c++'])
-    func = None
-    for child in tu.cursor.walk_preorder():
-        if (child.kind == clang.cindex.CursorKind.FUNCTION_DECL
-            and child.displayname == "withLambda()"):
-            func = child
-            break
-    if func is None:
-        assert False
-    expected = 0
-
-    actual = _calculate_cognitive_complexity(func)
-
-    assert expected == actual
-
 def test_calculate_complexity_for_lambda(clang_index: clang.cindex.Index):
     tu = clang_index.parse("./tests/data/analyze/cognitive_complexity.hpp", args=['-x', 'c++'])
     func = None
@@ -84,6 +68,22 @@ def test_calculate_complexity_for_lambda(clang_index: clang.cindex.Index):
     if func is None:
         assert False
     expected = 1
+
+    actual = _calculate_cognitive_complexity(func)
+
+    assert expected == actual
+
+def test_calculate_complexity_for_myFunc(clang_index: clang.cindex.Index):
+    tu = clang_index.parse("./tests/data/analyze/cognitive_complexity.hpp", args=['-x', 'c++'])
+    func = None
+    for child in tu.cursor.walk_preorder():
+        if (child.kind == clang.cindex.CursorKind.FUNCTION_DECL
+            and child.displayname == "myFunc()"):
+            func = child
+            break
+    if func is None:
+        assert False
+    expected = 2
 
     actual = _calculate_cognitive_complexity(func)
 

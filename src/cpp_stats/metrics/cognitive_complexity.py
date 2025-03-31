@@ -9,7 +9,7 @@ from cpp_stats.metrics.metric_calculator import Metric, ClangMetricCalculator
 MEAN_COGNITIVE_COMPLEXITY = 'MEAN_COGNITIVE_COMPLEXITY'
 MAX_COGNITIVE_COMPLEXITY = 'MAX_COGNITIVE_COMPLEXITY'
 
-def __need_to_increase(node_kind: clang.cindex.CursorKind):
+def __need_to_increase_value(node_kind: clang.cindex.CursorKind):
     return node_kind in [
         clang.cindex.CursorKind.IF_STMT,
         clang.cindex.CursorKind.WHILE_STMT,
@@ -17,16 +17,31 @@ def __need_to_increase(node_kind: clang.cindex.CursorKind):
         clang.cindex.CursorKind.SWITCH_STMT
     ]
 
+def __need_to_increase_depth(node_kind: clang.cindex.CursorKind):
+    return node_kind in [
+        clang.cindex.CursorKind.IF_STMT,
+        clang.cindex.CursorKind.WHILE_STMT,
+        clang.cindex.CursorKind.FOR_STMT,
+        clang.cindex.CursorKind.SWITCH_STMT,
+        clang.cindex.CursorKind.LAMBDA_EXPR,
+    ]
+
+def __is_break_linear_flow(node_kind: clang.cindex.CursorKind):
+    return node_kind in [
+        clang.cindex.CursorKind.CONTINUE_STMT,
+        clang.cindex.CursorKind.BREAK_STMT,
+        clang.cindex.CursorKind.GOTO_STMT,
+        clang.cindex.CursorKind.CXX_CATCH_STMT,
+    ]
+
 def _calculate_cognitive_complexity(node: clang.cindex.Cursor, depth = 0) -> int:
-    if depth != 0 and node.kind == clang.cindex.CursorKind.LAMBDA_EXPR:
-        return 0
-    complexity = 0
+    complexity = 1 if __is_break_linear_flow(node.kind) else 0
     for child in node.get_children():
-        if __need_to_increase(child.kind):
+        if __need_to_increase_value(child.kind):
             complexity += depth + 1
         complexity += _calculate_cognitive_complexity(
             child,
-            depth + (1 if __need_to_increase(child.kind) else 0)
+            depth + (1 if __need_to_increase_depth(child.kind) else 0)
         )
     return complexity
 

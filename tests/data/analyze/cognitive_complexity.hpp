@@ -24,3 +24,11 @@ int withLambda() {
         return s;
     };
 }
+
+void myFunc() {
+    auto l = []() {
+        if (true) {
+            return true;
+        }
+    };
+}
