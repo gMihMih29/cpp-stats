@@ -76,8 +76,7 @@ class MeanCyclomaticComplexityCalculator(ClangMetricCalculator):
         return (
             cursor.kind in [
                 clang.cindex.CursorKind.CXX_METHOD,
-                clang.cindex.CursorKind.FUNCTION_DECL,
-                clang.cindex.CursorKind.LAMBDA_EXPR
+                clang.cindex.CursorKind.FUNCTION_DECL
             ]
             and cursor.is_definition()
         )
@@ -129,8 +128,7 @@ class MaxCyclomaticComplexityCalculator(ClangMetricCalculator):
         return (
             cursor.kind in [
                 clang.cindex.CursorKind.CXX_METHOD,
-                clang.cindex.CursorKind.FUNCTION_DECL,
-                clang.cindex.CursorKind.LAMBDA_EXPR
+                clang.cindex.CursorKind.FUNCTION_DECL
             ]
             and cursor.is_definition()
         )
