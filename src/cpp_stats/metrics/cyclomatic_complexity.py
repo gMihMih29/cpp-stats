@@ -44,7 +44,10 @@ class MeanCyclomaticComplexityMetric(Metric):
     def __add__(self, other):
         if not isinstance(other, MeanCyclomaticComplexityMetric):
             raise NotImplementedError
-        return MeanCyclomaticComplexityMetric(self.sum_value + other.sum_value, other.cnt + self.cnt)
+        return MeanCyclomaticComplexityMetric(
+            self.sum_value + other.sum_value,
+            other.cnt + self.cnt
+        )
 
     def get(self) -> tuple[str, float]:
         '''
