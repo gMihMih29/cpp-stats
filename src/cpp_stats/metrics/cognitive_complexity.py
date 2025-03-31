@@ -5,6 +5,7 @@ Module for MEAN_COGNITIVE_COMPLEXITY and MAX_COGNITIVE_COMPLEXITY metrics.
 import clang.cindex
 
 from cpp_stats.metrics.metric_calculator import Metric, ClangMetricCalculator
+from cpp_stats.metrics.utils import is_definition_of_func_or_method
 
 MEAN_COGNITIVE_COMPLEXITY = 'MEAN_COGNITIVE_COMPLEXITY'
 MAX_COGNITIVE_COMPLEXITY = 'MAX_COGNITIVE_COMPLEXITY'
@@ -94,13 +95,7 @@ class MeanCognitiveComplexityCalculator(ClangMetricCalculator):
         Returns:
         bool: can cursor be used for calculation or not.
         '''
-        return (
-            cursor.kind in [
-                clang.cindex.CursorKind.CXX_METHOD,
-                clang.cindex.CursorKind.FUNCTION_DECL
-            ]
-            and cursor.is_definition()
-        )
+        return is_definition_of_func_or_method(cursor)
 
 class MaxCognitiveComplexityMetric(Metric):
     '''
@@ -146,10 +141,4 @@ class MaxCognitiveComplexityCalculator(ClangMetricCalculator):
         Returns:
         bool: can cursor be used for calculation or not.
         '''
-        return (
-            cursor.kind in [
-                clang.cindex.CursorKind.CXX_METHOD,
-                clang.cindex.CursorKind.FUNCTION_DECL
-            ]
-            and cursor.is_definition()
-        )
+        return is_definition_of_func_or_method(cursor)
