@@ -15,6 +15,7 @@ from cpp_stats.metrics.cognitive_complexity import MeanCognitiveComplexityCalcul
 from cpp_stats.metrics.cognitive_complexity import MaxCognitiveComplexityCalculator
 from cpp_stats.metrics.cyclomatic_complexity import MeanCyclomaticComplexityCalculator
 from cpp_stats.metrics.cyclomatic_complexity import MaxCyclomaticComplexityCalculator
+from cpp_stats.metrics.halstead.program_vocabulary import MeanHalsteadProgramVocabularyCalculator
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.ast.ast_tree import analyze_ast
 
@@ -39,7 +40,8 @@ class CodeAnalyzer:
             'MEAN_COGNITIVE_COMPLEXITY': MeanCognitiveComplexityCalculator(),
             'MAX_COGNITIVE_COMPLEXITY': MaxCognitiveComplexityCalculator(),
             'MEAN_CYCLOMATIC_COMPLEXITY': MeanCyclomaticComplexityCalculator(),
-            'MAX_CYCLOMATIC_COMPLEXITY': MaxCyclomaticComplexityCalculator()
+            'MAX_CYCLOMATIC_COMPLEXITY': MaxCyclomaticComplexityCalculator(),
+            'MEAN_HALSTEAD_PROGRAM_VOCABULARY': MeanHalsteadProgramVocabularyCalculator()
         }
         self._cache = {
             'LINES_OF_CODE' : None,

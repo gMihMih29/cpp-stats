@@ -36,7 +36,7 @@ class CppStats:
             'MAX_CYCLOMATIC_COMPLEXITY',
             'MEAN_COGNITIVE_COMPLEXITY',
             'MAX_COGNITIVE_COMPLEXITY',
-            # 'HALSTEAD_PROGRAM_VOCABULARY',
+            'MEAN_HALSTEAD_PROGRAM_VOCABULARY',
             # 'HALSTEAD_PROGRAM_LENGTH',
             # 'HALSTEAD_CALCULATED_ESTIMATED_PROGRAM_LENGTH',
             # 'HALSTEAD_VOLUME',
@@ -78,7 +78,7 @@ class CppStats:
             return metric_name, len(self._files)
         metric = self._analyzer.metric(metric_name)
         if metric is None:
-            return None
+            return "None", None
         return metric.get()
 
     def as_xml(self):
