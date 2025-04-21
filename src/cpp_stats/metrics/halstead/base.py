@@ -107,11 +107,17 @@ def __get_spelling(cursor: Cursor) -> str:
     return cursor_str
 
 def __get_literal_spelling(cursor: Cursor):
+    '''
+    Finds spelling of literal.
+    '''
     tokens = list(cursor.get_tokens())
     op_token = tokens[0]
     return op_token.spelling
 
 def __get_binary_operator_spelling(cursor):
+    '''
+    Finds type of binary operator and returns its spelling.
+    '''
     children = list(cursor.get_children())
     left_child = children[0]
     tokens = list(cursor.get_tokens())
@@ -121,11 +127,17 @@ def __get_binary_operator_spelling(cursor):
     return op_token.spelling
 
 def __get_unary_operator_spelling(cursor):
+    '''
+    Finds type of unary operator and returns its spelling.
+    '''
     tokens = list(cursor.get_tokens())
     op_token = tokens[0]
     return op_token.spelling
 
-def __find_remaining_operators(cursor: Cursor):
+def __find_remaining_operators(cursor: Cursor) -> HalsteadData:
+    '''
+    Finds ',', '::', ';' in cursor tokens and returns HalsteadData with such tokens.
+    '''
     observed_tokens = [',', '::', ';']
     result = HalsteadData(set(), set(), 0, 0)
     for token in cursor.get_tokens():
@@ -184,7 +196,6 @@ def create_data(node: Cursor) -> HalsteadData:
         result.N1 += 1 # void* ptr = &&target_label;
 
     if node.kind == CursorKind.CALL_EXPR:
-        # result.n1 |= set([node.referenced.mangled_name])
         result.n1 |= set(["operator()"])
         result.N1 += 1
 
@@ -195,11 +206,6 @@ def create_data(node: Cursor) -> HalsteadData:
         result.n1 |= set(["operator()"])
         result.n1 |= set([node.type.spelling])
         result.N1 += 2
-
-    # if node.kind == CursorKind.CXX_FUNCTIONAL_CAST_EXPR:
-    #     result.n1 |= set(["operator()"])
-    #     result.n1 |= set([node.type.spelling])
-    #     result.N1 += 2
 
     if node.kind == CursorKind.CXX_METHOD:
         result.n1 |= set([node.mangled_name])

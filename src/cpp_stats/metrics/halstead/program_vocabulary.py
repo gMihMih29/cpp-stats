@@ -23,8 +23,7 @@ class MeanHalsteadProgramVocabularyMetric(Metric):
     def get(self) -> tuple[str, float]:
         sum_vocabulary = 0
         cnt_classes = len(self._data)
-        for file_name, hastead_data in self._data.items():
-            # hastead_data += base.find_remaining_operators(file_name)
+        for _, hastead_data in self._data.items():
             sum_vocabulary += hastead_data.program_vocabulary()
         value = 0
         if cnt_classes != 0:
