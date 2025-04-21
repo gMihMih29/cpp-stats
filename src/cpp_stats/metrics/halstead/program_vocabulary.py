@@ -31,6 +31,10 @@ class MeanHalsteadProgramVocabularyMetric(Metric):
         return MEAN_HALSTEAD_PROGRAM_VOCABULARY, value
 
 class MeanHalsteadProgramVocabularyCalculator(ClangMetricCalculator):
+    '''
+    Calculates MEAN_HALSTEAD_PROGRAM_VOCABULARY.
+    '''
+    
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
         return MeanHalsteadProgramVocabularyMetric({
             node.location.file.name: base.create_data(node)
