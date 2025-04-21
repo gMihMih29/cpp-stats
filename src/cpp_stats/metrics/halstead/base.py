@@ -94,18 +94,6 @@ def __is_literal(cursor):
         CursorKind.CXX_THIS_EXPR
     ]
 
-def __get_spelling(cursor: Cursor) -> str:
-    '''
-    Gets spelling of cursor directly from source file.
-    '''
-    start = cursor.extent.start
-    end = cursor.extent.end
-    with open(start.file.name, "r", encoding="utf-8") as source_code:
-        for _ in range(start.line):
-            cursor_str = source_code.readline()
-    cursor_str = cursor_str[start.column - 1: end.column - 1]
-    return cursor_str
-
 def __get_literal_spelling(cursor: Cursor):
     '''
     Finds spelling of literal.
@@ -144,7 +132,6 @@ def __find_remaining_operators(cursor: Cursor) -> HalsteadData:
         if token.spelling in observed_tokens:
             result.n1 |= set([token.spelling])
             result.N1 += 1
-            print(token.spelling)
     return result
 
 def create_data(node: Cursor) -> HalsteadData:
@@ -380,16 +367,12 @@ def create_data(node: Cursor) -> HalsteadData:
 
     if node.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
         spelling = mangle_cursor_name(node)
-        if node.spelling == '':
-            spelling += "::" + __get_spelling(node)
         result.n1 |= set([spelling])
         result.N1 += 1
 
     if node.kind == CursorKind.MEMBER_REF_EXPR:
         result.n2 |= set([mangle_cursor_name(node.referenced)])
         result.N2 += 1
-        result.n1 |= set([__get_binary_operator_spelling(node)])
-        result.N1 += 1
 
     if node.kind in [
         CursorKind.BINARY_OPERATOR,
@@ -433,12 +416,6 @@ def create_data(node: Cursor) -> HalsteadData:
         else:
             result.n1 |= set([node.referenced.mangled_name])
             result.N1 += 1
-
-    if result.N1 != 0:
-        text = f"{node.kind} "
-        for token in node.get_tokens():
-            text += f" {token.spelling}"
-        print(text)
 
     return result
 

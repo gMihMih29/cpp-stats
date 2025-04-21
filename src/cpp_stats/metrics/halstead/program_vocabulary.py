@@ -11,6 +11,10 @@ MEAN_HALSTEAD_PROGRAM_VOCABULARY = 'MEAN_HALSTEAD_PROGRAM_VOCABULARY'
 MAX_HALSTEAD_PROGRAM_VOCABULARY = 'MAX_HALSTEAD_PROGRAM_VOCABULARY'
 
 class MeanHalsteadProgramVocabularyMetric(Metric):
+    '''
+    Represents MEAN_HALSTEAD_PROGRAM_VOCABULARY metric.
+    '''
+
     def __init__(self, data: dict[str, base.HalsteadData]):
         super().__init__(MEAN_HALSTEAD_PROGRAM_VOCABULARY)
         self._data = data
@@ -22,21 +26,54 @@ class MeanHalsteadProgramVocabularyMetric(Metric):
 
     def get(self) -> tuple[str, float]:
         sum_vocabulary = 0
-        cnt_classes = len(self._data)
+        cnt_files = len(self._data)
         for _, hastead_data in self._data.items():
             sum_vocabulary += hastead_data.program_vocabulary()
         value = 0
-        if cnt_classes != 0:
-            value = sum_vocabulary / cnt_classes
+        if cnt_files != 0:
+            value = sum_vocabulary / cnt_files
         return MEAN_HALSTEAD_PROGRAM_VOCABULARY, value
 
 class MeanHalsteadProgramVocabularyCalculator(ClangMetricCalculator):
     '''
     Calculates MEAN_HALSTEAD_PROGRAM_VOCABULARY.
     '''
-    
+
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
         return MeanHalsteadProgramVocabularyMetric({
+            node.location.file.name: base.create_data(node)
+        })
+
+    def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
+        return True
+
+class MaxHalsteadProgramVocabularyMetric(Metric):
+    '''
+    Represents MAX_HALSTEAD_PROGRAM_VOCABULARY metric.
+    '''
+
+    def __init__(self, data: dict[str, base.HalsteadData]):
+        super().__init__(MAX_HALSTEAD_PROGRAM_VOCABULARY)
+        self._data = data
+
+    def __add__(self, other):
+        if not isinstance(other, MaxHalsteadProgramVocabularyMetric):
+            raise NotImplementedError
+        return MaxHalsteadProgramVocabularyMetric(base.merge_data(self._data, other._data))
+
+    def get(self) -> tuple[str, float]:
+        result = 0
+        for _, hastead_data in self._data.items():
+            result = max(result, hastead_data.program_vocabulary())
+        return MAX_HALSTEAD_PROGRAM_VOCABULARY, result
+
+class MaxHalsteadProgramVocabularyCalculator(ClangMetricCalculator):
+    '''
+    Calculates MAX_HALSTEAD_PROGRAM_VOCABULARY.
+    '''
+
+    def __call__(self, node: clang.cindex.Cursor) -> Metric:
+        return MaxHalsteadProgramVocabularyMetric({
             node.location.file.name: base.create_data(node)
         })
 
