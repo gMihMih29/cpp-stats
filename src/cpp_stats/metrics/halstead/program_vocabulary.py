@@ -24,7 +24,7 @@ class MeanHalsteadProgramVocabularyMetric(Metric):
         sum_vocabulary = 0
         cnt_classes = len(self._data)
         for file_name, hastead_data in self._data.items():
-            hastead_data += base.find_remaining_operators(file_name)
+            # hastead_data += base.find_remaining_operators(file_name)
             sum_vocabulary += hastead_data.program_vocabulary()
         value = 0
         if cnt_classes != 0:
@@ -33,7 +33,9 @@ class MeanHalsteadProgramVocabularyMetric(Metric):
 
 class MeanHalsteadProgramVocabularyCalculator(ClangMetricCalculator):
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
-        return MeanHalsteadProgramVocabularyMetric({node.location.file.name: base.create_data(node)})
+        return MeanHalsteadProgramVocabularyMetric({
+            node.location.file.name: base.create_data(node)
+        })
 
     def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
         return True
