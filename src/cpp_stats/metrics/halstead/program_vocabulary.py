@@ -2,80 +2,60 @@
 Module for MEAN_HALSTEAD_PROGRAM_VOCABULARY and MAX_HALSTEAD_PROGRAM_VOCABULARY metrics.
 '''
 
-import clang.cindex
-
-from cpp_stats.metrics.metric_calculator import Metric, ClangMetricCalculator
-from cpp_stats.metrics.halstead import base
+from cpp_stats.metrics.halstead.base_metric import HalsteadCalculator
+from cpp_stats.metrics.halstead.base_metric import MeanHalsteadMetric, MaxHalsteadMetric
+from cpp_stats.metrics.halstead.base import HalsteadData
 
 MEAN_HALSTEAD_PROGRAM_VOCABULARY = 'MEAN_HALSTEAD_PROGRAM_VOCABULARY'
 MAX_HALSTEAD_PROGRAM_VOCABULARY = 'MAX_HALSTEAD_PROGRAM_VOCABULARY'
 
-class MeanHalsteadProgramVocabularyMetric(Metric):
+class MeanHalsteadProgramVocabularyMetric(MeanHalsteadMetric):
     '''
     Represents MEAN_HALSTEAD_PROGRAM_VOCABULARY metric.
     '''
 
-    def __init__(self, data: dict[str, base.HalsteadData]):
-        super().__init__(MEAN_HALSTEAD_PROGRAM_VOCABULARY)
-        self._data = data
+    @classmethod
+    def value_source(cls, halstead_data: HalsteadData):
+        return halstead_data.program_vocabulary()
 
-    def __add__(self, other):
-        if not isinstance(other, MeanHalsteadProgramVocabularyMetric):
-            raise NotImplementedError
-        return MeanHalsteadProgramVocabularyMetric(base.merge_data(self._data, other._data))
+    def __init__(self, data: dict[str, HalsteadData]):
+        super().__init__(
+            MEAN_HALSTEAD_PROGRAM_VOCABULARY,
+            MeanHalsteadProgramVocabularyMetric,
+            data
+        )
 
-    def get(self) -> tuple[str, float]:
-        sum_vocabulary = 0
-        cnt_files = len(self._data)
-        for _, hastead_data in self._data.items():
-            sum_vocabulary += hastead_data.program_vocabulary()
-        value = 0
-        if cnt_files != 0:
-            value = sum_vocabulary / cnt_files
-        return MEAN_HALSTEAD_PROGRAM_VOCABULARY, value
-
-class MeanHalsteadProgramVocabularyCalculator(ClangMetricCalculator):
+class MeanHalsteadProgramVocabularyCalculator(HalsteadCalculator):
     '''
     Calculates MEAN_HALSTEAD_PROGRAM_VOCABULARY.
     '''
+    def __init__(self):
+        super().__init__(
+            MeanHalsteadProgramVocabularyMetric
+        )
 
-    def __call__(self, node: clang.cindex.Cursor) -> Metric:
-        return MeanHalsteadProgramVocabularyMetric({
-            node.location.file.name: base.create_data(node)
-        })
-
-    def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
-        return True
-
-class MaxHalsteadProgramVocabularyMetric(Metric):
+class MaxHalsteadProgramVocabularyMetric(MaxHalsteadMetric):
     '''
     Represents MAX_HALSTEAD_PROGRAM_VOCABULARY metric.
     '''
 
-    def __init__(self, data: dict[str, base.HalsteadData]):
-        super().__init__(MAX_HALSTEAD_PROGRAM_VOCABULARY)
-        self._data = data
+    @classmethod
+    def value_source(cls, halstead_data: HalsteadData):
+        return halstead_data.program_vocabulary()
 
-    def __add__(self, other):
-        if not isinstance(other, MaxHalsteadProgramVocabularyMetric):
-            raise NotImplementedError
-        return MaxHalsteadProgramVocabularyMetric(base.merge_data(self._data, other._data))
+    def __init__(self, data: dict[str, HalsteadData]):
+        super().__init__(
+            MAX_HALSTEAD_PROGRAM_VOCABULARY,
+            MaxHalsteadProgramVocabularyMetric,
+            data
+        )
 
-    def get(self) -> tuple[str, float]:
-        result = 0
-        for _, hastead_data in self._data.items():
-            result = max(result, hastead_data.program_vocabulary())
-        return MAX_HALSTEAD_PROGRAM_VOCABULARY, result
-
-class MaxHalsteadProgramVocabularyCalculator(ClangMetricCalculator):
+class MaxHalsteadProgramVocabularyCalculator(HalsteadCalculator):
     '''
     Calculates MAX_HALSTEAD_PROGRAM_VOCABULARY.
     '''
 
-    def __call__(self, node: clang.cindex.Cursor) -> Metric:
-        return MaxHalsteadProgramVocabularyMetric({
-            node.location.file.name: base.create_data(node)
-        })
-
-    def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
-        return True
+    def __init__(self):
+        super().__init__(
+            MaxHalsteadProgramVocabularyMetric
+        )
