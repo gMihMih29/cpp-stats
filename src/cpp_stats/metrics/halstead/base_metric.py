@@ -28,14 +28,14 @@ class MeanHalsteadMetric(Metric):
         sum_vocabulary = 0
         cnt_files = len(self._data)
         for _, halstead_data in self._data.items():
-            sum_vocabulary += self._type.value_source(halstead_data)
+            sum_vocabulary += self._type.value_source(halstead_data).real
         value = 0
         if cnt_files != 0:
             value = sum_vocabulary / cnt_files
         return self.name(), value
 
     @classmethod
-    def value_source(cls, halstead_data: base.HalsteadData):
+    def value_source(cls, halstead_data: base.HalsteadData) -> float:
         '''
         Returns value used by MeanHalsteadMetric during calculations
         '''
@@ -58,13 +58,14 @@ class MaxHalsteadMetric(Metric):
         )
 
     def get(self) -> tuple[str, float]:
-        result = 0
+        result = 0.0
         for _, halstead_data in self._data.items():
-            result = max(result, self._type.value_source(halstead_data))
+            print(self._type.value_source(halstead_data).real)
+            result = max(result, self._type.value_source(halstead_data).real)
         return self.name(), result
 
     @classmethod
-    def value_source(cls, halstead_data: base.HalsteadData):
+    def value_source(cls, halstead_data: base.HalsteadData) -> float:
         '''
         Returns value used by MeanHalsteadMetric during calculations
         '''

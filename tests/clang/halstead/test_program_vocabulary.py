@@ -1,10 +1,12 @@
 import pytest
+import clang.cindex
+import pathlib
 
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.metrics.halstead.program_vocabulary import MeanHalsteadProgramVocabularyCalculator, MaxHalsteadProgramVocabularyCalculator
 from cpp_stats.metrics.halstead.program_vocabulary import MeanHalsteadProgramVocabularyMetric, MaxHalsteadProgramVocabularyMetric
 from cpp_stats.metrics.halstead.base import HalsteadData
-import clang.cindex
+from cpp_stats.ast.ast_tree import analyze_ast
 
 def test_when_sum_with_unknown_metric_then_not_implemented():
     m1 = MeanHalsteadProgramVocabularyMetric({})
@@ -38,18 +40,28 @@ def test_get_max_metric():
 
     assert expected == actual
 
-# def test_calculate_complexity_sum_of_primes(clang_index: clang.cindex.Index):
-#     tu = clang_index.parse("./tests/data/analyze/cyclomatic_complexity.hpp", args=['-x', 'c++'])
-#     func = None
-#     for child in tu.cursor.walk_preorder():
-#         if (child.kind == clang.cindex.CursorKind.FUNCTION_DECL
-#             and child.displayname == "test1(int, int)"):
-#             func = child
-#             break
-#     if func is None:
-#         assert False
-#     expected = 3
+def test_mean_wiki(clang_index: clang.cindex.Index):
+    result = analyze_ast(
+        clang_index,
+        [pathlib.Path("./tests/data/analyze/halstead/wiki/wiki.hpp")],
+        {
+            "MEAN_HALSTEAD_PROGRAM_VOCABULARY": MeanHalsteadProgramVocabularyCalculator()
+        }
+    )
+    expected = 19
 
-#     actual = _calculate_cyclomatic_complexity(func)
+    _, actual = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"].get()
+    assert expected == actual
 
-#     assert expected == actual
+def test_max_wiki(clang_index: clang.cindex.Index):
+    result = analyze_ast(
+        clang_index,
+        [pathlib.Path("./tests/data/analyze/halstead/wiki/wiki.hpp")],
+        {
+            "MAX_HALSTEAD_PROGRAM_VOCABULARY": MaxHalsteadProgramVocabularyCalculator()
+        }
+    )
+    expected = 19
+
+    _, actual = result["MAX_HALSTEAD_PROGRAM_VOCABULARY"].get()
+    assert expected == actual
