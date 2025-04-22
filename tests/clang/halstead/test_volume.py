@@ -20,6 +20,7 @@ def test_when_sum_with_unknown_metric_then_not_implemented():
 def test_mean_wiki(clang_index: clang.cindex.Index):
     result = analyze_ast(
         clang_index,
+        "./tests/data/analyze/halstead/wiki/",
         [pathlib.Path("./tests/data/analyze/halstead/wiki/wiki.hpp")],
         {
             "MEAN_HALSTEAD_VOLUME": MeanHalsteadVolumeCalculator()
@@ -33,6 +34,7 @@ def test_mean_wiki(clang_index: clang.cindex.Index):
 def test_max_wiki(clang_index: clang.cindex.Index):
     result = analyze_ast(
         clang_index,
+        "./tests/data/analyze/halstead/wiki/",
         [pathlib.Path("./tests/data/analyze/halstead/wiki/wiki.hpp")],
         {
             "MAX_HALSTEAD_VOLUME": MaxHalsteadVolumeCalculator()

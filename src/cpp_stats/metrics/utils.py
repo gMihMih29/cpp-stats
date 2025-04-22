@@ -14,6 +14,8 @@ def mangle_cursor_name(node: clang.cindex.Cursor) -> str:
     Parameters:
     node (clang.cindex.Cursor): cursor for which mangled name is being calculated.
     '''
+    if node is None:
+        return ""
     if node.kind == clang.cindex.CursorKind.TRANSLATION_UNIT:
         return ""
     return mangle_cursor_name(node.semantic_parent) + '::' + node.displayname

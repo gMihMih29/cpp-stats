@@ -3,12 +3,13 @@ Module for creating ast tree based on clang tree for calculating metric.
 '''
 
 from pathlib import Path
+import os
 
 import clang.cindex
 
 from cpp_stats.metrics.metric_calculator import ClangMetricCalculator, Metric
 
-def analyze_ast(index: clang.cindex.Index, c_cxx_files: list[Path],
+def analyze_ast(index: clang.cindex.Index, repo_path: str, c_cxx_files: list[Path],
                 calculators: dict[str, ClangMetricCalculator]) -> dict[str, Metric]:
     '''
     Analyzes ast based on `c_cxx_files` and calculates metrics using `calculators`
@@ -21,8 +22,13 @@ def analyze_ast(index: clang.cindex.Index, c_cxx_files: list[Path],
     `dict[str, Metric]`: dictionary with all metrics calculated by `calculators`.
     '''
     result = {}
+    args = ["-x", "c++"]
+    for root, _, _ in os.walk(repo_path):
+        args.extend(["-I", root])
+    print(args)
     for _, file_path in enumerate(c_cxx_files):
-        translation_unit = index.parse(file_path, args=['-x', 'c++'])
+        translation_unit = index.parse(file_path, args=args)
+        print(str(file_path.resolve()))
         _analyze_children(
             result,
             calculators,

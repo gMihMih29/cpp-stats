@@ -293,6 +293,7 @@ def test_find_remaining_operators_wiki(clang_index: clang.cindex.Index):
 def test_create_data_wiki(clang_index: clang.cindex.Index, distinct_operators_wiki, distinct_operands_wiki):
     result = analyze_ast(
         clang_index,
+        "./tests/data/analyze/halstead/wiki/",
         [pathlib.Path("./tests/data/analyze/halstead/wiki/wiki.hpp")],
         {
             "MEAN_HALSTEAD_PROGRAM_VOCABULARY": MeanHalsteadProgramVocabularyCalculator()

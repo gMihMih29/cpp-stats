@@ -26,24 +26,32 @@ class CppStats:
         self._path_to_repo = path_to_repo
         self._available_metrics = [
             'NUMBER_OF_C_C++_FILES',
-            'LINES_OF_CODE',
-            'NUMBER_OF_CLASSES',
-            'MEAN_NUMBER_OF_METHODS_PER_CLASS',
-            'MAX_NUMBER_OF_METHODS_PER_CLASS',
-            'MEAN_LENGTH_OF_METHODS',
-            'MAX_LENGTH_OF_METHODS',
-            'MEAN_CYCLOMATIC_COMPLEXITY',
-            'MAX_CYCLOMATIC_COMPLEXITY',
-            'MEAN_COGNITIVE_COMPLEXITY',
-            'MAX_COGNITIVE_COMPLEXITY',
-            'MEAN_HALSTEAD_PROGRAM_VOCABULARY',
-            # 'HALSTEAD_PROGRAM_LENGTH',
-            # 'HALSTEAD_CALCULATED_ESTIMATED_PROGRAM_LENGTH',
-            # 'HALSTEAD_VOLUME',
-            # 'HALSTEAD_DIFFICULTY',
-            # 'HALSTEAD_EFFORT',
-            # 'HALSTEAD_TIME_REQUIRED',
-            # 'HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
+            # 'LINES_OF_CODE',
+            # 'NUMBER_OF_CLASSES',
+            # 'MEAN_NUMBER_OF_METHODS_PER_CLASS',
+            # 'MAX_NUMBER_OF_METHODS_PER_CLASS',
+            # 'MEAN_LENGTH_OF_METHODS',
+            # 'MAX_LENGTH_OF_METHODS',
+            # 'MEAN_CYCLOMATIC_COMPLEXITY',
+            # 'MAX_CYCLOMATIC_COMPLEXITY',
+            # 'MEAN_COGNITIVE_COMPLEXITY',
+            # 'MAX_COGNITIVE_COMPLEXITY',
+            # 'MEAN_HALSTEAD_PROGRAM_VOCABULARY',
+            # 'MAX_HALSTEAD_PROGRAM_VOCABULARY',
+            # 'MEAN_HALSTEAD_PROGRAM_LENGTH',
+            # 'MAX_HALSTEAD_PROGRAM_LENGTH',
+            # 'MEAN_HALSTEAD_ESTIMATED_PROGRAM_LENGTH',
+            # 'MAX_HALSTEAD_ESTIMATED_PROGRAM_LENGTH',
+            # 'MEAN_HALSTEAD_VOLUME',
+            # 'MAX_HALSTEAD_VOLUME',
+            # 'MEAN_HALSTEAD_DIFFICULTY',
+            # 'MAX_HALSTEAD_DIFFICULTY',
+            # 'MEAN_HALSTEAD_EFFORT',
+            # 'MAX_HALSTEAD_EFFORT',
+            # 'MEAN_HALSTEAD_TIME_REQUIRED_TO_PROGRAM',
+            # 'MAX_HALSTEAD_TIME_REQUIRED_TO_PROGRAM',
+            # 'MEAN_HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
+            # 'MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
             # 'MAINTAINABILITY_INDEX',
             # 'LCOM',
             # 'LCOM2',
@@ -56,9 +64,9 @@ class CppStats:
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))
         if use_clang:
-            self._analyzer = CodeAnalyzer(self._files, os.getenv('LIBCLANG_LIBRARY_PATH'))
+            self._analyzer = CodeAnalyzer(path_to_repo, self._files, os.getenv('LIBCLANG_LIBRARY_PATH'))
         else:
-            self._analyzer = CodeAnalyzer(self._files, None)
+            self._analyzer = CodeAnalyzer(path_to_repo, self._files, None)
 
     def list(self) -> list[str]:
         '''

@@ -10,6 +10,7 @@ EPS = 1e-5
 def test_mean_wiki(clang_index: clang.cindex.Index):
     result = analyze_ast(
         clang_index,
+        "./tests/data/analyze/halstead/wiki/",
         [pathlib.Path("./tests/data/analyze/halstead/wiki/wiki.hpp")],
         {
             "MEAN_HALSTEAD_NUMBER_OF_DELIVERED_BUGS": MeanHalsteadDeliveredBugsCalculator()
@@ -23,6 +24,7 @@ def test_mean_wiki(clang_index: clang.cindex.Index):
 def test_max_wiki(clang_index: clang.cindex.Index):
     result = analyze_ast(
         clang_index,
+        "./tests/data/analyze/halstead/wiki/",
         [pathlib.Path("./tests/data/analyze/halstead/wiki/wiki.hpp")],
         {
             "MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS": MaxHalsteadDeliveredBugsCalculator()

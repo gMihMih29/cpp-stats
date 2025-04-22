@@ -1,6 +1,7 @@
 '''
 Module for base halstead metrics.
 '''
+import math
 
 import clang.cindex
 
@@ -28,6 +29,8 @@ class MeanHalsteadMetric(Metric):
         sum_vocabulary = 0
         cnt_files = len(self._data)
         for _, halstead_data in self._data.items():
+            if math.isnan(self._type.value_source(halstead_data).real):
+                continue
             sum_vocabulary += self._type.value_source(halstead_data).real
         value = 0
         if cnt_files != 0:
@@ -60,6 +63,8 @@ class MaxHalsteadMetric(Metric):
     def get(self) -> tuple[str, float]:
         result = 0.0
         for _, halstead_data in self._data.items():
+            if math.isnan(self._type.value_source(halstead_data).real):
+                continue
             print(self._type.value_source(halstead_data).real)
             result = max(result, self._type.value_source(halstead_data).real)
         return self.name(), result

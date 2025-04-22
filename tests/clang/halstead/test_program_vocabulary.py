@@ -43,6 +43,7 @@ def test_get_max_metric():
 def test_mean_wiki(clang_index: clang.cindex.Index):
     result = analyze_ast(
         clang_index,
+        "./tests/data/analyze/halstead/wiki/",
         [pathlib.Path("./tests/data/analyze/halstead/wiki/wiki.hpp")],
         {
             "MEAN_HALSTEAD_PROGRAM_VOCABULARY": MeanHalsteadProgramVocabularyCalculator()
@@ -56,6 +57,7 @@ def test_mean_wiki(clang_index: clang.cindex.Index):
 def test_max_wiki(clang_index: clang.cindex.Index):
     result = analyze_ast(
         clang_index,
+        "./tests/data/analyze/halstead/wiki/",
         [pathlib.Path("./tests/data/analyze/halstead/wiki/wiki.hpp")],
         {
             "MAX_HALSTEAD_PROGRAM_VOCABULARY": MaxHalsteadProgramVocabularyCalculator()

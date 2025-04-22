@@ -4,7 +4,7 @@ Contains main logic for calculating Halstead complexity including number of oper
 
 import cmath
 
-from clang.cindex import CursorKind, Cursor
+from clang.cindex import CursorKind, Cursor, ExceptionSpecificationKind
 
 from cpp_stats.metrics.utils import mangle_cursor_name
 
@@ -46,6 +46,8 @@ class HalsteadData:
         '''
         Calculates Halstead estimated length of program.
         '''
+        if len(self.n1) == 0 or len(self.n2) == 0:
+            return float("nan")
         return len(self.n1) * cmath.log(len(self.n1), 2) + len(self.n2) * cmath.log(len(self.n2), 2)
 
     def volume(self):
@@ -58,6 +60,8 @@ class HalsteadData:
         '''
         Calculates Halstead difficulty.
         '''
+        if len(self.n2) == 0:
+            return float("nan")
         return len(self.n1) / 2 * self.N2 / len(self.n2)
 
     def effort(self):
@@ -77,6 +81,19 @@ class HalsteadData:
         Calculates Halstead delivered bugs.
         '''
         return self.volume() / 3000
+
+def __get_spelling_from_file(cursor: Cursor) -> str:
+    '''
+    Returns spelling of cursor directly from file.
+    '''
+    start = cursor.extent.start
+    end = cursor.extent.end
+    with open(start.file.name, "r", encoding="utf-8") as source_code:
+        for _ in range(start.line):
+            cursor_str = source_code.readline()
+    cursor_str = cursor_str[start.column - 1: end.column - 1]
+    return cursor_str
+
 
 def __is_literal(cursor):
     '''
@@ -99,6 +116,8 @@ def __get_literal_spelling(cursor: Cursor):
     Finds spelling of literal.
     '''
     tokens = list(cursor.get_tokens())
+    if len(tokens) == 0:
+        return __get_spelling_from_file(cursor)
     op_token = tokens[0]
     return op_token.spelling
 
@@ -111,6 +130,8 @@ def __get_binary_operator_spelling(cursor):
     tokens = list(cursor.get_tokens())
     left_tokens = list(left_child.get_tokens())
     op_token_index = len(left_tokens)
+    if len(tokens) <= op_token_index:
+        return __get_spelling_from_file(cursor)
     op_token = tokens[op_token_index]
     return op_token.spelling
 
@@ -119,6 +140,8 @@ def __get_unary_operator_spelling(cursor):
     Finds type of unary operator and returns its spelling.
     '''
     tokens = list(cursor.get_tokens())
+    if len(tokens) == 0:
+        return __get_spelling_from_file(cursor)
     op_token = tokens[0]
     return op_token.spelling
 
@@ -401,7 +424,8 @@ def create_data(node: Cursor) -> HalsteadData:
         if node.spelling != "":
             result.n2 |= set([node.spelling])
         else:
-            result.n2 |= set([__get_literal_spelling(node)])
+            spelling = __get_literal_spelling(node)
+            result.n2 |= set([spelling])
         result.N2 += 1
 
     if node.kind == CursorKind.DECL_REF_EXPR and node.referenced is not None:
