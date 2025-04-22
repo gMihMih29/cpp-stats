@@ -1,5 +1,6 @@
 import pytest
 import pathlib
+import platform
 
 from cpp_stats.metrics.halstead.base import HalsteadData
 from cpp_stats.metrics.halstead.base import create_data, merge_data
@@ -19,7 +20,10 @@ def distinct_operators_wiki():
     Returns distinct operators from wiki article about Halstead complexity
     https://en.wikipedia.org/wiki/Halstead_complexity_measures
     '''
-    yield set(["main", "operator()", "{}", "int", "__isoc99_scanf", "operator&", "operator=", "operator+", "operator/", "printf", ",", ";"])
+    if platform.system() == "Linux":
+        yield set(["main", "operator()", "{}", "int", "__isoc99_scanf", "operator&", "operator=", "operator+", "operator/", "printf", ",", ";"])
+    elif platform.system() == "Windows":
+        yield set(["main", "operator()", "{}", "int", "scanf", "operator&", "operator=", "operator+", "operator/", "printf", ",", ";"])
 
 @pytest.fixture
 def distinct_operands_wiki():
@@ -302,7 +306,10 @@ def test_create_data_wiki(clang_index: clang.cindex.Index, distinct_operators_wi
     expected_number_of_operators = 27
     expected_number_of_operands = 15
 
-    halstead_data = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"]._data["tests/data/analyze/halstead/wiki/wiki.hpp"]
+    if platform.system() == "Linux":
+        halstead_data = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"]._data["tests/data/analyze/halstead/wiki/wiki.hpp"]
+    elif platform.system() == "Windows":
+        halstead_data = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"]._data["tests\\data\\analyze\\halstead\\wiki\\wiki.hpp"]
     assert halstead_data.n1 == distinct_operators_wiki
     assert halstead_data.n2 == distinct_operands_wiki
     assert halstead_data.N1 == expected_number_of_operators

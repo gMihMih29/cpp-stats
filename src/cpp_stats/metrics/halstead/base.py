@@ -364,7 +364,7 @@ def create_data(node: Cursor) -> HalsteadData:
         if len(list(node.get_tokens())) == 2:
             result.n1 |= set([node.type.spelling])
             result.N1 += 1
-        result.n2 |= set([node.mangled_name])
+        result.n2 |= set([mangle_cursor_name(node)])
         result.N2 += 1
 
     if node.kind in [CursorKind.LABEL_REF, CursorKind.LABEL_STMT]:
