@@ -25,6 +25,7 @@ class MeanHalsteadProgramLengthMetric(MeanHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MeanHalsteadProgramLengthCalculator(HalsteadCalculator):
     '''
     Calculates MEAN_HALSTEAD_PROGRAM_LENGTH.
@@ -50,6 +51,7 @@ class MaxHalsteadProgramLengthMetric(MaxHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MaxHalsteadProgramLengthCalculator(HalsteadCalculator):
     '''
     Calculates MAX_HALSTEAD_PROGRAM_LENGTH.

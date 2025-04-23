@@ -25,6 +25,7 @@ class MeanHalsteadEffortMetric(MeanHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MeanHalsteadEffortCalculator(HalsteadCalculator):
     '''
     Calculates MEAN_HALSTEAD_EFFORT.
@@ -50,6 +51,7 @@ class MaxHalsteadEffortMetric(MaxHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MaxHalsteadEffortCalculator(HalsteadCalculator):
     '''
     Calculates MAX_HALSTEAD_EFFORT.

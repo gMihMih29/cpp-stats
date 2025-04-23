@@ -25,6 +25,7 @@ class MeanHalsteadTimeToProgramMetric(MeanHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MeanHalsteadTimeToProgramCalculator(HalsteadCalculator):
     '''
     Calculates MEAN_HALSTEAD_TIME_REQUIRED_TO_PROGRAM.
@@ -50,6 +51,7 @@ class MaxHalsteadTimeToProgramMetric(MaxHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MaxHalsteadTimeToProgramCalculator(HalsteadCalculator):
     '''
     Calculates MAX_HALSTEAD_TIME_REQUIRED_TO_PROGRAM.

@@ -25,6 +25,7 @@ class MeanHalsteadDeliveredBugsMetric(MeanHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MeanHalsteadDeliveredBugsCalculator(HalsteadCalculator):
     '''
     Calculates MEAN_HALSTEAD_NUMBER_OF_DELIVERED_BUGS.
@@ -50,6 +51,7 @@ class MaxHalsteadDeliveredBugsMetric(MaxHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MaxHalsteadDeliveredBugsCalculator(HalsteadCalculator):
     '''
     Calculates MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS.

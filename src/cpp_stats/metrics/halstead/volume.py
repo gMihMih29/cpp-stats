@@ -25,6 +25,7 @@ class MeanHalsteadVolumeMetric(MeanHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MeanHalsteadVolumeCalculator(HalsteadCalculator):
     '''
     Calculates MEAN_HALSTEAD_VOLUME.
@@ -50,6 +51,7 @@ class MaxHalsteadVolumeMetric(MaxHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MaxHalsteadVolumeCalculator(HalsteadCalculator):
     '''
     Calculates MAX_HALSTEAD_VOLUME.

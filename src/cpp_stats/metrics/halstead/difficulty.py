@@ -25,6 +25,7 @@ class MeanHalsteadDifficultyMetric(MeanHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MeanHalsteadDifficultyCalculator(HalsteadCalculator):
     '''
     Calculates MEAN_HALSTEAD_DIFFICULTY.
@@ -50,6 +51,7 @@ class MaxHalsteadDifficultyMetric(MaxHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MaxHalsteadDifficultyCalculator(HalsteadCalculator):
     '''
     Calculates MAX_HALSTEAD_DIFFICULTY.

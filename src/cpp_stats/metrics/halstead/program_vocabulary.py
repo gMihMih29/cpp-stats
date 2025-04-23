@@ -25,6 +25,7 @@ class MeanHalsteadProgramVocabularyMetric(MeanHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MeanHalsteadProgramVocabularyCalculator(HalsteadCalculator):
     '''
     Calculates MEAN_HALSTEAD_PROGRAM_VOCABULARY.
@@ -50,6 +51,7 @@ class MaxHalsteadProgramVocabularyMetric(MaxHalsteadMetric):
             data
         )
 
+# pylint: disable=R0903
 class MaxHalsteadProgramVocabularyCalculator(HalsteadCalculator):
     '''
     Calculates MAX_HALSTEAD_PROGRAM_VOCABULARY.

@@ -4,7 +4,7 @@ Contains main logic for calculating Halstead complexity including number of oper
 
 import cmath
 
-from clang.cindex import CursorKind, Cursor, ExceptionSpecificationKind
+from clang.cindex import CursorKind, Cursor
 
 from cpp_stats.metrics.utils import mangle_cursor_name
 
