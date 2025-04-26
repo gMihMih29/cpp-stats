@@ -172,9 +172,26 @@ def create_data(node: Cursor) -> HalsteadData:
         CursorKind.NAMESPACE_ALIAS,
         CursorKind.USING_DECLARATION,
         CursorKind.CXX_BASE_SPECIFIER,
-        CursorKind.NAMESPACE_REF
+        CursorKind.NAMESPACE_REF,
+        CursorKind.CONSTRUCTOR,
+        CursorKind.DESTRUCTOR,
+        CursorKind.CLASS_DECL,
+        CursorKind.STRUCT_DECL,
+        CursorKind.UNION_DECL,
+        CursorKind.ENUM_DECL,
+        CursorKind.CLASS_TEMPLATE,
+        CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION
         ]:
         result.n1 |= set([node.spelling])
+        result.N1 += 1
+
+    if node.kind in [
+        CursorKind.TYPE_REF,
+        CursorKind.TYPE_ALIAS_DECL,
+        CursorKind.TYPEDEF_DECL,
+        CursorKind.TEMPLATE_REF
+        ]:
+        result.n1 |= set([node.displayname])
         result.N1 += 1
 
     if node.kind == CursorKind.USING_DIRECTIVE:
@@ -322,33 +339,6 @@ def create_data(node: Cursor) -> HalsteadData:
         result.N1 += 3
     if node.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
         result.n1 |= set([__get_unary_operator_spelling(node)])
-        result.N1 += 1
-
-    if node.kind in [
-        CursorKind.CONSTRUCTOR,
-        CursorKind.DESTRUCTOR
-        ]:
-        result.n1 |= set([node.spelling])
-        result.N1 += 1
-
-    if node.kind in [
-        CursorKind.CLASS_DECL,
-        CursorKind.STRUCT_DECL,
-        CursorKind.UNION_DECL,
-        CursorKind.ENUM_DECL,
-        CursorKind.CLASS_TEMPLATE,
-        CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION
-        ]:
-        result.n1 |= set([node.spelling])
-        result.N1 += 1
-
-    if node.kind in [
-        CursorKind.TYPE_REF,
-        CursorKind.TYPE_ALIAS_DECL,
-        CursorKind.TYPEDEF_DECL,
-        CursorKind.TEMPLATE_REF
-        ]:
-        result.n1 |= set([node.displayname])
         result.N1 += 1
 
     if node.kind in [

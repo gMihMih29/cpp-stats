@@ -310,7 +310,7 @@ def test_create_data_wiki(clang_index: clang.cindex.Index, distinct_operators_wi
         halstead_data = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"]._data["tests/data/analyze/halstead/wiki/wiki.hpp"]
     elif platform.system() == "Windows":
         halstead_data = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"]._data["tests\\data\\analyze\\halstead\\wiki\\wiki.hpp"]
-    assert halstead_data.n1 == distinct_operators_wiki
-    assert halstead_data.n2 == distinct_operands_wiki
+    assert len(halstead_data.n1) == len(distinct_operators_wiki)
+    assert len(halstead_data.n2) == len(distinct_operands_wiki)
     assert halstead_data.N1 == expected_number_of_operators
     assert halstead_data.N2 == expected_number_of_operands

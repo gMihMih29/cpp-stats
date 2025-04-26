@@ -15,22 +15,8 @@ from cpp_stats.metrics.cognitive_complexity import MeanCognitiveComplexityCalcul
 from cpp_stats.metrics.cognitive_complexity import MaxCognitiveComplexityCalculator
 from cpp_stats.metrics.cyclomatic_complexity import MeanCyclomaticComplexityCalculator
 from cpp_stats.metrics.cyclomatic_complexity import MaxCyclomaticComplexityCalculator
-from cpp_stats.metrics.halstead.program_vocabulary import MeanHalsteadProgramVocabularyCalculator
-from cpp_stats.metrics.halstead.program_vocabulary import MaxHalsteadProgramVocabularyCalculator
-from cpp_stats.metrics.halstead.program_length import MeanHalsteadProgramLengthCalculator
-from cpp_stats.metrics.halstead.program_length import MaxHalsteadProgramLengthCalculator
-from cpp_stats.metrics.halstead.estimated_program_length import MeanHalsteadEstimatedProgramLengthCalculator
-from cpp_stats.metrics.halstead.estimated_program_length import MaxHalsteadEstimatedProgramLengthCalculator
-from cpp_stats.metrics.halstead.volume import MeanHalsteadVolumeCalculator
-from cpp_stats.metrics.halstead.volume import MaxHalsteadVolumeCalculator
-from cpp_stats.metrics.halstead.difficulty import MeanHalsteadDifficultyCalculator
-from cpp_stats.metrics.halstead.difficulty import MaxHalsteadDifficultyCalculator
-from cpp_stats.metrics.halstead.effort import MeanHalsteadEffortCalculator
-from cpp_stats.metrics.halstead.effort import MaxHalsteadEffortCalculator
-from cpp_stats.metrics.halstead.time_to_program import MeanHalsteadTimeToProgramCalculator
-from cpp_stats.metrics.halstead.time_to_program import MaxHalsteadTimeToProgramCalculator
-from cpp_stats.metrics.halstead.delivered_bugs import MeanHalsteadDeliveredBugsCalculator
-from cpp_stats.metrics.halstead.delivered_bugs import MaxHalsteadDeliveredBugsCalculator
+from cpp_stats.metrics.halstead import program_vocabulary, program_length, estimated_program_length
+from cpp_stats.metrics.halstead import volume, difficulty, effort, time_to_program, delivered_bugs
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.ast.ast_tree import analyze_ast
 
@@ -56,23 +42,38 @@ class CodeAnalyzer:
             'MAX_COGNITIVE_COMPLEXITY': MaxCognitiveComplexityCalculator(),
             'MEAN_CYCLOMATIC_COMPLEXITY': MeanCyclomaticComplexityCalculator(),
             'MAX_CYCLOMATIC_COMPLEXITY': MaxCyclomaticComplexityCalculator(),
-            'MEAN_HALSTEAD_PROGRAM_VOCABULARY': MeanHalsteadProgramVocabularyCalculator(),
-            'MAX_HALSTEAD_PROGRAM_VOCABULARY': MaxHalsteadProgramVocabularyCalculator(),
-            'MEAN_HALSTEAD_PROGRAM_LENGTH': MeanHalsteadProgramLengthCalculator(),
-            'MAX_HALSTEAD_PROGRAM_LENGTH': MaxHalsteadProgramLengthCalculator(),
-            'MEAN_HALSTEAD_ESTIMATED_PROGRAM_LENGTH': 
-                MeanHalsteadEstimatedProgramLengthCalculator(),
-            'MAX_HALSTEAD_ESTIMATED_PROGRAM_LENGTH': MaxHalsteadEstimatedProgramLengthCalculator(),
-            'MEAN_HALSTEAD_VOLUME': MeanHalsteadVolumeCalculator(),
-            'MAX_HALSTEAD_VOLUME': MaxHalsteadVolumeCalculator(),
-            'MEAN_HALSTEAD_DIFFICULTY': MeanHalsteadDifficultyCalculator(),
-            'MAX_HALSTEAD_DIFFICULTY': MaxHalsteadDifficultyCalculator(),
-            'MEAN_HALSTEAD_EFFORT': MeanHalsteadEffortCalculator(),
-            'MAX_HALSTEAD_EFFORT': MaxHalsteadEffortCalculator(),
-            'MEAN_HALSTEAD_TIME_REQUIRED_TO_PROGRAM': MeanHalsteadTimeToProgramCalculator(),
-            'MAX_HALSTEAD_TIME_REQUIRED_TO_PROGRAM': MaxHalsteadTimeToProgramCalculator(),
-            'MEAN_HALSTEAD_NUMBER_OF_DELIVERED_BUGS': MeanHalsteadDeliveredBugsCalculator(),
-            'MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS': MaxHalsteadDeliveredBugsCalculator(),
+            'MEAN_HALSTEAD_PROGRAM_VOCABULARY':
+                program_vocabulary.MeanHalsteadProgramVocabularyCalculator(),
+            'MAX_HALSTEAD_PROGRAM_VOCABULARY':
+                program_vocabulary.MaxHalsteadProgramVocabularyCalculator(),
+            'MEAN_HALSTEAD_PROGRAM_LENGTH':
+                program_length.MeanHalsteadProgramLengthCalculator(),
+            'MAX_HALSTEAD_PROGRAM_LENGTH':
+                program_length.MaxHalsteadProgramLengthCalculator(),
+            'MEAN_HALSTEAD_ESTIMATED_PROGRAM_LENGTH':
+                estimated_program_length.MeanHalsteadEstimatedProgramLengthCalculator(),
+            'MAX_HALSTEAD_ESTIMATED_PROGRAM_LENGTH':
+                estimated_program_length.MaxHalsteadEstimatedProgramLengthCalculator(),
+            'MEAN_HALSTEAD_VOLUME':
+                volume.MeanHalsteadVolumeCalculator(),
+            'MAX_HALSTEAD_VOLUME':
+                volume.MaxHalsteadVolumeCalculator(),
+            'MEAN_HALSTEAD_DIFFICULTY':
+                difficulty.MeanHalsteadDifficultyCalculator(),
+            'MAX_HALSTEAD_DIFFICULTY':
+                difficulty.MaxHalsteadDifficultyCalculator(),
+            'MEAN_HALSTEAD_EFFORT':
+                effort.MeanHalsteadEffortCalculator(),
+            'MAX_HALSTEAD_EFFORT':
+                effort.MaxHalsteadEffortCalculator(),
+            'MEAN_HALSTEAD_TIME_REQUIRED_TO_PROGRAM':
+                time_to_program.MeanHalsteadTimeToProgramCalculator(),
+            'MAX_HALSTEAD_TIME_REQUIRED_TO_PROGRAM':
+                time_to_program.MaxHalsteadTimeToProgramCalculator(),
+            'MEAN_HALSTEAD_NUMBER_OF_DELIVERED_BUGS':
+                delivered_bugs.MeanHalsteadDeliveredBugsCalculator(),
+            'MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS':
+                delivered_bugs.MaxHalsteadDeliveredBugsCalculator(),
         }
         self._cache = {
             'LINES_OF_CODE' : None,
