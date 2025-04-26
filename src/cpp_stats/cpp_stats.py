@@ -64,7 +64,11 @@ class CppStats:
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))
         if use_clang:
-            self._analyzer = CodeAnalyzer(path_to_repo, self._files, os.getenv('LIBCLANG_LIBRARY_PATH'))
+            self._analyzer = CodeAnalyzer(
+                path_to_repo,
+                self._files,
+                os.getenv('LIBCLANG_LIBRARY_PATH')
+            )
         else:
             self._analyzer = CodeAnalyzer(path_to_repo, self._files, None)
 
