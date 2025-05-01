@@ -157,6 +157,8 @@ def __find_remaining_operators(cursor: Cursor) -> HalsteadData:
             result.N1 += 1
     return result
 
+# pylint: disable=R0912
+# pylint: disable=R0915
 def create_data(node: Cursor) -> HalsteadData:
     '''
     Analyzes given cursor and checks whether it is operator or operand.
