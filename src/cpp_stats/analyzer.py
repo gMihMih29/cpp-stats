@@ -18,7 +18,7 @@ from cpp_stats.metrics.cyclomatic_complexity import MaxCyclomaticComplexityCalcu
 from cpp_stats.metrics.halstead import program_vocabulary, program_length, estimated_program_length
 from cpp_stats.metrics.halstead import volume, difficulty, effort, time_to_program, delivered_bugs
 from cpp_stats.metrics.maintainability_index import MeanMaintainabilityIndexCalculator
-from cpp_stats.metrics.maintainability_index import MaxMaintainabilityIndexCalculator
+from cpp_stats.metrics.maintainability_index import MinMaintainabilityIndexCalculator
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.ast.ast_tree import analyze_ast
 
@@ -78,8 +78,8 @@ class CodeAnalyzer:
                 delivered_bugs.MaxHalsteadDeliveredBugsCalculator(),
             'MEAN_MAINTAINABILITY_INDEX':
                 MeanMaintainabilityIndexCalculator(),
-            'MAX_MAINTAINABILITY_INDEX':
-                MaxMaintainabilityIndexCalculator(),
+            'MIN_MAINTAINABILITY_INDEX':
+                MinMaintainabilityIndexCalculator(),
         }
         self._cache = {
             'LINES_OF_CODE' : None,

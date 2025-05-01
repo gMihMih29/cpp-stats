@@ -53,7 +53,7 @@ class CppStats:
             'MEAN_HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
             'MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
             'MEAN_MAINTAINABILITY_INDEX',
-            'MAX_MAINTAINABILITY_INDEX',
+            'MIN_MAINTAINABILITY_INDEX',
             # 'LCOM',
             # 'LCOM2',
             # 'LCOM3',

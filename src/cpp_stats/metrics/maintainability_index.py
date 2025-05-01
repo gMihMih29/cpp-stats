@@ -12,7 +12,7 @@ from cpp_stats.metrics.cyclomatic_complexity import MeanCyclomaticComplexityCalc
 from cpp_stats.metrics.cyclomatic_complexity import MeanCyclomaticComplexityMetric
 
 MEAN_MAINTAINABILITY_INDEX = 'MEAN_MAINTAINABILITY_INDEX'
-MAX_MAINTAINABILITY_INDEX = 'MAX_MAINTAINABILITY_INDEX'
+MIN_MAINTAINABILITY_INDEX = 'MIN_MAINTAINABILITY_INDEX'
 
 def _merge_data(lhv: dict[str, (int, MeanHalsteadVolumeMetric, MeanCyclomaticComplexityMetric)],
                 rhv: dict[str, (int, MeanHalsteadVolumeMetric, MeanCyclomaticComplexityMetric)]):
@@ -118,9 +118,9 @@ class MeanMaintainabilityIndexCalculator(ClangMetricCalculator):
         '''
         return True
 
-class MaxMaintainabilityIndexMetric(Metric):
+class MinMaintainabilityIndexMetric(Metric):
     '''
-    Represents MAX_MAINTAINABILITY_INDEX metric.
+    Represents MIN_MAINTAINABILITY_INDEX metric.
     '''
 
     def __init__(self,
@@ -133,13 +133,13 @@ class MaxMaintainabilityIndexMetric(Metric):
         data (dict[str, (int, MeanHalsteadVolumeMetric, MeanCyclomaticComplexityMetric)]):
         dictionary that stores metrics for each viewed file.
         '''
-        super().__init__(MAX_MAINTAINABILITY_INDEX)
+        super().__init__(MIN_MAINTAINABILITY_INDEX)
         self.data = data
 
     def __add__(self, other):
-        if not isinstance(other, MaxMaintainabilityIndexMetric):
+        if not isinstance(other, MinMaintainabilityIndexMetric):
             raise NotImplementedError
-        return MaxMaintainabilityIndexMetric(
+        return MinMaintainabilityIndexMetric(
             _merge_data(self.data, other.data)
         )
 
@@ -148,8 +148,8 @@ class MaxMaintainabilityIndexMetric(Metric):
         Returns metric value.
         '''
         if len(self.data) == 0:
-            return MAX_MAINTAINABILITY_INDEX, 0
-        result = 0
+            return MIN_MAINTAINABILITY_INDEX, 0
+        result = 1e5
         for file_name, item in self.data.items():
             loc, volume, cyclomatic = item
             if volume.data[file_name].volume() == 0 or loc == 0:
@@ -158,12 +158,12 @@ class MaxMaintainabilityIndexMetric(Metric):
                         171
                         - 5.2 * math.log(volume.data[file_name].volume().real)
                         - 0.23 * cyclomatic.sum_value - 16.2 * math.log(loc))
-            result = max(result, value)
-        return MAX_MAINTAINABILITY_INDEX, result
+            result = min(result, value)
+        return MIN_MAINTAINABILITY_INDEX, result
 
-class MaxMaintainabilityIndexCalculator(ClangMetricCalculator):
+class MinMaintainabilityIndexCalculator(ClangMetricCalculator):
     '''
-    Calculates MAX_MAINTAINABILITY_INDEX.
+    Calculates MIN_MAINTAINABILITY_INDEX.
     '''
 
     def __init__(self):
@@ -179,11 +179,11 @@ class MaxMaintainabilityIndexCalculator(ClangMetricCalculator):
             location = node.spelling
         else:
             location = node.location.file.name
-        return MaxMaintainabilityIndexMetric({
+        return MinMaintainabilityIndexMetric({
             location: (
                     loc,
                     self.__volume_calc(node),
-                    self.__cyclomatic_calc(node) 
+                    self.__cyclomatic_calc(node)
                 )
         })
 
