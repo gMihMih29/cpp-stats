@@ -307,9 +307,9 @@ def test_create_data_wiki(clang_index: clang.cindex.Index, distinct_operators_wi
     expected_number_of_operands = 15
 
     if platform.system() == "Linux":
-        halstead_data = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"]._data["tests/data/analyze/halstead/wiki/wiki.hpp"]
+        halstead_data = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"].data["tests/data/analyze/halstead/wiki/wiki.hpp"]
     elif platform.system() == "Windows":
-        halstead_data = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"]._data["tests\\data\\analyze\\halstead\\wiki\\wiki.hpp"]
+        halstead_data = result["MEAN_HALSTEAD_PROGRAM_VOCABULARY"].data["tests\\data\\analyze\\halstead\\wiki\\wiki.hpp"]
     assert len(halstead_data.n1) == len(distinct_operators_wiki)
     assert len(halstead_data.n2) == len(distinct_operands_wiki)
     assert halstead_data.N1 == expected_number_of_operators
