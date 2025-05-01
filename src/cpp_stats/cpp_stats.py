@@ -54,13 +54,15 @@ class CppStats:
             'MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
             'MEAN_MAINTAINABILITY_INDEX',
             'MIN_MAINTAINABILITY_INDEX',
+            'MEAN_CAMC',
+            'MIN_CAMC',
+            'MAX_CAMC',
             # 'LCOM',
             # 'LCOM2',
             # 'LCOM3',
             # 'LCOM4',
             # 'TCC',
             # 'LCC',
-            # 'CAMC',
             ]
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))

@@ -19,6 +19,9 @@ from cpp_stats.metrics.halstead import program_vocabulary, program_length, estim
 from cpp_stats.metrics.halstead import volume, difficulty, effort, time_to_program, delivered_bugs
 from cpp_stats.metrics.maintainability_index import MeanMaintainabilityIndexCalculator
 from cpp_stats.metrics.maintainability_index import MinMaintainabilityIndexCalculator
+from cpp_stats.metrics.camc import MinCAMCCalculator
+from cpp_stats.metrics.camc import MeanCAMCCalculator
+from cpp_stats.metrics.camc import MaxCAMCCalculator
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.ast.ast_tree import analyze_ast
 
@@ -80,6 +83,9 @@ class CodeAnalyzer:
                 MeanMaintainabilityIndexCalculator(),
             'MIN_MAINTAINABILITY_INDEX':
                 MinMaintainabilityIndexCalculator(),
+            'MEAN_CAMC': MeanCAMCCalculator(),
+            'MIN_CAMC': MinCAMCCalculator(),
+            'MAX_CAMC': MaxCAMCCalculator()
         }
         self._cache = {
             'LINES_OF_CODE' : None,

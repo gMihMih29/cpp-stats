@@ -65,7 +65,6 @@ class MaxHalsteadMetric(Metric):
         for _, halstead_data in self.data.items():
             if math.isnan(self._type.value_source(halstead_data).real):
                 continue
-            print(self._type.value_source(halstead_data).real)
             result = max(result, self._type.value_source(halstead_data).real)
         return self.name(), result
 
