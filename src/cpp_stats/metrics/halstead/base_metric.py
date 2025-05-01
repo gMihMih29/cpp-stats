@@ -16,19 +16,19 @@ class MeanHalsteadMetric(Metric):
     def __init__(self, name, true_type, data: dict[str, base.HalsteadData]):
         super().__init__(name)
         self._type = true_type
-        self._data = data
+        self.data = data
 
     def __add__(self, other):
         if not isinstance(other, self._type):
             raise NotImplementedError
         return self._type(
-            base.merge_data(self._data, other._data)
+            base.merge_data(self.data, other.data)
         )
 
     def get(self) -> tuple[str, float]:
         sum_vocabulary = 0
-        cnt_files = len(self._data)
-        for _, halstead_data in self._data.items():
+        cnt_files = len(self.data)
+        for _, halstead_data in self.data.items():
             if math.isnan(self._type.value_source(halstead_data).real):
                 continue
             sum_vocabulary += self._type.value_source(halstead_data).real
@@ -51,18 +51,18 @@ class MaxHalsteadMetric(Metric):
     def __init__(self, name, true_type, data: dict[str, base.HalsteadData]):
         super().__init__(name)
         self._type = true_type
-        self._data = data
+        self.data = data
 
     def __add__(self, other):
         if not isinstance(other, self._type):
             raise NotImplementedError
         return self._type(
-            base.merge_data(self._data, other._data)
+            base.merge_data(self.data, other.data)
         )
 
     def get(self) -> tuple[str, float]:
         result = 0.0
-        for _, halstead_data in self._data.items():
+        for _, halstead_data in self.data.items():
             if math.isnan(self._type.value_source(halstead_data).real):
                 continue
             print(self._type.value_source(halstead_data).real)
@@ -85,6 +85,12 @@ class HalsteadCalculator(ClangMetricCalculator):
         self._metric_type = metric_type
 
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
+        if node.kind.is_translation_unit():
+            return self._metric_type(
+            {
+                node.spelling: base.create_data(node)
+            }
+        )
         return self._metric_type(
             {
                 node.location.file.name: base.create_data(node)

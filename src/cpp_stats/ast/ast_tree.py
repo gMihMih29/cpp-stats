@@ -41,14 +41,15 @@ def _analyze_children(
     cursor: clang.cindex.Cursor,
     analyzed_file: str
     ):
+    for clc in calculators.items():
+        metric = clc[1](cursor)
+        if result.get(metric.name(), None) is None:
+            result[metric.name()] = metric
+        else:
+            result[metric.name()] += metric
     for child in cursor.get_children():
-        if (child.location.file is None or
-            child.translation_unit.spelling != child.location.file.name):
+        if (not child.kind.is_translation_unit() and
+            (child.location.file is None or
+            child.translation_unit.spelling != child.location.file.name)):
             continue
-        for clc in calculators.items():
-            metric = clc[1](child)
-            if result.get(metric.name(), None) is None:
-                result[metric.name()] = metric
-            else:
-                result[metric.name()] += metric
         _analyze_children(result, calculators, child, analyzed_file)
