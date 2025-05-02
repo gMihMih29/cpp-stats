@@ -1,3 +1,7 @@
+'''
+Contains base logic for work with argument types of methods.
+'''
+
 import clang.cindex
 
 from cpp_stats.metrics.utils import mangle_cursor_name

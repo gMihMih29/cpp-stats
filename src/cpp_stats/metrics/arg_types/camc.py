@@ -1,5 +1,5 @@
 '''
-Module for MEAN_CYCLOMATIC_COMPLEXITY and MAX_CYCLOMATIC_COMPLEXITY metrics.
+Module for MEAN_CAMC, MAX_CAMC and MIN_CAMC metrics.
 '''
 
 import clang.cindex
