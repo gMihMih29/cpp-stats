@@ -68,8 +68,10 @@ class CppStats:
             'MAX_LCOM3',
             'MEAN_LCOM4',
             'MAX_LCOM4',
-            # 'TCC',
-            # 'LCC',
+            'MEAN_TCC',
+            'MIN_TCC',
+            'MEAN_LCC',
+            'MIN_LCC',
             ]
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))

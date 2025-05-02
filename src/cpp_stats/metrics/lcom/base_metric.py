@@ -104,11 +104,15 @@ class MinLCOMMetric(Metric):
         '''
         Returns value of metric based on value_source.
         '''
-        result = 0.0
+        result = None
         for _, lcom_data in self.data.items():
-            if math.isnan(self._type.value_source(lcom_data).real):
+            value = self._type.value_source(lcom_data).real
+            if math.isnan(value):
                 continue
-            result = min(result, self._type.value_source(lcom_data).real)
+            if result is None:
+                result = value
+            else:
+                result = min(result, value)
         return self.name(), result
 
     @classmethod

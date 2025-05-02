@@ -29,6 +29,8 @@ from cpp_stats.metrics.lcom.lcom1 import MeanLCOM1Calculator, MaxLCOM1Calculator
 from cpp_stats.metrics.lcom.lcom2 import MeanLCOM2Calculator, MaxLCOM2Calculator
 from cpp_stats.metrics.lcom.lcom3 import MeanLCOM3Calculator, MaxLCOM3Calculator
 from cpp_stats.metrics.lcom.lcom4 import MeanLCOM4Calculator, MaxLCOM4Calculator
+from cpp_stats.metrics.lcom.tcc_lcc.lcc import MeanLCCCalculator, MinLCCCalculator
+from cpp_stats.metrics.lcom.tcc_lcc.tcc import MeanTCCCalculator, MinTCCCalculator
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.ast.ast_tree import analyze_ast
 
@@ -104,6 +106,10 @@ class CodeAnalyzer:
             'MAX_LCOM3': MaxLCOM3Calculator(),
             'MEAN_LCOM4': MeanLCOM4Calculator(),
             'MAX_LCOM4': MaxLCOM4Calculator(),
+            'MEAN_TCC': MeanTCCCalculator(),
+            'MIN_TCC': MinTCCCalculator(),
+            'MEAN_LCC': MeanLCCCalculator(),
+            'MIN_LCC': MinLCCCalculator(),
         }
         self._cache = {
             'LINES_OF_CODE' : None,
