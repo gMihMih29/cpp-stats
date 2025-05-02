@@ -1,13 +1,11 @@
 '''
 Contains main logic for calculating LCOM metrics.
 '''
-
-import cmath
-
 from clang.cindex import CursorKind, Cursor
 
 from cpp_stats.metrics.utils import mangle_cursor_name
 
+# pylint: disable=R0903
 class LCOMMethodData:
     '''
     Contains methods and fields which are used by method 'method_name'.
@@ -25,6 +23,7 @@ class LCOMMethodData:
         self.used_methods = used_methods
         self.used_fields = used_fields
 
+# pylint: disable=R0903
 class LCOMClassData:
     '''
     Contains information about used methods and fields
@@ -87,4 +86,3 @@ def merge_class_lcom_data(lhv: dict[str, LCOMClassData], rhv: dict[str, LCOMClas
         else:
             new_dict[key] += value
     return new_dict
-

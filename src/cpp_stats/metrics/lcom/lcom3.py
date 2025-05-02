@@ -21,8 +21,8 @@ class MeanLCOM3Metric(MeanLCOMMetric):
     '''
 
     @classmethod
-    def value_source(cls, class_data: LCOMClassData):
-        return _get_lcom3(class_data)
+    def value_source(cls, lcom_data: LCOMClassData):
+        return _get_lcom3(lcom_data)
 
     def __init__(self, data: dict[str, LCOMClassData]):
         super().__init__(
@@ -31,6 +31,7 @@ class MeanLCOM3Metric(MeanLCOMMetric):
             data
         )
 
+# pylint: disable=R0903
 class MeanLCOM3Calculator(LCOMCalculator):
     '''
     Calculates MEAN_LCOM3.
@@ -47,8 +48,8 @@ class MaxLCOM3Metric(MaxLCOMMetric):
     '''
 
     @classmethod
-    def value_source(cls, class_data: LCOMClassData):
-        return _get_lcom3(class_data)
+    def value_source(cls, lcom_data: LCOMClassData):
+        return _get_lcom3(lcom_data)
 
     def __init__(self, data: dict[str, LCOMClassData]):
         super().__init__(
@@ -57,6 +58,7 @@ class MaxLCOM3Metric(MaxLCOMMetric):
             data
         )
 
+# pylint: disable=R0903
 class MaxLCOM3Calculator(LCOMCalculator):
     '''
     Calculates MAX_LCOM3.

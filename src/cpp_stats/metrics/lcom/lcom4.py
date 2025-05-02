@@ -48,8 +48,8 @@ class MeanLCOM4Metric(MeanLCOMMetric):
     '''
 
     @classmethod
-    def value_source(cls, class_data: LCOMClassData):
-        return _get_lcom4(class_data)
+    def value_source(cls, lcom_data: LCOMClassData):
+        return _get_lcom4(lcom_data)
 
     def __init__(self, data: dict[str, LCOMClassData]):
         super().__init__(
@@ -58,6 +58,7 @@ class MeanLCOM4Metric(MeanLCOMMetric):
             data
         )
 
+# pylint: disable=R0903
 class MeanLCOM4Calculator(LCOMCalculator):
     '''
     Calculates MEAN_LCOM4.
@@ -74,8 +75,8 @@ class MaxLCOM4Metric(MaxLCOMMetric):
     '''
 
     @classmethod
-    def value_source(cls, class_data: LCOMClassData):
-        return _get_lcom4(class_data)
+    def value_source(cls, lcom_data: LCOMClassData):
+        return _get_lcom4(lcom_data)
 
     def __init__(self, data: dict[str, LCOMClassData]):
         super().__init__(
@@ -84,6 +85,7 @@ class MaxLCOM4Metric(MaxLCOMMetric):
             data
         )
 
+# pylint: disable=R0903
 class MaxLCOM4Calculator(LCOMCalculator):
     '''
     Calculates MAX_LCOM4.

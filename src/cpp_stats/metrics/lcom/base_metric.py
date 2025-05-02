@@ -8,6 +8,7 @@ import clang.cindex
 from cpp_stats.metrics.metric_calculator import Metric, ClangMetricCalculator
 from cpp_stats.metrics.lcom import base
 
+# pylint: disable=R0801
 class MeanLCOMMetric(Metric):
     '''
     Represents abstract mean lcom metric.
@@ -43,6 +44,7 @@ class MeanLCOMMetric(Metric):
         Returns value used by MeanLCOMMetric during calculations
         '''
 
+# pylint: disable=R0801
 class MaxLCOMMetric(Metric):
     '''
     Represents abstract max lcom metric.
