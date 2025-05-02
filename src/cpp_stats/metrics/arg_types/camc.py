@@ -118,7 +118,7 @@ class MinCAMCMetric(Metric):
             else:
                 value = min(value, class_value)
         if value is None:
-            return MIN_CAMC, value
+            return MIN_CAMC, 0
         return MIN_CAMC, value
 
 class MinCAMCCalculator(ClangMetricCalculator):
@@ -187,7 +187,7 @@ class MaxCAMCMetric(Metric):
             else:
                 value = max(value, class_value)
         if value is None:
-            return MAX_CAMC, value
+            return MAX_CAMC, 0
         return MAX_CAMC, value
 
 class MaxCAMCCalculator(ClangMetricCalculator):
