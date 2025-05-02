@@ -1,7 +1,7 @@
 import pytest
 import pathlib
 
-from cpp_stats.metrics.camc import MeanCAMCCalculator, MinCAMCCalculator, MaxCAMCCalculator
+from cpp_stats.metrics.arg_types.camc import MeanCAMCCalculator, MinCAMCCalculator, MaxCAMCCalculator
 from cpp_stats.ast.ast_tree import analyze_ast
 
 import clang.cindex

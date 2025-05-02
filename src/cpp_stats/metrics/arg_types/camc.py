@@ -6,49 +6,11 @@ import clang.cindex
 
 from cpp_stats.metrics.metric_calculator import Metric, ClangMetricCalculator
 
-from cpp_stats.metrics.utils import mangle_cursor_name
+from cpp_stats.metrics.arg_types.base import merge_argument_data, get_argument_data
 
 MEAN_CAMC = 'MEAN_CAMC'
 MIN_CAMC = 'MIN_CAMC'
 MAX_CAMC = 'MAX_CAMC'
-
-def _merge_class_data(lhv: dict[str, set[str]], rhv: dict[str, set[str]]):
-    result = {}
-    for key, item in lhv.items():
-        result[key] = item
-    for key, item in rhv.items():
-        if result.get(key, None) is None:
-            result[key] = item
-        else:
-            result[key] |= item
-    return result
-
-def _merge_data(lhv: dict[str, dict[str, set[str]]], rhv: dict[str, dict[str, set[str]]]):
-    result = {}
-    for key, item in lhv.items():
-        result[key] = item
-    for key, item in rhv.items():
-        if result.get(key, None) is None:
-            result[key] = item
-        else:
-            result[key] = _merge_class_data(result[key], item)
-    return result
-
-def _get_set_of_argument_types(method: clang.cindex.Cursor) -> set[str]:
-    result = set([])
-    for child in method.get_children():
-        if child.kind == clang.cindex.CursorKind.COMPOUND_STMT:
-            break
-        if child.kind == clang.cindex.CursorKind.PARM_DECL:
-            result |= set([child.type.spelling])
-    return result
-
-def _get_data(method: clang.cindex.Cursor):
-    return {
-        mangle_cursor_name(method.semantic_parent): {
-            method.mangled_name: _get_set_of_argument_types(method)
-        }
-    }
 
 class MeanCAMCMetric(Metric):
     '''
@@ -69,7 +31,7 @@ class MeanCAMCMetric(Metric):
     def __add__(self, other):
         if not isinstance(other, MeanCAMCMetric):
             raise NotImplementedError
-        return MeanCAMCMetric(_merge_data(self.data, other.data))
+        return MeanCAMCMetric(merge_argument_data(self.data, other.data))
 
     def get(self) -> tuple[str, float]:
         '''
@@ -98,7 +60,7 @@ class MeanCAMCCalculator(ClangMetricCalculator):
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
         if not self.validate_cursor(node):
             return MeanCAMCMetric({})
-        return MeanCAMCMetric(_get_data(node))
+        return MeanCAMCMetric(get_argument_data(node))
 
     def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
         '''
@@ -132,7 +94,7 @@ class MinCAMCMetric(Metric):
     def __add__(self, other):
         if not isinstance(other, MinCAMCMetric):
             raise NotImplementedError
-        return MinCAMCMetric(_merge_data(self.data, other.data))
+        return MinCAMCMetric(merge_argument_data(self.data, other.data))
 
     def get(self) -> tuple[str, float]:
         '''
@@ -167,7 +129,7 @@ class MinCAMCCalculator(ClangMetricCalculator):
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
         if not self.validate_cursor(node):
             return MinCAMCMetric({})
-        return MinCAMCMetric(_get_data(node))
+        return MinCAMCMetric(get_argument_data(node))
 
     def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
         '''
@@ -201,7 +163,7 @@ class MaxCAMCMetric(Metric):
     def __add__(self, other):
         if not isinstance(other, MaxCAMCMetric):
             raise NotImplementedError
-        return MaxCAMCMetric(_merge_data(self.data, other.data))
+        return MaxCAMCMetric(merge_argument_data(self.data, other.data))
 
     def get(self) -> tuple[str, float]:
         '''
@@ -236,7 +198,7 @@ class MaxCAMCCalculator(ClangMetricCalculator):
     def __call__(self, node: clang.cindex.Cursor) -> Metric:
         if not self.validate_cursor(node):
             return MaxCAMCMetric({})
-        return MaxCAMCMetric(_get_data(node))
+        return MaxCAMCMetric(get_argument_data(node))
 
     def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
         '''
