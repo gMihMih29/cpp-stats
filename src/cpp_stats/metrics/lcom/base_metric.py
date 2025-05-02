@@ -27,6 +27,9 @@ class MeanLCOMMetric(Metric):
         )
 
     def get(self) -> tuple[str, float]:
+        '''
+        Returns value of metric based on value_source.
+        '''
         summ = 0
         cnt = len(self.data)
         for _, lcom_data in self.data.items():
@@ -63,6 +66,9 @@ class MaxLCOMMetric(Metric):
         )
 
     def get(self) -> tuple[str, float]:
+        '''
+        Returns value of metric based on value_source.
+        '''
         result = 0.0
         for _, lcom_data in self.data.items():
             if math.isnan(self._type.value_source(lcom_data).real):
@@ -94,6 +100,9 @@ class LCOMCalculator(ClangMetricCalculator):
         })
 
     def validate_cursor(self, cursor: clang.cindex.Cursor) -> bool:
+        '''
+        Checks that given cursor can be used for calculation.
+        '''
         return (
             cursor.kind in [
                 clang.cindex.CursorKind.CXX_METHOD,
