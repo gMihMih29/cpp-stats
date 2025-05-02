@@ -171,7 +171,7 @@ class MaxCAMCMetric(Metric):
         '''
         value = None
         if len(self.data) == 0:
-            return MIN_CAMC, 0
+            return MAX_CAMC, 0
         for _, class_methods in self.data.items():
             all_types = set([])
             for _, argument_types in class_methods.items():
@@ -187,8 +187,8 @@ class MaxCAMCMetric(Metric):
             else:
                 value = max(value, class_value)
         if value is None:
-            return MIN_CAMC, value
-        return MIN_CAMC, value
+            return MAX_CAMC, value
+        return MAX_CAMC, value
 
 class MaxCAMCCalculator(ClangMetricCalculator):
     '''
