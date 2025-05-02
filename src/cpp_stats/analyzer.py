@@ -25,6 +25,10 @@ from cpp_stats.metrics.arg_types.camc import MaxCAMCCalculator
 from cpp_stats.metrics.arg_types.nhd import MinNHDCalculator
 from cpp_stats.metrics.arg_types.nhd import MeanNHDCalculator
 from cpp_stats.metrics.arg_types.nhd import MaxNHDCalculator
+from cpp_stats.metrics.lcom.lcom1 import MeanLCOM1Calculator, MaxLCOM1Calculator
+from cpp_stats.metrics.lcom.lcom2 import MeanLCOM2Calculator, MaxLCOM2Calculator
+from cpp_stats.metrics.lcom.lcom3 import MeanLCOM3Calculator, MaxLCOM3Calculator
+from cpp_stats.metrics.lcom.lcom4 import MeanLCOM4Calculator, MaxLCOM4Calculator
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.ast.ast_tree import analyze_ast
 
@@ -91,7 +95,15 @@ class CodeAnalyzer:
             'MAX_CAMC': MaxCAMCCalculator(),
             'MEAN_NHD': MeanNHDCalculator(),
             'MIN_NHD': MinNHDCalculator(),
-            'MAX_NHD': MaxNHDCalculator()
+            'MAX_NHD': MaxNHDCalculator(),
+            'MEAN_LCOM1': MeanLCOM1Calculator(),
+            'MAX_LCOM1': MaxLCOM1Calculator(),
+            'MEAN_LCOM2': MeanLCOM2Calculator(),
+            'MAX_LCOM2': MaxLCOM2Calculator(),
+            'MEAN_LCOM3': MeanLCOM3Calculator(),
+            'MAX_LCOM3': MaxLCOM3Calculator(),
+            'MEAN_LCOM4': MeanLCOM4Calculator(),
+            'MAX_LCOM4': MaxLCOM4Calculator(),
         }
         self._cache = {
             'LINES_OF_CODE' : None,
