@@ -79,7 +79,42 @@ class MaxLCOMMetric(Metric):
     @classmethod
     def value_source(cls, lcom_data: base.LCOMClassData) -> float:
         '''
-        Returns value used by MeanLCOMMetric during calculations
+        Returns value used by MaxLCOMMetric during calculations
+        '''
+
+# pylint: disable=R0801
+class MinLCOMMetric(Metric):
+    '''
+    Represents abstract min lcom metric.
+    '''
+
+    def __init__(self, name, true_type, data: dict[str, base.LCOMClassData]):
+        super().__init__(name)
+        self._type = true_type
+        self.data = data
+
+    def __add__(self, other):
+        if not isinstance(other, self._type):
+            raise NotImplementedError
+        return self._type(
+            base.merge_class_lcom_data(self.data, other.data)
+        )
+
+    def get(self) -> tuple[str, float]:
+        '''
+        Returns value of metric based on value_source.
+        '''
+        result = 0.0
+        for _, lcom_data in self.data.items():
+            if math.isnan(self._type.value_source(lcom_data).real):
+                continue
+            result = min(result, self._type.value_source(lcom_data).real)
+        return self.name(), result
+
+    @classmethod
+    def value_source(cls, lcom_data: base.LCOMClassData) -> float:
+        '''
+        Returns value used by MinLCOMMetric during calculations
         '''
 
 class LCOMCalculator(ClangMetricCalculator):
