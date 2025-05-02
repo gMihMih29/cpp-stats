@@ -22,6 +22,9 @@ from cpp_stats.metrics.maintainability_index import MinMaintainabilityIndexCalcu
 from cpp_stats.metrics.arg_types.camc import MinCAMCCalculator
 from cpp_stats.metrics.arg_types.camc import MeanCAMCCalculator
 from cpp_stats.metrics.arg_types.camc import MaxCAMCCalculator
+from cpp_stats.metrics.arg_types.nhd import MinNHDCalculator
+from cpp_stats.metrics.arg_types.nhd import MeanNHDCalculator
+from cpp_stats.metrics.arg_types.nhd import MaxNHDCalculator
 from cpp_stats.metrics.metric_calculator import Metric
 from cpp_stats.ast.ast_tree import analyze_ast
 
@@ -85,7 +88,10 @@ class CodeAnalyzer:
                 MinMaintainabilityIndexCalculator(),
             'MEAN_CAMC': MeanCAMCCalculator(),
             'MIN_CAMC': MinCAMCCalculator(),
-            'MAX_CAMC': MaxCAMCCalculator()
+            'MAX_CAMC': MaxCAMCCalculator(),
+            'MEAN_NHD': MeanNHDCalculator(),
+            'MIN_NHD': MinNHDCalculator(),
+            'MAX_NHD': MaxNHDCalculator()
         }
         self._cache = {
             'LINES_OF_CODE' : None,
