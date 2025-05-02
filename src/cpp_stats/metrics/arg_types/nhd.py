@@ -117,7 +117,7 @@ class MinNHDMetric(Metric):
             else:
                 value = min(value, nhd)
         if value is None:
-            return MIN_NHD, value
+            return MIN_NHD, 0
         return MIN_NHD, value
 
 class MinNHDCalculator(ClangMetricCalculator):
@@ -170,7 +170,7 @@ class MaxNHDMetric(Metric):
         '''
         value = None
         if len(self.data) == 0:
-            return MIN_NHD, 0
+            return MAX_NHD, 0
         for _, class_methods in self.data.items():
             nhd = _calculate_nhd(class_methods)
             if value is None:
@@ -178,8 +178,8 @@ class MaxNHDMetric(Metric):
             else:
                 value = max(value, nhd)
         if value is None:
-            return MIN_NHD, value
-        return MIN_NHD, value
+            return MAX_NHD, 0
+        return MAX_NHD, value
 
 class MaxNHDCalculator(ClangMetricCalculator):
     '''
