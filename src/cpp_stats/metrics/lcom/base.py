@@ -63,10 +63,10 @@ def get_lcom_data(cursor: Cursor) -> LCOMClassData:
             continue
         if (node.referenced.kind == CursorKind.CXX_METHOD
             and node.referenced.semantic_parent == cursor.semantic_parent):
-            method_data.used_methods = method_data.used_methods | set([node.referenced.mangled_name])
+            method_data.used_methods |= set([node.referenced.mangled_name])
         if (node.referenced.kind == CursorKind.FIELD_DECL
             and node.referenced.semantic_parent == cursor.semantic_parent):
-            method_data.used_fields = method_data.used_fields | set([node.referenced.spelling])
+            method_data.used_fields |= set([node.referenced.spelling])
     return LCOMClassData(
         class_name,
         {
