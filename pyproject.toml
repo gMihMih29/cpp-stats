@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cpp-stats"
+version = "1.0.0"
+authors = [
+    { name = "Mikhail Getmanov" }
+]
+description = "Calculation of metrics for C/C++ repositories"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.scripts]
+cpp-stats = "src.main:main"
+
+[tool.setuptools.packages.find]
+include = ["src*"]
