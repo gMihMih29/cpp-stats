@@ -21,7 +21,7 @@ dependencies = [
 ]
 
 [project.scripts]
-cpp-stats = "src.cpp_stats.main:main"
+cpp-stats = "cpp_stats.main:main"
 
 [tool.setuptools.packages.find]
-include = ["src*"]
+include = ["cpp_stats*"]
