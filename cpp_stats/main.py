@@ -11,7 +11,7 @@ from cpp_stats.cpp_stats import CppStats
 @click.argument('path_to_repo')
 def main(path_to_repo, report):
     '''
-    Main function of programm that calculates metrics for a given 
+    Main function of program that calculates metrics for a given 
     C/C++ repository and stores report in XML file.
     
     Parameters:
