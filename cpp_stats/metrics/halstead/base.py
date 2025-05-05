@@ -167,7 +167,8 @@ def create_data(node: Cursor) -> HalsteadData:
     result = HalsteadData(set(), set(), 0, 0)
 
     try:
-        if node.lexical_parent is not None and node.lexical_parent.kind == CursorKind.TRANSLATION_UNIT:
+        if (node.lexical_parent is not None 
+            and node.lexical_parent.kind == CursorKind.TRANSLATION_UNIT):
             result += __find_remaining_operators(node)
 
         if node.kind in [
@@ -433,7 +434,7 @@ def create_data(node: Cursor) -> HalsteadData:
             else:
                 result.n1 |= set([node.referenced.mangled_name])
                 result.N1 += 1
-    except Exception as _:
+    except OSError as _:
         pass
     return result
 
