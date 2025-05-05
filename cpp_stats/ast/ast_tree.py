@@ -25,8 +25,7 @@ def analyze_ast(index: clang.cindex.Index, repo_path: str, c_cxx_files: list[Pat
     args = ["-x", "c++"]
     for root, _, _ in os.walk(repo_path):
         args.extend(["-I", root])
-    for i, file_path in enumerate(c_cxx_files):
-        print(f"[{i}/{len(c_cxx_files)}] - {file_path}")
+    for _, file_path in enumerate(c_cxx_files):
         translation_unit = index.parse(file_path, args=args)
         _analyze_children(
             result,
