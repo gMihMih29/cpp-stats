@@ -13,6 +13,8 @@ def __get_direct_connections(data: LCOMClassData) -> (set[str], dict[str, set[st
         direct_connections[field] = set([])
     for method_name, method_data in data.method_data.items():
         for field in method_data.used_fields:
+            if field not in direct_connections:
+                direct_connections[field] = set([])
             direct_connections[field].add(method_name)
 
     direct_connections_set = set([])

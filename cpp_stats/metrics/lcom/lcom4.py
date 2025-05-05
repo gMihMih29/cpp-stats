@@ -21,9 +21,12 @@ def _get_lcom4(data: LCOMClassData) -> float:
         graph[field] = set([])
         nodes.add(field)
     for key, value in data.method_data.items():
-        graph[key] = set([])
+        if key not in graph:
+            graph[key] = set([])
         nodes.add(key)
         for field in value.used_fields:
+            if field not in graph:
+                graph[field] = set([])
             graph[field] |= set([key])
             graph[key] |= set([field])
         for method in value.used_methods:
