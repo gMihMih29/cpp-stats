@@ -15,8 +15,8 @@ Base statistics include:
 - avg/max halstead estimated program length
 - avg/max halstead volume
 - avg/max halstead difficulty
-- avg/max halstead effort
-- avg/max halstead time required to program
+- avg/sum/max halstead effort
+- avg/sum/max halstead time required to program
 - avg/max halstead number of delivered bugs
 - avg/min maintainability index
 - avg/min/max cohesion among methods of class
