@@ -167,7 +167,7 @@ def create_data(node: Cursor) -> HalsteadData:
     result = HalsteadData(set(), set(), 0, 0)
 
     try:
-        if (node.lexical_parent is not None 
+        if (node.lexical_parent is not None
             and node.lexical_parent.kind == CursorKind.TRANSLATION_UNIT):
             result += __find_remaining_operators(node)
 
