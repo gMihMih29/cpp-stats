@@ -1,0 +1,56 @@
+<report>
+    <report-time>05.05.2025</report-time>
+    <repository-path>D:\programming\tmp\cpp-dotenv</repository-path>
+    <metrics>
+        <metric name="NUMBER_OF_C_C++_FILES">357</metric>
+        <metric name="LINES_OF_CODE">33741</metric>
+        <metric name="NUMBER_OF_CLASSES">207</metric>
+        <metric name="MEAN_NUMBER_OF_METHODS_PER_CLASS">6.575916230366492</metric>
+        <metric name="MAX_NUMBER_OF_METHODS_PER_CLASS">61</metric>
+        <metric name="MEAN_LENGTH_OF_METHODS">9.903662420382165</metric>
+        <metric name="MAX_LENGTH_OF_METHODS">376</metric>
+        <metric name="MEAN_CYCLOMATIC_COMPLEXITY">1.8824902723735408</metric>
+        <metric name="MAX_CYCLOMATIC_COMPLEXITY">34</metric>
+        <metric name="MEAN_COGNITIVE_COMPLEXITY">1.3704280155642024</metric>
+        <metric name="MAX_COGNITIVE_COMPLEXITY">65</metric>
+        <metric name="MEAN_HALSTEAD_PROGRAM_VOCABULARY">54.72549019607843</metric>
+        <metric name="MAX_HALSTEAD_PROGRAM_VOCABULARY">607</metric>
+        <metric name="MEAN_HALSTEAD_PROGRAM_LENGTH">196.67226890756302</metric>
+        <metric name="MAX_HALSTEAD_PROGRAM_LENGTH">3708</metric>
+        <metric name="MEAN_HALSTEAD_ESTIMATED_PROGRAM_LENGTH">298.31648000623477</metric>
+        <metric name="MAX_HALSTEAD_ESTIMATED_PROGRAM_LENGTH">5112.982360230688</metric>
+        <metric name="MEAN_HALSTEAD_VOLUME">1376.5647279614154</metric>
+        <metric name="MAX_HALSTEAD_VOLUME">34282.50943479608</metric>
+        <metric name="MEAN_HALSTEAD_DIFFICULTY">23.467958896156464</metric>
+        <metric name="MAX_HALSTEAD_DIFFICULTY">239.275</metric>
+        <metric name="MEAN_HALSTEAD_EFFORT">135608.66482503514</metric>
+        <metric name="MAX_HALSTEAD_EFFORT">7014155.821699276</metric>
+        <metric name="SUM_HALSTEAD_EFFORT">48412293.342537545</metric>
+        <metric name="MEAN_HALSTEAD_TIME_REQUIRED_TO_PROGRAM">7533.81471250195</metric>
+        <metric name="MAX_HALSTEAD_TIME_REQUIRED_TO_PROGRAM">389675.3234277375</metric>
+        <metric name="SUM_HALSTEAD_TIME_REQUIRED_TO_PROGRAM">2689571.852363196</metric>
+        <metric name="MEAN_HALSTEAD_NUMBER_OF_DELIVERED_BUGS">0.45885490932047235</metric>
+        <metric name="MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS">11.427503144932025</metric>
+        <metric name="MEAN_MAINTAINABILITY_INDEX">72.27515848157475</metric>
+        <metric name="MIN_MAINTAINABILITY_INDEX">0</metric>
+        <metric name="MEAN_CAMC">0.34557578749582907</metric>
+        <metric name="MIN_CAMC">0</metric>
+        <metric name="MAX_CAMC">1.0</metric>
+        <metric name="MEAN_NHD">0.05267370128949359</metric>
+        <metric name="MIN_NHD">0</metric>
+        <metric name="MAX_NHD">1.0</metric>
+        <metric name="MEAN_LCOM1">41.964467005076145</metric>
+        <metric name="MAX_LCOM1">1420.0</metric>
+        <metric name="MEAN_LCOM2">0.3864281363442332</metric>
+        <metric name="MAX_LCOM2">1.0</metric>
+        <metric name="MEAN_LCOM3">0.7888214530270005</metric>
+        <metric name="MAX_LCOM3">2.0</metric>
+        <metric name="MEAN_LCOM4">4.583756345177665</metric>
+        <metric name="MAX_LCOM4">28</metric>
+        <metric name="MEAN_TCC">0.14413106755888072</metric>
+        <metric name="MIN_TCC">0</metric>
+        <metric name="MEAN_LCC">0.16777980307614854</metric>
+        <metric name="MIN_LCC">0</metric>
+    </metrics>
+</report>
+
