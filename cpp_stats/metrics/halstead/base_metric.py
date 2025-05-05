@@ -74,6 +74,37 @@ class MaxHalsteadMetric(Metric):
         Returns value used by MeanHalsteadMetric during calculations
         '''
 
+class SumHalsteadMetric(Metric):
+    '''
+    Represents abstract sum halstead metric.
+    '''
+
+    def __init__(self, name, true_type, data: dict[str, base.HalsteadData]):
+        super().__init__(name)
+        self._type = true_type
+        self.data = data
+
+    def __add__(self, other):
+        if not isinstance(other, self._type):
+            raise NotImplementedError
+        return self._type(
+            base.merge_data(self.data, other.data)
+        )
+
+    def get(self) -> tuple[str, float]:
+        result = 0.0
+        for _, halstead_data in self.data.items():
+            if math.isnan(self._type.value_source(halstead_data).real):
+                continue
+            result += self._type.value_source(halstead_data).real
+        return self.name(), result
+
+    @classmethod
+    def value_source(cls, halstead_data: base.HalsteadData) -> float:
+        '''
+        Returns value used by MeanHalsteadMetric during calculations
+        '''
+
 class HalsteadCalculator(ClangMetricCalculator):
     '''
     Calculates abstract halstead metric.

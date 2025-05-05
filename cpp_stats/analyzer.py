@@ -80,10 +80,14 @@ class CodeAnalyzer:
                 effort.MeanHalsteadEffortCalculator(),
             'MAX_HALSTEAD_EFFORT':
                 effort.MaxHalsteadEffortCalculator(),
+            'SUM_HALSTEAD_EFFORT':
+                effort.SumHalsteadEffortCalculator(),
             'MEAN_HALSTEAD_TIME_REQUIRED_TO_PROGRAM':
                 time_to_program.MeanHalsteadTimeToProgramCalculator(),
             'MAX_HALSTEAD_TIME_REQUIRED_TO_PROGRAM':
                 time_to_program.MaxHalsteadTimeToProgramCalculator(),
+            'SUM_HALSTEAD_TIME_REQUIRED_TO_PROGRAM':
+                time_to_program.SumHalsteadTimeToProgramCalculator(),
             'MEAN_HALSTEAD_NUMBER_OF_DELIVERED_BUGS':
                 delivered_bugs.MeanHalsteadDeliveredBugsCalculator(),
             'MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS':
