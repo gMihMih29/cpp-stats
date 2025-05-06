@@ -58,7 +58,7 @@ def test_calculate_complexity_sum_of_primes(clang_index: clang.cindex.Index):
 
     assert expected == actual
 
-def test_calculate_complexity_sum_of_primes(clang_index: clang.cindex.Index):
+def test_calculate_complexity_sum_of_primes_1(clang_index: clang.cindex.Index):
     tu = clang_index.parse("./tests/data/analyze/cyclomatic_complexity.hpp", args=['-x', 'c++'])
     func = None
     for child in tu.cursor.walk_preorder():
