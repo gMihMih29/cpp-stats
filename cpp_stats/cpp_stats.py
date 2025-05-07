@@ -32,34 +32,59 @@ class CppStats:
             'MAX_NUMBER_OF_METHODS_PER_CLASS',
             'MEAN_LENGTH_OF_METHODS',
             'MAX_LENGTH_OF_METHODS',
-            # 'CYCLOMATIC_COMPLEXITY',
-            # 'MEAN_CYCLOMATIC_COMPLEXITY',
-            # 'MAX_CYCLOMATIC_COMPLEXITY',
+            'MEAN_CYCLOMATIC_COMPLEXITY',
+            'MAX_CYCLOMATIC_COMPLEXITY',
             'MEAN_COGNITIVE_COMPLEXITY',
             'MAX_COGNITIVE_COMPLEXITY',
-            # 'HALSTEAD_PROGRAM_VOCABULARY',
-            # 'HALSTEAD_PROGRAM_LENGTH',
-            # 'HALSTEAD_CALCULATED_ESTIMATED_PROGRAM_LENGTH',
-            # 'HALSTEAD_VOLUME',
-            # 'HALSTEAD_DIFFICULTY',
-            # 'HALSTEAD_EFFORT',
-            # 'HALSTEAD_TIME_REQUIRED',
-            # 'HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
-            # 'MAINTAINABILITY_INDEX',
-            # 'LCOM',
-            # 'LCOM2',
-            # 'LCOM3',
-            # 'LCOM4',
-            # 'TCC',
-            # 'LCC',
-            # 'CAMC',
+            'MEAN_HALSTEAD_PROGRAM_VOCABULARY',
+            'MAX_HALSTEAD_PROGRAM_VOCABULARY',
+            'MEAN_HALSTEAD_PROGRAM_LENGTH',
+            'MAX_HALSTEAD_PROGRAM_LENGTH',
+            'MEAN_HALSTEAD_ESTIMATED_PROGRAM_LENGTH',
+            'MAX_HALSTEAD_ESTIMATED_PROGRAM_LENGTH',
+            'MEAN_HALSTEAD_VOLUME',
+            'MAX_HALSTEAD_VOLUME',
+            'MEAN_HALSTEAD_DIFFICULTY',
+            'MAX_HALSTEAD_DIFFICULTY',
+            'MEAN_HALSTEAD_EFFORT',
+            'MAX_HALSTEAD_EFFORT',
+            'SUM_HALSTEAD_EFFORT',
+            'MEAN_HALSTEAD_TIME_REQUIRED_TO_PROGRAM',
+            'MAX_HALSTEAD_TIME_REQUIRED_TO_PROGRAM',
+            'SUM_HALSTEAD_TIME_REQUIRED_TO_PROGRAM',
+            'MEAN_HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
+            'MAX_HALSTEAD_NUMBER_OF_DELIVERED_BUGS',
+            'MEAN_MAINTAINABILITY_INDEX',
+            'MIN_MAINTAINABILITY_INDEX',
+            'MEAN_CAMC',
+            'MIN_CAMC',
+            'MAX_CAMC',
+            'MEAN_NHD',
+            'MIN_NHD',
+            'MAX_NHD',
+            'MEAN_LCOM1',
+            'MAX_LCOM1',
+            'MEAN_LCOM2',
+            'MAX_LCOM2',
+            'MEAN_LCOM3',
+            'MAX_LCOM3',
+            'MEAN_LCOM4',
+            'MAX_LCOM4',
+            'MEAN_TCC',
+            'MIN_TCC',
+            'MEAN_LCC',
+            'MIN_LCC',
             ]
 
         self._files = sieve_c_cxx_files(Path(self._path_to_repo))
         if use_clang:
-            self._analyzer = CodeAnalyzer(self._files, os.getenv('LIBCLANG_LIBRARY_PATH'))
+            self._analyzer = CodeAnalyzer(
+                path_to_repo,
+                self._files,
+                os.getenv('LIBCLANG_LIBRARY_PATH')
+            )
         else:
-            self._analyzer = CodeAnalyzer(self._files, None)
+            self._analyzer = CodeAnalyzer(path_to_repo, self._files, None)
 
     def list(self) -> list[str]:
         '''
@@ -79,7 +104,7 @@ class CppStats:
             return metric_name, len(self._files)
         metric = self._analyzer.metric(metric_name)
         if metric is None:
-            return None
+            return "None", None
         return metric.get()
 
     def as_xml(self):

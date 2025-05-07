@@ -11,7 +11,7 @@ def test_when_nested_then_check_nested_class(clang_index: clang.cindex.Index):
     calculators = {METRIC_NAME: NumberOfClassesCalculator()}
     expected = 1
 
-    result = analyze_ast(clang_index, files, calculators)
+    result = analyze_ast(clang_index, "./tests/data/analyze/", files, calculators)
 
     _, actual = result[METRIC_NAME].get()
     assert expected == actual

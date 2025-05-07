@@ -3,12 +3,13 @@ Module for creating ast tree based on clang tree for calculating metric.
 '''
 
 from pathlib import Path
+import os
 
 import clang.cindex
 
 from cpp_stats.metrics.metric_calculator import ClangMetricCalculator, Metric
 
-def analyze_ast(index: clang.cindex.Index, c_cxx_files: list[Path],
+def analyze_ast(index: clang.cindex.Index, repo_path: str, c_cxx_files: list[Path],
                 calculators: dict[str, ClangMetricCalculator]) -> dict[str, Metric]:
     '''
     Analyzes ast based on `c_cxx_files` and calculates metrics using `calculators`
@@ -21,8 +22,11 @@ def analyze_ast(index: clang.cindex.Index, c_cxx_files: list[Path],
     `dict[str, Metric]`: dictionary with all metrics calculated by `calculators`.
     '''
     result = {}
+    args = ["-x", "c++"]
+    for root, _, _ in os.walk(repo_path):
+        args.extend(["-I", root])
     for _, file_path in enumerate(c_cxx_files):
-        translation_unit = index.parse(file_path, args=['-x', 'c++'])
+        translation_unit = index.parse(file_path, args=args)
         _analyze_children(
             result,
             calculators,
@@ -37,14 +41,15 @@ def _analyze_children(
     cursor: clang.cindex.Cursor,
     analyzed_file: str
     ):
+    for clc in calculators.items():
+        metric = clc[1](cursor)
+        if result.get(metric.name(), None) is None:
+            result[metric.name()] = metric
+        else:
+            result[metric.name()] += metric
     for child in cursor.get_children():
-        if (child.location.file is None or
-            child.translation_unit.spelling != child.location.file.name):
+        if (not child.kind.is_translation_unit() and
+            (child.location.file is None or
+            child.translation_unit.spelling != child.location.file.name)):
             continue
-        for clc in calculators.items():
-            metric = clc[1](child)
-            if result.get(metric.name(), None) is None:
-                result[metric.name()] = metric
-            else:
-                result[metric.name()] += metric
         _analyze_children(result, calculators, child, analyzed_file)

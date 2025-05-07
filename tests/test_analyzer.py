@@ -12,7 +12,7 @@ def test_loc_metric_1():
     files = [
         Path('./tests/data/repo/main.cpp')
     ]
-    analyzer = CodeAnalyzer(files)
+    analyzer = CodeAnalyzer("./tests/data/repo/", files)
     expected = 6
 
     _, actual = analyzer.metric("LINES_OF_CODE").get()
@@ -26,7 +26,7 @@ def test_loc_metric_2():
     files = [
         Path('./tests/data/repo_with_ignr_modules/src/serial_port.c')
     ]
-    analyzer = CodeAnalyzer(files)
+    analyzer = CodeAnalyzer("./tests/data/repo/", files)
     expected = 1
 
     _, actual = analyzer.metric("LINES_OF_CODE").get()
@@ -40,7 +40,7 @@ def test_repeated_metric():
     files = [
         Path('./tests/data/repo/main.cpp')
     ]
-    analyzer = CodeAnalyzer(files)
+    analyzer = CodeAnalyzer("./tests/data/repo/", files)
     expected = analyzer.metric("LINES_OF_CODE")
 
     actual = analyzer.metric("LINES_OF_CODE")
@@ -55,7 +55,7 @@ def test_unknown_metric():
     files = [
         Path('./tests/data/repo/main.cpp')
     ]
-    analyzer = CodeAnalyzer(files)
+    analyzer = CodeAnalyzer("./tests/data/repo/", files)
     expected = None
 
     actual = analyzer.metric("UNKNOWN_METRIC")

@@ -5,11 +5,15 @@ Module for MEAN_COGNITIVE_COMPLEXITY and MAX_COGNITIVE_COMPLEXITY metrics.
 import clang.cindex
 
 from cpp_stats.metrics.metric_calculator import Metric, ClangMetricCalculator
+from cpp_stats.metrics.utils import is_definition_of_func_or_method
 
 MEAN_COGNITIVE_COMPLEXITY = 'MEAN_COGNITIVE_COMPLEXITY'
 MAX_COGNITIVE_COMPLEXITY = 'MAX_COGNITIVE_COMPLEXITY'
 
 def __need_to_increase_value(node_kind: clang.cindex.CursorKind):
+    '''
+    Checks that metric must be increased according to calculation rules.
+    '''
     return node_kind in [
         clang.cindex.CursorKind.IF_STMT,
         clang.cindex.CursorKind.WHILE_STMT,
@@ -18,6 +22,9 @@ def __need_to_increase_value(node_kind: clang.cindex.CursorKind):
     ]
 
 def __need_to_increase_depth(node_kind: clang.cindex.CursorKind):
+    '''
+    Checks that depth of calculation must be increased according to calculation rules.
+    '''
     return node_kind in [
         clang.cindex.CursorKind.IF_STMT,
         clang.cindex.CursorKind.WHILE_STMT,
@@ -27,6 +34,9 @@ def __need_to_increase_depth(node_kind: clang.cindex.CursorKind):
     ]
 
 def __is_break_linear_flow(node_kind: clang.cindex.CursorKind):
+    '''
+    Checks that given cursor breaks linear program control flow.
+    '''
     return node_kind in [
         clang.cindex.CursorKind.CONTINUE_STMT,
         clang.cindex.CursorKind.BREAK_STMT,
@@ -35,6 +45,9 @@ def __is_break_linear_flow(node_kind: clang.cindex.CursorKind):
     ]
 
 def _calculate_cognitive_complexity(node: clang.cindex.Cursor, depth = 0) -> int:
+    '''
+    Calculates cognitive complexity for given cursor and its children.
+    '''
     complexity = 1 if __is_break_linear_flow(node.kind) else 0
     for child in node.get_children():
         if __need_to_increase_value(child.kind):
@@ -94,13 +107,7 @@ class MeanCognitiveComplexityCalculator(ClangMetricCalculator):
         Returns:
         bool: can cursor be used for calculation or not.
         '''
-        return (
-            cursor.kind in [
-                clang.cindex.CursorKind.CXX_METHOD,
-                clang.cindex.CursorKind.FUNCTION_DECL
-            ]
-            and cursor.is_definition()
-        )
+        return is_definition_of_func_or_method(cursor)
 
 class MaxCognitiveComplexityMetric(Metric):
     '''
@@ -146,10 +153,4 @@ class MaxCognitiveComplexityCalculator(ClangMetricCalculator):
         Returns:
         bool: can cursor be used for calculation or not.
         '''
-        return (
-            cursor.kind in [
-                clang.cindex.CursorKind.CXX_METHOD,
-                clang.cindex.CursorKind.FUNCTION_DECL
-            ]
-            and cursor.is_definition()
-        )
+        return is_definition_of_func_or_method(cursor)
